@@ -141,7 +141,9 @@ private:
             start = true;
         }
 
-
+        }else if (buttonRB){   // RB stop recording 
+            record = false;
+        }
         // ------ Propulsion ------
         if (axisLT > DEADZONE_LT_RT && axisRT > DEADZONE_LT_RT){  //Incompatible orders : Stop the car
             requestedThrottle = STOP;
@@ -182,7 +184,7 @@ private:
     //Joystick variables
     map<string,int> axisMap;
     map<string,int> buttonsMap;
-    bool buttonB, buttonStart, buttonA, buttonY, buttonDpadBottom, buttonDpadLeft ;
+    bool buttonB, buttonStart, buttonA, buttonLB, buttonRB, buttonY, buttonDpadBottom, buttonDpadLeft ;
     
     float axisRT, axisLT, axisLS_X;
 

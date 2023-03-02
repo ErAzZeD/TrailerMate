@@ -96,7 +96,10 @@ private:
 
         }
         
-
+        if (joyOrder.record != record) {
+            record = joyOrder.record;
+        }
+            
         if (joyOrder.mode != mode && joyOrder.mode != -1){ //if mode change
             mode = joyOrder.mode;
 
@@ -241,7 +244,7 @@ private:
 
         if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
-            rightRearPwmCmd = STOP;
+            rightRearPwmCmd = STOP; handle_recording();
             steeringPwmCmd = STOP;
 
         }else{ //Car started
