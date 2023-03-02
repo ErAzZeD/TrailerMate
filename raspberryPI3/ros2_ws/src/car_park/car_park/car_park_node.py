@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 
 
-from interfaces.msg import MotorsOrder, JoystickOrder
+from interfaces.msg import MotorsOrder, JoystickOrder, AppliOrder
 
 class parking(Node):
 
@@ -23,10 +23,16 @@ class parking(Node):
             self.joystick_order_callback,
             10
         )
+        #self.subscription_appli_order = self.create_subscription(AppliOrder, 'appli_order', self.appliOrder_callback, 10)
 
         self.file_path = 'motors_order_values.txt'
         self.file_handle = None
         self.is_recording = False
+
+        self.recordAppli = False
+
+    """def appliOrder_callback(self, appliOrder: AppliOrder): 
+        self.recordAppli = appliOrder.button_record;""" 
 
     def motors_order_callback(self, motors_order: MotorsOrder):
         right_rear_pwm = motors_order.right_rear_pwm
