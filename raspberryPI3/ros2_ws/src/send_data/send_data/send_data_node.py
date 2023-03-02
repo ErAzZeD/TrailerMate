@@ -37,8 +37,8 @@ class SendData (Node):
         self.us_back_right = 0
         self.trailer_angle = 0
         self.currentRightSpeed = 0
-        self.latitude = 0
-        self.longitude = 0
+        self.latitude = 43.6
+        self.longitude = 1.433
         self.battery_level = 0
 
     def us_callback(self, us: Ultrasonic):
@@ -80,7 +80,12 @@ class SendData (Node):
             {"longitude": self.longitude},
             {"battery_level": self.battery_level}
         ]
-        response = requests.put(api_url, json=data)
+
+        base_api_url = "http://138.197.181.206/api/data/"
+
+        for item in data:
+            api_url = f"{base_api_url}{list(item.keys())[0]}"
+            response = requests.put(api_url, json={list(item.keys())[0]: list(item.values())[0]})
 
 
 def main(args=None):

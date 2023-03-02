@@ -23,7 +23,7 @@ set(msg_files
   "msg/SystemCheck.msg"
   "msg/ObstacleDetection.msg"
   "msg/AngleTrailer.msg"
-  "msg/AppiOrder.msg"
+  "msg/AppliOrder.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
