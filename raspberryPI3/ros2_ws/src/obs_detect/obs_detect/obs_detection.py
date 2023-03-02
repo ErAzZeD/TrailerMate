@@ -13,6 +13,7 @@ class ObstacleDetection(Node):
         super().__init__('obs_detection')
 
         self.MINIMAL_DISTANCE = 50
+        self.STOP = 50
 
         self.GO_FRONT = False
         self.GO_REAR = False
@@ -34,13 +35,14 @@ class ObstacleDetection(Node):
     def motors_order_callback(self, motorsOrder: MotorsOrder):
 
         # Get car direction
-        if motorsOrder.right_rear_pwm > 50 and motorsOrder.left_rear_pwm > 50 :
+        if motorsOrder.right_rear_pwm > STOP and motorsOrder.left_rear_pwm > STOP :
             self.GO_FRONT = True
-        elif motorsOrder.right_rear_pwm < 50 and motorsOrder.left_rear_pwm < 50 :
+        elif motorsOrder.right_rear_pwm < STOP and motorsOrder.left_rear_pwm < STOP :
             self.GO_REAR = True
         else :
             self.STOPPED = True
 
+        self.get_logger().info("Car stopped: " + self.STOPPED)
         self.get_logger().info("Car direction front: " + self.GO_FRONT)
         self.get_logger().info("Car direction rear: " + self.GO_REAR)
 
