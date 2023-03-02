@@ -17,9 +17,19 @@ class ObstacleDetection(Node):
        FRONT_OBSTACLE = False
        REAR_OBSTACLE = False
 
+        MINIMAL_DISTANCE = 50
+        STOP = 50
 
+        GO_FRONT = False
+        GO_REAR = False
+        STOPPED = False
+
+        FRONT_OBSTACLE = False
+        REAR_OBSTACLE = False
+    
     def __init__(self):
         super().__init__('obs_detection')
+
 
         # Publishers
         # publish informations to StopCar topic
@@ -68,9 +78,15 @@ class ObstacleDetection(Node):
 
         
         # Stop the car
+<<<<<<< HEAD
         if self.GO_FRONT and self.FRONT_OBSTACLE :
             stop.stop_car_front = True
         elif self.GO_REAR and self.REAR_OBSTACLE : 
+=======
+        if self.FRONT_OBSTACLE and self.GO_FRONT :
+            stop.stop_car_front = True
+        elif self.REAR_OBSTACLE and self.GO_REAR : 
+>>>>>>> 1715b466607ad8c270319cfc553ad8cd8e97e512
             stop.stop_car_rear = True
         else :
             stop.stop_car_front = False
