@@ -1,4 +1,4 @@
-#Copyright 2015 Open Source Robotics Foundation, Inc.
+# Copyright 2015 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,4 +23,3 @@ import pytest
 def test_copyright():
     rc = main(argv=['.', 'test'])
     assert rc == 0, 'Found errors'
-

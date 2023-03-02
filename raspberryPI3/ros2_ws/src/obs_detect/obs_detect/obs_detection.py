@@ -24,7 +24,7 @@ class ObsDetection(Node):
 
         self.sensors = False
 
-    def appliOrder_Callback(self, appliOrder: AppliOrder): 
+    def appliOrder_callback(self, appliOrder: AppliOrder): 
         self.sensors = appliOrder.button_sensors; 
 
     def us_callback(self, us: Ultrasonic):

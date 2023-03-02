@@ -8,7 +8,7 @@ from interfaces.msg import MotorsOrder, JoystickOrder
 class parking(Node):
 
     def __init__(self):
-        super().__init__('filerecorder')
+        super().__init__('filerecord')
 
         self.subscription_motors_order = self.create_subscription(
             MotorsOrder,
@@ -61,19 +61,19 @@ class parking(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    filerecorder = parking()
+    filerecord = parking()
 
     try:
         while rclpy.ok():  # Continue tant que le système ROS 2 est actif
-            rclpy.spin_once(filerecorder, timeout_sec=1)
+            rclpy.spin_once(filerecord, timeout_sec=1)
 
     except KeyboardInterrupt:
         pass
 
     finally:
-        if filerecorder.is_recording:
+        if filerecord.is_recording:
             filerecorder.file_handle.close()
-        filerecorder.destroy_node()
+        filerecord.destroy_node()
         rclpy.shutdown()
 
 if __name__ == '__main__':
