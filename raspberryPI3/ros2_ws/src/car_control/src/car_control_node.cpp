@@ -304,7 +304,7 @@ private:
 
         if (!replay && !go_reverse && !go_forward) mode = 0;
         if (go_forward || go_reverse) mode = 1;
-        if (replay) mode = 3;
+        //if (replay) mode = 3;
         if (emergency) start = false;
 
         if (!start){    //Car stopped
@@ -326,7 +326,7 @@ private:
                         recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
                         
                         PWM_order_filter = PWM_order_right;
-                        attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
+                        //attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
                         rightRearPwmCmd = 50 - PWM_order_filter; 
                         leftRearPwmCmd = rightRearPwmCmd; 
@@ -336,7 +336,7 @@ private:
                         recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
                         
                         PWM_order_filter = PWM_order_right;
-                        attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
+                        //attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
                         rightRearPwmCmd = PWM_order_filter + 50; 
                         leftRearPwmCmd = rightRearPwmCmd; 
@@ -349,11 +349,12 @@ private:
                 //Autonomous Mode
 
                 } else if (mode==1){
-                    RPM_order = requestedThrottle*50.0f;
+
                     //RPM_order = 20.0f;
-                    reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
+                    //reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
 
                     if (go_reverse) {    // => PWM : [50 -> 0] (reverse)
+			RPM_order = requestedThrottle*50.0f;
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                         recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
 
@@ -366,7 +367,8 @@ private:
                         trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
                         steeringPwmCmd=PWM_angle;
                     } else if (go_forward) {   // => PWM : [50 -> 100] (forward)
-                        recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                        RPM_order = 20.0f;
+			recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                         recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
 
                         PWM_order_filter = PWM_order_right;

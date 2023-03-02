@@ -3,12 +3,12 @@ import rclpy
 from rclpy.node import Node
 
 
-from interfaces.msg import MotorsOrder, JoystickOrder, AppliOrder
+from interfaces.msg import MotorsOrder, JoystickOrder
 
 class parking(Node):
 
     def __init__(self):
-        super().__init__('filerecord')
+        super().__init__('filerecorder')
 
         self.subscription_motors_order = self.create_subscription(
             MotorsOrder,
@@ -23,17 +23,12 @@ class parking(Node):
             self.joystick_order_callback,
             10
         )
-        #self.subscription_appli_order = self.create_subscription(AppliOrder, 'appli_order', self.appliOrder_callback, 10)
-
-        self.file_path = 'motors_order_values.txt'
+        
+        self.file_path = '/home/pi/motors_order_values.txt'
         self.file_handle = None
         self.is_recording = False
 
-        self.recordAppli = False
-
-    """def appliOrder_callback(self, appliOrder: AppliOrder): 
-        self.recordAppli = appliOrder.button_record;""" 
-
+        
     def motors_order_callback(self, motors_order: MotorsOrder):
         right_rear_pwm = motors_order.right_rear_pwm
         left_rear_pwm = motors_order.left_rear_pwm
@@ -41,7 +36,7 @@ class parking(Node):
 
         if self.is_recording:
             # Enregistre les données dans le fichier texte
-            self.file_handle.write('Right Rear PWM: %d, Left Rear PWM: %d, Steering PWM: %d\n' %
+            self.file_handle.write('%d %d %d\n' %
                 (right_rear_pwm, left_rear_pwm, steering_pwm)
             )
 
@@ -67,19 +62,19 @@ class parking(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    filerecord = parking()
+    filerecorder = parking()
 
     try:
         while rclpy.ok():  # Continue tant que le système ROS 2 est actif
-            rclpy.spin_once(filerecord, timeout_sec=1)
+            rclpy.spin_once(filerecorder, timeout_sec=1)
 
     except KeyboardInterrupt:
         pass
 
     finally:
-        if filerecord.is_recording:
+        if filerecorder.is_recording:
             filerecorder.file_handle.close()
-        filerecord.destroy_node()
+        filerecorder.destroy_node()
         rclpy.shutdown()
 
 if __name__ == '__main__':
