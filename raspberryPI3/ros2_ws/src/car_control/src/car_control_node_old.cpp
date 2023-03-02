@@ -139,6 +139,8 @@ private:
         currentAngle = motorsFeedback.steering_angle;
         currentLeftSpeed = motorsFeedback.left_rear_speed;
         currentRightSpeed = motorsFeedback.right_rear_speed;
+        LeftOdometry = motorsFeedback.left_rear_odometry;
+        RightOdometry = motorsFeedback.right_rear_odometry;
     }
 
 
@@ -167,10 +169,12 @@ private:
     * 
     */
     void appliOrderCallback(const interfaces::msg::AppliOrder & appliOrder){
-        emergency = appliOrder.button_emergency; 
+        emergency = appliOrder.button_emergency;
+        record = appliOrder.button_record;       
         replay = appliOrder.button_replay;
-        go_reverse = appliOrder.button_reverse;      
-        go_forward = appliOrder.button_forward; 
+        reverse = appliOrder.button_reverse;      
+        forward = appliOrder.button_forward;     
+        sensors = appliOrder.button_sensors; 
     }
 
 // --------------------------------------------------------------
@@ -300,10 +304,10 @@ private:
 
         }else{ //Car started
 
-            if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
             //Manual Mode
-                if (mode==0 && !playing){
+            if (mode==0 && !playing){
 
+                if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
                     RPM_order = requestedThrottle*50.0f;
                     
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
@@ -332,87 +336,90 @@ private:
                     recurrence_PI_steering(requestedSteerAngle, currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last,direction_prec);
                     steeringPwmCmd=PWM_angle;
                     reinit = 1;
-                 
-
-                //Autonomous Mode
-                } else if (mode==1 || go_reverse || go_forward){
-                    //RPM_order = requestedThrottle*50.0f;
-                    RPM_order = 20.0f;
-                    reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
-                    
-                    if (reverse || go_reverse) {    // => PWM : [50 -> 0] (reverse)
-                        recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
-                        recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
-                        
-                        PWM_order_filter = PWM_order_right;
-                        attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
-
-                        rightRearPwmCmd = 50 - PWM_order_filter; 
-                        leftRearPwmCmd = rightRearPwmCmd; 
-
-                        trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
-                        steeringPwmCmd=PWM_angle;
-                    } else {   // => PWM : [50 -> 100] (forward)
-                        recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
-                        recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
-                        
-                        PWM_order_filter = PWM_order_right;
-                        attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
-
-                        rightRearPwmCmd = PWM_order_filter + 50; 
-                        leftRearPwmCmd = rightRearPwmCmd; 
-                        steeringPwmCmd= STOP;  
-                    }
-                
-    
-                //playing mode
-                } else if (mode==3 || replay){
-                
-                    int var1 ,var2 ,var3;
-                    // Lire une ligne différente à chaque appel de la fonction
-                    // RCLCPP_ERROR(get_logger(), "start playing the text file.");
-                    if (!playing && !stop_play) {
-                        file.open("/home/pi/motors_order_values.txt");
-                        if (!file.is_open()) {
-                            RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier ");
-                        }
-                        else{
-                            playing=true;
-                        }
-                    }
-                    else if(playing && file.eof() ) { //conditin fermeture fichier
-                        playing= false;
-                        file.close();
-                        stop_play=true;
-                        
-                    }
-                    else if (!playing && stop_play){
-                        leftRearPwmCmd = STOP;
-                        rightRearPwmCmd = STOP;
-                        steeringPwmCmd = STOP;
-                    // RCLCPP_INFO(get_logger(), "car stop");
-                    }
-                    else if (playing) {
-
-                    // Lire la ligne actuelle
-                        if (!file.eof()) {
-                            file >> var1 >> var2 >> var3;
-                            file.ignore(256, '\n');
-                            // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
-                            RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
-                            leftRearPwmCmd = var1;
-                            rightRearPwmCmd = var2;
-                            steeringPwmCmd = var3;
-                        } else {
-                            RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
-                        }   
-                    }
+                } else {
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
                 }
 
-            }else {
-                leftRearPwmCmd = STOP;
-                rightRearPwmCmd = STOP;
-                steeringPwmCmd = STOP;
+            //Autonomous Mode
+            } else if (mode==1){
+                if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
+                    //RPM_order = requestedThrottle*50.0f;
+                RPM_order = 20.0f;
+                reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
+                
+                if (reverse) {    // => PWM : [50 -> 0] (reverse)
+                    recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                    recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+                    
+                    PWM_order_filter = PWM_order_right;
+                    attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
+
+	                rightRearPwmCmd = 50 - PWM_order_filter; 
+                    leftRearPwmCmd = rightRearPwmCmd; 
+
+                    trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
+                    steeringPwmCmd=PWM_angle;
+                } else {   // => PWM : [50 -> 100] (forward)
+                    recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                    recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+                    
+                    PWM_order_filter = PWM_order_right;
+                    attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
+
+		            rightRearPwmCmd = PWM_order_filter + 50; 
+                    leftRearPwmCmd = rightRearPwmCmd; 
+                    steeringPwmCmd= STOP;  
+                }
+                } else {
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
+                }              
+  
+             //playing mode
+            } else if (mode==3){
+               
+                int var1 ,var2 ,var3;
+                // Lire une ligne différente à chaque appel de la fonction
+                // RCLCPP_ERROR(get_logger(), "start playing the text file.");
+                if (!playing && !stop_play) {
+                    file.open("/home/pi/motors_order_values.txt");
+                    if (!file.is_open()) {
+                        RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier ");
+                    }
+                    else{
+                        playing=true;
+                    }
+                }
+                else if(playing && file.eof() ) { //conditin fermeture fichier
+                    playing= false;
+                    file.close();
+                    stop_play=true;
+                    
+                }
+                else if (!playing && stop_play){
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
+                   // RCLCPP_INFO(get_logger(), "car stop");
+                }
+                else if (playing) {
+
+                 // Lire la ligne actuelle
+                    if (!file.eof()) {
+                        file >> var1 >> var2 >> var3;
+                        file.ignore(256, '\n');
+                        // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
+                        RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
+                        leftRearPwmCmd = var1;
+                        rightRearPwmCmd = var2;
+                        steeringPwmCmd = var3;
+                    } else {
+                        RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
+                    }   
+                }
             }
         }
       
@@ -498,13 +505,6 @@ private:
             //Error
     float Error_last_right;
     float Error_last_left;
-
-    //appli order
-    bool emergency;     
-    bool replay;
-    bool go_reverse;      
-    bool go_forward; 
-
             //PWM
     float PWM_order_right;
     float PWM_order_left;

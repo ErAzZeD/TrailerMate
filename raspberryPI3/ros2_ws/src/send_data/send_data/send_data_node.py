@@ -37,8 +37,8 @@ class SendData (Node):
         self.us_back_right = 0
         self.trailer_angle = 0
         self.currentRightSpeed = 0
-        self.latitude = 43.6
-        self.longitude = 1.433
+        self.latitude = 43.509548901418347
+        self.longitude = 1.4662544183069595
         self.battery_level = 0
 
     def us_callback(self, us: Ultrasonic):
