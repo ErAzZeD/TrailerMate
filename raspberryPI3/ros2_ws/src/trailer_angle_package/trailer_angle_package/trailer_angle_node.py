@@ -31,14 +31,18 @@ class TrailerAngle(Node):
         baudrate = 115200
         serial_addr = "/dev/ttyACM0"
         serial_connection = serial.Serial(port=serial_addr, baudrate=baudrate)
-        
+
         while(True):
             size = serial_connection.inWaiting()
             if size:
                 data = serial_connection.read(size)
-                type_export_topic.trailer_angle = float(ord(data) - 90)
-                self.publish_trailer_angle.publish(type_export_topic)        
-
+                #print(type(data), " ", data, " ", len(data))
+                if (isinstance(data, bytes) and len(data) == 1):
+                    type_export_topic.trailer_angle = float(ord(data) - 90)
+                    self.publish_trailer_angle.publish(type_export_topic)        
+                else:
+                    type_export_topic.trailer_angle = -1.
+                    self.publish_trailer_angle.publish(type_export_topic)
 def main(args=None):
     rclpy.init(args=args)
     trailer_angle_node = TrailerAngle()
