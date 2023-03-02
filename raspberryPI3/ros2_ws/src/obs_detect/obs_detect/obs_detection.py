@@ -42,9 +42,9 @@ class ObstacleDetection(Node):
         else :
             self.STOPPED = True
 
-        self.get_logger().info("Car stopped: " + self.STOPPED)
-        self.get_logger().info("Car direction front: " + self.GO_FRONT)
-        self.get_logger().info("Car direction rear: " + self.GO_REAR)
+        self.get_logger().info("Car stopped: " + str(self.STOPPED))
+        self.get_logger().info("Car direction front: " + str(self.GO_FRONT))
+        self.get_logger().info("Car direction rear: " + str(self.GO_REAR))
 
     def us_callback(self, us: Ultrasonic):
 
