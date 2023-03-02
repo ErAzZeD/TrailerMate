@@ -7,20 +7,19 @@ from interfaces.msg import MotorsOrder
 
 
 class ObstacleDetection(Node):
+       MINIMAL_DISTANCE = 50
+       STOP = 50
+
+       GO_FRONT = False
+       GO_REAR = False
+       STOPPED = False
+
+       FRONT_OBSTACLE = False
+       REAR_OBSTACLE = False
 
 
     def __init__(self):
         super().__init__('obs_detection')
-
-        self.MINIMAL_DISTANCE = 50
-        self.STOP = 50
-
-        self.GO_FRONT = False
-        self.GO_REAR = False
-        self.STOPPED = False
-
-        self.FRONT_OBSTACLE = False
-        self.REAR_OBSTACLE = False
 
         # Publishers
         # publish informations to StopCar topic
@@ -37,10 +36,16 @@ class ObstacleDetection(Node):
         # Get car direction
         if motorsOrder.right_rear_pwm > self.STOP and motorsOrder.left_rear_pwm > self.STOP :
             self.GO_FRONT = True
+            self.GO_REAR = False
+            self.STOPPED = False 
         elif motorsOrder.right_rear_pwm < self.STOP and motorsOrder.left_rear_pwm < self.STOP :
+            self.GO_FRONT = False
             self.GO_REAR = True
+            self.STOPPED = False 
         else :
             self.STOPPED = True
+            self.GO_FRONT = False
+            self.GO_REAR = False
 
         self.get_logger().info("Car stopped: " + str(self.STOPPED))
         self.get_logger().info("Car direction front: " + str(self.GO_FRONT))
