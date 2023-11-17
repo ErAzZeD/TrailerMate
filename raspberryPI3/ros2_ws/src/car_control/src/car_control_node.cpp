@@ -12,6 +12,7 @@
 
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
+#include "../include/car_control/control_loop.h"
 #include "../include/car_control/car_control_node.h"
 
 using namespace std;
@@ -104,6 +105,8 @@ private:
     */
     void motorsFeedbackCallback(const interfaces::msg::MotorsFeedback & motorsFeedback){
         currentAngle = motorsFeedback.steering_angle;
+        currentLeftSpeed = motorsFeedback.left_rear_speed;
+        currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
 
@@ -137,7 +140,9 @@ private:
 
             //Autonomous Mode
             } else if (mode==1){
-                //...
+                RPM_order = FIXED_SPEED;
+                reverse = 0;
+                compensator_recurrence(RPM_order,reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
             }
         }
 
@@ -212,9 +217,14 @@ private:
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
 
-    
+    //Control loop variables
+    float RPM_order;
+
     //Motors feedback variables
     float currentAngle;
+    float currentRightSpeed;
+    float currentLeftSpeed;
+
 
     //Manual Mode variables (with joystick control)
     bool reverse;
