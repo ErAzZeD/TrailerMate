@@ -136,14 +136,15 @@ private:
                 manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
                 steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
-
-
+		reinit = 1;
             //Autonomous Mode
             } else if (mode==1){
                 RPM_order = 20.0;
                 reverse = 0;
-                compensator_recurrence(RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
-            }   // (float RPM_order, float currentRightSpeed, float currentLeftSpeed, uint8_t& rightRearPwmCmd, uint8_t& leftRearPwmCmd)
+                compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
+            	steeringPwmCmd = 50;
+            	reinit = 0;
+            }   
         }
 
 
@@ -219,7 +220,7 @@ private:
 
     //Control loop variables
     float RPM_order;
-
+    int reinit;
     //Motors feedback variables
     float currentAngle;
     float currentRightSpeed;
