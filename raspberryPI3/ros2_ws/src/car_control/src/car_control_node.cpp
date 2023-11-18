@@ -48,7 +48,7 @@ public:
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
 
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
-        "stop_car", 10, std::bind(&car_control::updateCmd, this, _1));
+        "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
         
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
@@ -116,19 +116,10 @@ private:
     * This function is called when a message is published on the "/stop_car" topic
     * 
     */
-    /*void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-
-        auto motorsOrder = interfaces::msg::MotorsOrder();
-
-        if ((stopCar.stop_car_rear && motorsOrder.left_rear_pwm < STOP && motorsOrder.right_rear_pwm < STOP) || (stopCar.stop_car_front && motorsOrder.left_rear_pwm > STOP && motorsOrder.right_rear_pwm > STOP)){
-            motorsOrder.left_rear_pwm = STOP;
-            motorsOrder.right_rear_pwm = STOP;
-            motorsOrder.steering_pwm = STOP;
-        }
-
-        publisher_can_->publish(motorsOrder);
-
-    }*/
+    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+        frontObstacle = stopCar.stop_car_front;
+        rearObstacle = stopCar.stop_car_rear;
+    }
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -152,7 +143,7 @@ private:
         }else{ //Car started
 
             //Manual Mode
-            if (mode==0 && stopCar.stop_car_front==false){
+            if (mode==0 && frontObstacle==false){
                 
                 manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
@@ -160,7 +151,7 @@ private:
                 reinit = 1;
 
             //Autonomous Mode
-            } else if (mode==1 && stopCar.stop_car_front==false){
+            } else if (mode==1 && frontObstacle==false){
                 RPM_order = 20.0;
                 reverse = 0;
                 compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
@@ -247,6 +238,10 @@ private:
     float currentAngle;
     float currentRightSpeed;
     float currentLeftSpeed;
+
+    //Obstacles variables
+    float frontObstacle;
+    float rearObstacle;
 
 
     //Manual Mode variables (with joystick control)
