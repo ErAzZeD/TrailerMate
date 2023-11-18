@@ -7,6 +7,7 @@
 #include "interfaces/msg/motors_feedback.hpp"
 #include "interfaces/msg/steering_calibration.hpp"
 #include "interfaces/msg/joystick_order.hpp"
+#include "interfaces/msg/stop_car.hpp"
 
 #include "std_srvs/srv/empty.hpp"
 
@@ -46,7 +47,8 @@ public:
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
 
-
+        subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
+        "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
         
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
@@ -109,6 +111,23 @@ private:
         currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
+    /* Update command from stop car [callback function]  :
+    *
+    * This function is called when a message is published on the "/stop_car" topic
+    * 
+    */
+    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+        if (stopCar.stop_car_rear && motorsOrder.left_rear_pwm < STOP && motorsOrder.right_rear_pwm < STOP){
+            leftRearPwmCmd = STOP;
+            rightRearPwmCmd = STOP;
+            steeringPwmCmd = STOP;
+        }
+        if (stopCar.stop_car_front && motorsOrder.left_rear_pwm > STOP && motorsOrder.right_rear_pwm > STOP){
+            leftRearPwmCmd = STOP;
+            rightRearPwmCmd = STOP;
+            steeringPwmCmd = STOP;
+        }
+    }
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -136,7 +155,8 @@ private:
                 manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
                 steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
-		reinit = 1;
+		        reinit = 1;
+
             //Autonomous Mode
             } else if (mode==1){
                 RPM_order = 20.0;
