@@ -13,7 +13,7 @@
 *   Error_last -> Erreur(k)
 */
 void recurrence_equation(float RPM_order, float Error, float& Error_last, float& PWM_order, float& PWM_order_last, float currentSpeed);  
-
-int * compensator_recurrence(float RPM_order, bool reverse, float currentRightSpeed, float currentLeftSpeed, uint8_t& rightRearPwmCmd, uint8_t& leftRearPwmCmd);
+// int *
+void compensator_recurrence(float RPM_order, bool reverse, float currentRightSpeed, float currentLeftSpeed, uint8_t& rightRearPwmCmd, uint8_t& leftRearPwmCmd);
 
 #endif /*__ control_loop_H */

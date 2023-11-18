@@ -23,7 +23,7 @@ void recurrence_equation(float RPM_order, float Error, float& Error_last, float&
     PWM_order_last=PWM_order;
 }
 
-int * compensator_recurrence(float RPM_order, bool reverse, float currentRightSpeed, float currentLeftSpeed, uint8_t& rightRearPwmCmd, uint8_t& leftRearPwmCmd){
+void compensator_recurrence(float RPM_order, bool reverse,float currentRightSpeed, float currentLeftSpeed, uint8_t& rightRearPwmCmd, uint8_t& leftRearPwmCmd){   
 
     // Variable statique pour conserver la valeur entre les appels
     static float Left_PWM_order = 0.0;
@@ -32,7 +32,7 @@ int * compensator_recurrence(float RPM_order, bool reverse, float currentRightSp
     static float Right_PWM_order_last = 0.0;
     static float Left_Error_last = 0.0;
     static float Right_Error_last = 0.0;
-
+    
     float Left_Error;
     float Right_Error;
     
@@ -50,7 +50,5 @@ int * compensator_recurrence(float RPM_order, bool reverse, float currentRightSp
         rightRearPwmCmd = Right_PWM_order + 50; 
         leftRearPwmCmd = Left_PWM_order + 50;    
     }
-
-    return 0;
 
 }

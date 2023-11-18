@@ -140,10 +140,10 @@ private:
 
             //Autonomous Mode
             } else if (mode==1){
-                RPM_order = FIXED_SPEED;
+                RPM_order = 20.0;
                 reverse = 0;
-                compensator_recurrence(RPM_order,reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
-            }
+                compensator_recurrence(RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
+            }   // (float RPM_order, float currentRightSpeed, float currentLeftSpeed, uint8_t& rightRearPwmCmd, uint8_t& leftRearPwmCmd)
         }
 
 
