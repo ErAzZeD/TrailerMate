@@ -117,16 +117,17 @@ private:
     * 
     */
     void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-        if (stopCar.stop_car_rear && motorsOrder.left_rear_pwm < STOP && motorsOrder.right_rear_pwm < STOP){
-            leftRearPwmCmd = STOP;
-            rightRearPwmCmd = STOP;
-            steeringPwmCmd = STOP;
+
+        auto motorsOrder = interfaces::msg::MotorsOrder();
+
+        if ((stopCar.stop_car_rear && motorsOrder.left_rear_pwm < STOP && motorsOrder.right_rear_pwm < STOP) || (stopCar.stop_car_front && motorsOrder.left_rear_pwm > STOP && motorsOrder.right_rear_pwm > STOP)){
+            motorsOrder.left_rear_pwm = STOP;
+            motorsOrder.right_rear_pwm = STOP;
+            motorsOrder.steering_pwm = STOP;
         }
-        if (stopCar.stop_car_front && motorsOrder.left_rear_pwm > STOP && motorsOrder.right_rear_pwm > STOP){
-            leftRearPwmCmd = STOP;
-            rightRearPwmCmd = STOP;
-            steeringPwmCmd = STOP;
-        }
+
+        publisher_can_->publish(motorsOrder);
+        
     }
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
