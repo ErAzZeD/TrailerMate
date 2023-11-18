@@ -151,30 +151,22 @@ private:
 
         }else{ //Car started
 
-            if ((stopCar.stop_car_rear && motorsOrder.left_rear_pwm < STOP && motorsOrder.right_rear_pwm < STOP) || (stopCar.stop_car_front && motorsOrder.left_rear_pwm > STOP && motorsOrder.right_rear_pwm > STOP)){
-                leftRearPwmCmd = STOP;
-                rightRearPwmCmd = STOP;
-                steeringPwmCmd = STOP;
-            }
+            //Manual Mode
+            if (mode==0 && stopCar.stop_car_front==false){
+                
+                manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
-            else{
-                //Manual Mode
-                if (mode==0){
-                    
-                    manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
+                steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
+                reinit = 1;
 
-                    steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
-                    reinit = 1;
-
-                //Autonomous Mode
-                } else if (mode==1){
-                    RPM_order = 20.0;
-                    reverse = 0;
-                    compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
-                    steeringPwmCmd = 50;
-                    reinit = 0;
-                }  
-            } 
+            //Autonomous Mode
+            } else if (mode==1 && stopCar.stop_car_front==false){
+                RPM_order = 20.0;
+                reverse = 0;
+                compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
+                steeringPwmCmd = 50;
+                reinit = 0;
+            }  
         }
 
 
