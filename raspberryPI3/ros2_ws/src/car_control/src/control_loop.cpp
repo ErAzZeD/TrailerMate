@@ -1,8 +1,7 @@
 #include "../include/car_control/control_loop.h"
 
-float Fe = 1000;
-float Te = 1/Fe;
-float K = 4.59;  // Ki / Kp 
+float Te = 0.1;  // Motors data (right/left feedback) are periodically send with a period egals to 100ms.
+float K = 4.59;  // Ki/Kp 
 float ao = (K*Te/2) + 1;
 float bo = (K*Te/2) - 1;
 
