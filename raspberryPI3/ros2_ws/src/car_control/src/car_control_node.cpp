@@ -48,7 +48,7 @@ public:
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
 
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
-        "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
+        "stop_car", 10, std::bind(&car_control::updateCmd, this, _1));
         
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
@@ -116,7 +116,7 @@ private:
     * This function is called when a message is published on the "/stop_car" topic
     * 
     */
-    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+    /*void stopCarCallback(const interfaces::msg::StopCar & stopCar){
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
@@ -127,8 +127,8 @@ private:
         }
 
         publisher_can_->publish(motorsOrder);
-        
-    }
+
+    }*/
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -141,6 +141,7 @@ private:
     void updateCmd(){
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
+        auto stopCar = interfaces::msg::StopCar();
 
         if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
@@ -150,22 +151,30 @@ private:
 
         }else{ //Car started
 
-            //Manual Mode
-            if (mode==0){
-                
-                manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
+            if ((stopCar.stop_car_rear && motorsOrder.left_rear_pwm < STOP && motorsOrder.right_rear_pwm < STOP) || (stopCar.stop_car_front && motorsOrder.left_rear_pwm > STOP && motorsOrder.right_rear_pwm > STOP)){
+                leftRearPwmCmd = STOP;
+                rightRearPwmCmd = STOP;
+                steeringPwmCmd = STOP;
+            }
 
-                steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
-		        reinit = 1;
+            else{
+                //Manual Mode
+                if (mode==0){
+                    
+                    manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
-            //Autonomous Mode
-            } else if (mode==1){
-                RPM_order = 20.0;
-                reverse = 0;
-                compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
-            	steeringPwmCmd = 50;
-            	reinit = 0;
-            }   
+                    steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
+                    reinit = 1;
+
+                //Autonomous Mode
+                } else if (mode==1){
+                    RPM_order = 20.0;
+                    reverse = 0;
+                    compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
+                    steeringPwmCmd = 50;
+                    reinit = 0;
+                }  
+            } 
         }
 
 
