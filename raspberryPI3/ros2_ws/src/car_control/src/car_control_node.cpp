@@ -100,6 +100,20 @@ private:
         }
     }
 
+
+/* Update command from stop car [callback function]  :
+    *
+    * This function is called when a message is published on the "/stop_car" topic
+    * 
+    */
+    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+        frontObstacle = stopCar.stop_car_front;
+        rearObstacle = stopCar.stop_car_rear;
+        if(frontObstacle || rearObstacle)
+         RCLCPP_INFO(this->get_logger(), "obstacle detected car stoped");
+    }
+
+
     /* Update currentAngle from motors feedback [callback function]  :
     *
     * This function is called when a message is published on the "/motors_feedback" topic
@@ -111,15 +125,7 @@ private:
         currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
-    /* Update command from stop car [callback function]  :
-    *
-    * This function is called when a message is published on the "/stop_car" topic
-    * 
-    */
-    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-        frontObstacle = stopCar.stop_car_front;
-        rearObstacle = stopCar.stop_car_rear;
-    }
+    
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -133,7 +139,7 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start){    //Car stopped
+        if (!start||frontObstacle==true ||rearObstacle==true){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
@@ -142,7 +148,7 @@ private:
         }else{ //Car started
 
             //Manual Mode
-            if (mode==0) && frontObstacle==false){
+            if (mode==0){
                 
                 manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
@@ -150,7 +156,7 @@ private:
                 reinit = 1;
 
             //Autonomous Mode
-            } else if (mode==1 && frontObstacle==false){
+            } else if (mode==1){
                 RPM_order = 20.0;
                 reverse = 0;
                 compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
