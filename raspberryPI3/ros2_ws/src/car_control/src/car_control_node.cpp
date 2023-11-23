@@ -263,7 +263,6 @@ private:
     rclcpp::Subscription<interfaces::msg::JoystickOrder>::SharedPtr subscription_joystick_order_;
     rclcpp::Subscription<interfaces::msg::MotorsFeedback>::SharedPtr subscription_motors_feedback_;
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
-    cout << "test 2" << endl;
     rclcpp::Subscription<interfaces::msg::StopCar>::SharedPtr subscription_stop_car_;
 
     //Timer
