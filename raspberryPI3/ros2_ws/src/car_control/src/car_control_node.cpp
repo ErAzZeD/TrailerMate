@@ -47,7 +47,7 @@ public:
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
         
-        cout << "test" << endl;
+        RCLCPP_INFO(this->get_logger(), "car_control_node TEST DU PASSAGE DANS NOTRE FICHIER");
 
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
         "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
