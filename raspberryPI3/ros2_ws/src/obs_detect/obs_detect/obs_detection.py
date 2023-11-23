@@ -32,9 +32,9 @@ class ObstacleDetection(Node):
 
     def motors_order_callback(self, motorsOrder: MotorsOrder):
 
-        if motorsOrder.right_rear_pwm < 50 and motorsOrder.left_rear_pwm < 50 :
+        if motorsOrder.right_rear_pwm > 50 and motorsOrder.left_rear_pwm > 50 :
             self.GO_FRONT = True
-        elif motorsOrder.right_rear_pwm > 50 and motorsOrder.left_rear_pwm > 50 :
+        elif motorsOrder.right_rear_pwm < 50 and motorsOrder.left_rear_pwm < 50 :
             self.GO_REAR = True
         else :
             self.STOPPED = True
@@ -68,7 +68,7 @@ class ObstacleDetection(Node):
 
         # Publish stop_car topic
         self.publish_stop_car.publish(stop)
-        
+
 
 def main(args=None):
     rclpy.init(args=args)
