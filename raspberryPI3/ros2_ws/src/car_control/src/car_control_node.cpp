@@ -13,7 +13,6 @@
 
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
-#include "../include/car_control/control_loop.h"
 #include "../include/car_control/car_control_node.h"
 
 using namespace std;
@@ -158,11 +157,7 @@ private:
 
             //Autonomous Mode
             } else if (mode==1){
-                RPM_order = 20.0;
-                reverse = 0;
-                compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
-                steeringPwmCmd = 50;
-                reinit = 0;
+                
             }  
         }
 
