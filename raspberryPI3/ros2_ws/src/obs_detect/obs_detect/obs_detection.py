@@ -3,10 +3,19 @@ from rclpy.node import Node
 
 from interfaces.msg import Ultrasonic
 from interfaces.msg import StopCar
+from interfaces.msg import MotorsOrder
 
 
 class ObstacleDetection(Node):
     MINIMAL_DISTANCE = 50
+
+    GO_FRONT = False
+    GO_REAR = False
+    STOPPED = False
+
+    FRONT_OBSTACLE = False
+    REAR_OBSTACLE = False
+
 
     def __init__(self):
         super().__init__('obs_detection')
@@ -15,31 +24,47 @@ class ObstacleDetection(Node):
         # publish informations to StopCar topic
         self.publish_stop_car = self.create_publisher(StopCar, 'stop_car', 10)
         
-        # ICI
         # Subscribers
         self.subscription_us = self.create_subscription(Ultrasonic, 'us_data', self.us_callback, 10)
 
+        self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
 
-    def us_callback(self, msg: Ultrasonic):
 
-        stop = StopCar()
+    def motors_order_callback(self, motorsOrder: MotorsOrder):
 
-        if msg.front_left < self.MINIMAL_DISTANCE \
-                or msg.front_center < self.MINIMAL_DISTANCE \
-                or msg.front_right < self.MINIMAL_DISTANCE:
-            stop.stop_car_front = True
+        if motorsOrder.right_rear_pwm < 50 and motorsOrder.left_rear_pwm < 50 :
+            self.GO_FRONT = True
+        else if motorsOrder.right_rear_pwm > 50 and motorsOrder.left_rear_pwm > 50 :
+            self.GO_REAR = True
         else :
-            stop.stop_car_front = False
+            self.STOPPED = True
 
-        if msg.rear_left < self.MINIMAL_DISTANCE \
-               or msg.rear_center < self.MINIMAL_DISTANCE \
-               or msg.rear_right < self.MINIMAL_DISTANCE:
+
+    def us_callback(self, us: Ultrasonic):
+
+        if us.front_left < self.MINIMAL_DISTANCE or us.front_center < self.MINIMAL_DISTANCE or us.front_right < self.MINIMAL_DISTANCE :
+            self.FRONT_OBSTACLE = True
+        else :
+            self.FRONT_OBSTACLE = False
+
+        if us.rear_left < self.MINIMAL_DISTANCE or us.rear_center < self.MINIMAL_DISTANCE or us.rear_right < self.MINIMAL_DISTANCE :
+            self.REAR_OBSTACLE = True
+        else :
+            self.REAR_OBSTACLE = False
+
+    def obstacle_detection(self):
+        
+        stop = StopCar()
+        
+        if self.GO_FRONT and self.FRONT_OBSTACLE :
+            stop.stop_car_front = True
+        else if self.GO_REAR and REAR_OBSTACLE : 
             stop.stop_car_rear = True
         else :
+            stop.stop_car_front = False
             stop.stop_car_rear = False
-
+        
         self.publish_stop_car.publish(stop)
-
 
 def main(args=None):
     rclpy.init(args=args)
