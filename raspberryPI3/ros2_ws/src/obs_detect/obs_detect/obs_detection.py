@@ -42,6 +42,9 @@ class ObstacleDetection(Node):
 
     def us_callback(self, us: Ultrasonic):
 
+        stop = StopCar()
+        
+        # Get obstacle position
         if us.front_left < self.MINIMAL_DISTANCE or us.front_center < self.MINIMAL_DISTANCE or us.front_right < self.MINIMAL_DISTANCE :
             self.FRONT_OBSTACLE = True
         else :
@@ -52,7 +55,21 @@ class ObstacleDetection(Node):
         else :
             self.REAR_OBSTACLE = False
 
-    def obstacle_detection(self):
+        
+        # Get car direction
+        if self.GO_FRONT and self.FRONT_OBSTACLE :
+            stop.stop_car_front = True
+        elif self.GO_REAR and REAR_OBSTACLE : 
+            stop.stop_car_rear = True
+        else :
+            stop.stop_car_front = False
+            stop.stop_car_rear = False
+        
+
+        # Publish stop_car topic
+        self.publish_stop_car.publish(stop)
+
+   """  def obstacle_detection(self):
         
         stop = StopCar()
         
@@ -64,7 +81,7 @@ class ObstacleDetection(Node):
             stop.stop_car_front = False
             stop.stop_car_rear = False
         
-        self.publish_stop_car.publish(stop)
+        self.publish_stop_car.publish(stop) """
 
 def main(args=None):
     rclpy.init(args=args)

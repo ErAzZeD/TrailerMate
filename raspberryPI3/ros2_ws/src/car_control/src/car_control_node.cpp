@@ -136,7 +136,7 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start){    //Car stopped
+        if (!start || frontObstacle || rearObstacle){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
@@ -155,7 +155,6 @@ private:
                 
             }  
         }
-
 
         //Send order to motors
         motorsOrder.left_rear_pwm = leftRearPwmCmd;
@@ -239,10 +238,6 @@ private:
     //Obstacles variables
     bool frontObstacle;
     bool rearObstacle;
-
-    //Motors order variables
-    float currentRightPwmCmd;
-    float currentLeftPwmCmd;
 
 
     //Manual Mode variables (with joystick control)
