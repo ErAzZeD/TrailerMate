@@ -2,7 +2,6 @@ import rclpy
 from rclpy.node import Node
 
 from interfaces.msg import Ultrasonic
-from interfaces.msg import MotorsOrder
 from interfaces.msg import StopCar
 
 
@@ -15,7 +14,6 @@ class ObstacleDetection(Node):
         # Publishers
         # publish informations to StopCar topic
         self.publish_stop_car = self.create_publisher(StopCar, 'stop_car', 10)
-        # publish on motors_order to stop the car
         
         # ICI
         # Subscribers
