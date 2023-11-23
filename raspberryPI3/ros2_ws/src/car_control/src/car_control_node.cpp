@@ -45,13 +45,14 @@ public:
 
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
-        
-        RCLCPP_INFO(this->get_logger(), "car_control_node TEST DU PASSAGE DANS NOTRE FICHIER");
 
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
         "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
 
-        
+        subscription_motors_order_ = this->create_subscription<interfaces::msg::MotorsOrder>(
+        "motors_order", 10, std::bind(&car_control::motorsOrderCallback, this, _1));
+
+        RCLCPP_INFO(this->get_logger(), "car_control_node TEST DU CALLBACK DE MOTORE ORDER");
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -126,6 +127,15 @@ private:
          RCLCPP_INFO(this->get_logger(), "obstacle detected car stoped");
     }
 
+    /* Update currentAngle from motors order [callback function]  :
+    *
+    * This function is called when a message is published on the "/motors_order" topic
+    * 
+    */
+    void motorsOrderCallback(const interfaces::msg::MotorsOrder & motorsOrder1){
+        currentLeftPwmCmd = motorsOrder1.left_rear_pwm;
+        currentRightPwmCmd = motorsOrder1.right_rear_pwm;
+    }
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -139,13 +149,12 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start || (frontObstacle && motorsOrder.left_rear_pwm > STOP && motorsOrder.right_rear_pwm > STOP) || (rearObstacle && motorsOrder.left_rear_pwm < STOP && motorsOrder.right_rear_pwm < STOP)){    //Car stopped
+        if (!start || (frontObstacle && currentLeftPwmCmd > STOP && currentRightPwmCmd > STOP) || (rearObstacle && currentLeftPwmCmd < STOP && currentRightPwmCmd < STOP)){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
 
         }else{ //Car started
-
             //Manual Mode
             if (mode==0){
                 
@@ -234,6 +243,7 @@ private:
     //Control loop variables
     float RPM_order;
     int reinit;
+
     //Motors feedback variables
     float currentAngle;
     float currentRightSpeed;
@@ -242,6 +252,10 @@ private:
     //Obstacles variables
     bool frontObstacle;
     bool rearObstacle;
+
+    //Motors order variables
+    float currentRightPwmCmd;
+    float currentLeftPwmCmd;
 
 
     //Manual Mode variables (with joystick control)
@@ -263,6 +277,7 @@ private:
     rclcpp::Subscription<interfaces::msg::MotorsFeedback>::SharedPtr subscription_motors_feedback_;
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
     rclcpp::Subscription<interfaces::msg::StopCar>::SharedPtr subscription_stop_car_;
+    rclcpp::Subscription<interfaces::msg::MotorsOrder>::SharedPtr subscription_motors_order_;
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;
