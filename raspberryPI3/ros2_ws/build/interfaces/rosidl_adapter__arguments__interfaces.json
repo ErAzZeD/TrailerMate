@@ -1,0 +1,13 @@
+{
+  "package_name": "interfaces",
+  "non_idl_tuples": [
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/JoystickOrder.msg",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/MotorsOrder.msg",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/MotorsFeedback.msg",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/GeneralData.msg",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/SteeringCalibration.msg",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/Ultrasonic.msg",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/Gnss.msg",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/SystemCheck.msg"
+  ]
+}

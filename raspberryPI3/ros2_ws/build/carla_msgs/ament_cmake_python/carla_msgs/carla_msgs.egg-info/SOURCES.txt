@@ -1,0 +1,6 @@
+setup.py
+carla_msgs/__init__.py
+carla_msgs.egg-info/PKG-INFO
+carla_msgs.egg-info/SOURCES.txt
+carla_msgs.egg-info/dependency_links.txt
+carla_msgs.egg-info/top_level.txt

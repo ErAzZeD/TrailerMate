@@ -1,0 +1,6 @@
+{
+  "package_name": "carla_msgs",
+  "non_idl_tuples": [
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/carla_msgs:msg/CarlaEgoVehicleControl.msg"
+  ]
+}
