@@ -34,7 +34,7 @@ class ObstacleDetection(Node):
 
         if motorsOrder.right_rear_pwm < 50 and motorsOrder.left_rear_pwm < 50 :
             self.GO_FRONT = True
-        else if motorsOrder.right_rear_pwm > 50 and motorsOrder.left_rear_pwm > 50 :
+        elif motorsOrder.right_rear_pwm > 50 and motorsOrder.left_rear_pwm > 50 :
             self.GO_REAR = True
         else :
             self.STOPPED = True
@@ -58,7 +58,7 @@ class ObstacleDetection(Node):
         
         if self.GO_FRONT and self.FRONT_OBSTACLE :
             stop.stop_car_front = True
-        else if self.GO_REAR and REAR_OBSTACLE : 
+        elif self.GO_REAR and REAR_OBSTACLE : 
             stop.stop_car_rear = True
         else :
             stop.stop_car_front = False
