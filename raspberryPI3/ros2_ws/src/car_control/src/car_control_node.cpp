@@ -47,6 +47,8 @@ public:
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
         
+        cout << "test" << endl;
+
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
         "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
 
@@ -266,6 +268,7 @@ private:
     rclcpp::Subscription<interfaces::msg::JoystickOrder>::SharedPtr subscription_joystick_order_;
     rclcpp::Subscription<interfaces::msg::MotorsFeedback>::SharedPtr subscription_motors_feedback_;
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
+    cout << "test 2" << endl;
     rclcpp::Subscription<interfaces::msg::StopCar>::SharedPtr subscription_stop_car_;
 
     //Timer
