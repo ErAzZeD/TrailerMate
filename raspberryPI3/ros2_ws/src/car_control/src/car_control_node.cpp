@@ -238,12 +238,12 @@ private:
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
 
     //Control loop variables
-    float RPM_order;
+    double RPM_order;
     int reinit;
     //Motors feedback variables
     float currentAngle;
-    float currentRightSpeed;
-    float currentLeftSpeed;
+    double currentRightSpeed;
+    double currentLeftSpeed;
 
     //Obstacles variables
     bool frontObstacle;
