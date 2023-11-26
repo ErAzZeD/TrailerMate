@@ -7,11 +7,14 @@
 #include "interfaces/msg/motors_feedback.hpp"
 #include "interfaces/msg/steering_calibration.hpp"
 #include "interfaces/msg/joystick_order.hpp"
+#include "interfaces/msg/stop_car.hpp"
+
 
 #include "std_srvs/srv/empty.hpp"
 
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
+#include "../include/car_control/control_loop.h"
 #include "../include/car_control/car_control_node.h"
 
 using namespace std;
@@ -44,7 +47,8 @@ public:
 
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
-
+        subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
+        "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
 
         
 
@@ -97,6 +101,20 @@ private:
         }
     }
 
+
+/* Update command from stop car [callback function]  :
+    *
+    * This function is called when a message is published on the "/stop_car" topic
+    * 
+    */
+    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+        frontObstacle = stopCar.stop_car_front;
+        rearObstacle = stopCar.stop_car_rear;
+        if(frontObstacle || rearObstacle)
+         RCLCPP_INFO(this->get_logger(), "obstacle detected car stoped");
+    }
+
+
     /* Update currentAngle from motors feedback [callback function]  :
     *
     * This function is called when a message is published on the "/motors_feedback" topic
@@ -104,7 +122,10 @@ private:
     */
     void motorsFeedbackCallback(const interfaces::msg::MotorsFeedback & motorsFeedback){
         currentAngle = motorsFeedback.steering_angle;
+        currentLeftSpeed = motorsFeedback.left_rear_speed;
+        currentRightSpeed = motorsFeedback.right_rear_speed;
     }
+
 
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
@@ -119,7 +140,7 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start){    //Car stopped
+        if (!start||frontObstacle==true ||rearObstacle==true){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
@@ -133,12 +154,16 @@ private:
                 manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
                 steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
-
+                reinit = 1;
 
             //Autonomous Mode
             } else if (mode==1){
-                //...
-            }
+                RPM_order = 20.0;
+                reverse = 0;
+                compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
+                steeringPwmCmd = 50;
+                reinit = 0;
+            }  
         }
 
 
@@ -212,9 +237,18 @@ private:
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
 
-    
+    //Control loop variables
+    double RPM_order;
+    int reinit;
     //Motors feedback variables
     float currentAngle;
+    double currentRightSpeed;
+    double currentLeftSpeed;
+
+    //Obstacles variables
+    bool frontObstacle;
+    bool rearObstacle;
+
 
     //Manual Mode variables (with joystick control)
     bool reverse;
@@ -234,6 +268,7 @@ private:
     rclcpp::Subscription<interfaces::msg::JoystickOrder>::SharedPtr subscription_joystick_order_;
     rclcpp::Subscription<interfaces::msg::MotorsFeedback>::SharedPtr subscription_motors_feedback_;
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
+    rclcpp::Subscription<interfaces::msg::StopCar>::SharedPtr subscription_stop_car_;
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;
