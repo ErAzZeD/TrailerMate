@@ -37,9 +37,15 @@ class ObstacleDetection(Node):
         # Get car direction
         if motorsOrder.right_rear_pwm > self.STOP and motorsOrder.left_rear_pwm > self.STOP :
             self.GO_FRONT = True
+            self.GO_REAR = False
+            self.STOPPED = False 
         elif motorsOrder.right_rear_pwm < self.STOP and motorsOrder.left_rear_pwm < self.STOP :
+            self.GO_FRONT = False
             self.GO_REAR = True
+            self.STOPPED = False 
         else :
+            self.GO_FRONT = False
+            self.GO_REAR = False
             self.STOPPED = True 
 
         self.get_logger().info("Car stopped: " + str(self.STOPPED))
