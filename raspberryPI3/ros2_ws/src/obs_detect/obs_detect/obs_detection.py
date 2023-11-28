@@ -3,7 +3,7 @@ from rclpy.node import Node
 
 from interfaces.msg import Ultrasonic
 from interfaces.msg import StopCar
-#from interfaces.msg import MotorsOrder
+from interfaces.msg import MotorsOrder
 
 
 class ObstacleDetection(Node):
@@ -35,9 +35,9 @@ class ObstacleDetection(Node):
     def motors_order_callback(self, motorsOrder: MotorsOrder):
 
         # Get car direction
-        if motorsOrder.right_rear_pwm > STOP and motorsOrder.left_rear_pwm > STOP :
+        if motorsOrder.right_rear_pwm > self.STOP and motorsOrder.left_rear_pwm > self.STOP :
             self.GO_FRONT = True
-        elif motorsOrder.right_rear_pwm < STOP and motorsOrder.left_rear_pwm < STOP :
+        elif motorsOrder.right_rear_pwm < self.STOP and motorsOrder.left_rear_pwm < self.STOP :
             self.GO_REAR = True
         else :
             self.STOPPED = True 
