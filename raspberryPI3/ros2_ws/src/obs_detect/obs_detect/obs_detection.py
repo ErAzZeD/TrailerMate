@@ -3,7 +3,7 @@ from rclpy.node import Node
 
 from interfaces.msg import Ultrasonic
 from interfaces.msg import StopCar
-from interfaces.msg import MotorsOrder
+#from interfaces.msg import MotorsOrder
 
 
 class ObstacleDetection(Node):
@@ -28,7 +28,7 @@ class ObstacleDetection(Node):
         # Subscribers
         self.subscription_us = self.create_subscription(Ultrasonic, 'us_data', self.us_callback, 10)
 
-        self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
+        """ self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
 
 
     def motors_order_callback(self, motorsOrder: MotorsOrder):
@@ -39,10 +39,10 @@ class ObstacleDetection(Node):
         elif motorsOrder.right_rear_pwm < 50 and motorsOrder.left_rear_pwm < 50 :
             self.GO_REAR = True
         else :
-            self.STOPPED = True
+            self.STOPPED = True 
 
         self.get_logger().info("Car direction front: " + self.GO_FRONT)
-        self.get_logger().info("Car direction rear: " + self.GO_REAR)
+        self.get_logger().info("Car direction rear: " + self.GO_REAR)"""
 
     def us_callback(self, us: Ultrasonic):
 
@@ -61,9 +61,9 @@ class ObstacleDetection(Node):
 
         
         # Stop the car
-        if self.GO_FRONT and self.FRONT_OBSTACLE :
+        if self.FRONT_OBSTACLE :
             stop.stop_car_front = True
-        elif self.GO_REAR and self.REAR_OBSTACLE : 
+        elif self.REAR_OBSTACLE : 
             stop.stop_car_rear = True
         else :
             stop.stop_car_front = False
