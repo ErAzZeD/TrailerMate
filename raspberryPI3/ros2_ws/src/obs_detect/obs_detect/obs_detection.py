@@ -13,6 +13,7 @@ class ObstacleDetection(Node):
         super().__init__('obs_detection')
 
         self.MINIMAL_DISTANCE = 50
+        self.STOP = 50
 
         self.GO_FRONT = False
         self.GO_REAR = False
@@ -28,21 +29,22 @@ class ObstacleDetection(Node):
         # Subscribers
         self.subscription_us = self.create_subscription(Ultrasonic, 'us_data', self.us_callback, 10)
 
-        """ self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
+        self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
 
 
     def motors_order_callback(self, motorsOrder: MotorsOrder):
 
         # Get car direction
-        if motorsOrder.right_rear_pwm > 50 and motorsOrder.left_rear_pwm > 50 :
+        if motorsOrder.right_rear_pwm > STOP and motorsOrder.left_rear_pwm > STOP :
             self.GO_FRONT = True
-        elif motorsOrder.right_rear_pwm < 50 and motorsOrder.left_rear_pwm < 50 :
+        elif motorsOrder.right_rear_pwm < STOP and motorsOrder.left_rear_pwm < STOP :
             self.GO_REAR = True
         else :
             self.STOPPED = True 
 
+        self.get_logger().info("Car stopped: " + self.STOPPED)
         self.get_logger().info("Car direction front: " + self.GO_FRONT)
-        self.get_logger().info("Car direction rear: " + self.GO_REAR)"""
+        self.get_logger().info("Car direction rear: " + self.GO_REAR)
 
     def us_callback(self, us: Ultrasonic):
 
