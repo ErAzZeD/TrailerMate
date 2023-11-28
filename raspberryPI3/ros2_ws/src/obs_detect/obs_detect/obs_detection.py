@@ -7,18 +7,19 @@ from interfaces.msg import MotorsOrder
 
 
 class ObstacleDetection(Node):
-    MINIMAL_DISTANCE = 50
-
-    GO_FRONT = False
-    GO_REAR = False
-    STOPPED = False
-
-    FRONT_OBSTACLE = False
-    REAR_OBSTACLE = False
 
 
     def __init__(self):
         super().__init__('obs_detection')
+
+        self.MINIMAL_DISTANCE = 50
+
+        self.GO_FRONT = False
+        self.GO_REAR = False
+        self.STOPPED = False
+
+        self.FRONT_OBSTACLE = False
+        self.REAR_OBSTACLE = False
 
         # Publishers
         # publish informations to StopCar topic
@@ -32,6 +33,7 @@ class ObstacleDetection(Node):
 
     def motors_order_callback(self, motorsOrder: MotorsOrder):
 
+        # Get car direction
         if motorsOrder.right_rear_pwm > 50 and motorsOrder.left_rear_pwm > 50 :
             self.GO_FRONT = True
         elif motorsOrder.right_rear_pwm < 50 and motorsOrder.left_rear_pwm < 50 :
@@ -39,6 +41,8 @@ class ObstacleDetection(Node):
         else :
             self.STOPPED = True
 
+        self.get_logger().info("Car direction front: " + self.GO_FRONT)
+        self.get_logger().info("Car direction rear: " + self.GO_REAR)
 
     def us_callback(self, us: Ultrasonic):
 
@@ -56,7 +60,7 @@ class ObstacleDetection(Node):
             self.REAR_OBSTACLE = False
 
         
-        # Get car direction
+        # Stop the car
         if self.GO_FRONT and self.FRONT_OBSTACLE :
             stop.stop_car_front = True
         elif self.GO_REAR and self.REAR_OBSTACLE : 
