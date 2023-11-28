@@ -7,6 +7,9 @@
 #define Te 0.1  // Motors data (right/left feedback) are periodically send with a period egals to 100ms.
 #define K 4.59  // Ki/Kp 
 
+static double ao;
+static double bo;
+
 /* Calculate the recurrence equation based on the compensator to move the car forward and backward
 *   RPM_order -> Desired Speed (RPM)
 *   PWM_order -> I(k+1)

@@ -1,7 +1,7 @@
 #include "../include/car_control/control_loop.h"
 
-float ao = (K*Te/2) + 1;
-float bo = (K*Te/2) - 1;
+ao = (K*Te/2) + 1;
+bo = (K*Te/2) - 1;
 
 /* Calculate the recurrence equation based on the compensator to move the car forward and backward
 *   RPM_order -> Desired Speed (RPM)
@@ -44,7 +44,6 @@ void compensator_recurrence(bool init, double RPM_order, bool reverse,double cur
     double Right_Error=0.0;
     
     if (reverse){   // => PWM : [50 -> 0] (reverse)
-
         // currentRightSpeed = -currentRightSpeed;
         // ...
         // Sortie right/leftRearPwmCmd = 50 - recurrence_eq 
