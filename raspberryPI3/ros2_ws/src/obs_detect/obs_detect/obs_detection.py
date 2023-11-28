@@ -69,9 +69,9 @@ class ObstacleDetection(Node):
 
         
         # Stop the car
-        if self.FRONT_OBSTACLE and self.GO_FRONT :
+        if self.FRONT_OBSTACLE :
             stop.stop_car_front = True
-        elif self.REAR_OBSTACLE and self.GO_REAR : 
+        elif self.REAR_OBSTACLE  : 
             stop.stop_car_rear = True
         else :
             stop.stop_car_front = False
