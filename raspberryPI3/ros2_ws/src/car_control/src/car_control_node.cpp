@@ -149,7 +149,7 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start || (frontObstacle && leftRearPwmCmd => STOP) || (rearObstacle && leftRearPwmCmd <= STOP)){    //Car stopped
+        if (!start || (frontObstacle && leftRearPwmCmd >= STOP) || (rearObstacle && leftRearPwmCmd <= STOP)){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
