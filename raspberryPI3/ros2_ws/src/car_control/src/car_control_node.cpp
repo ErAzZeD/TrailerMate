@@ -131,7 +131,7 @@ private:
     * This function is called when a message is published on the "/direction" topic
     * 
     */
-    void directionCallbackCallback(const interfaces::msg::Direction & car_direction){
+    void directionCallback(const interfaces::msg::Direction & car_direction){
         goFront = car_direction.car_direction_front;
         goRear = car_direction.car_direction_rear;
         stopped = car_direction.car_direction_stop;
