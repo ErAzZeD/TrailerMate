@@ -65,8 +65,8 @@ void compensator_recurrence(bool init, double RPM_order, bool reverse,double cur
     }
 
     if (reverse){   // => PWM : [50 -> 0] (reverse)
-        recurrence_equation(1, RPM_order, Right_Error, Right_Error_last, Right_PWM_order, Right_PWM_order_last, currentRightSpeed);
-        recurrence_equation(1, RPM_order, Left_Error, Left_Error_last, Left_PWM_order, Left_PWM_order_last, currentLeftSpeed);
+        recurrence_equation(0, RPM_order, Right_Error, Right_Error_last, Right_PWM_order, Right_PWM_order_last, currentRightSpeed);
+        recurrence_equation(0, RPM_order, Left_Error, Left_Error_last, Left_PWM_order, Left_PWM_order_last, currentLeftSpeed);
         
         rightRearPwmCmd = 50 - Right_PWM_order; 
         leftRearPwmCmd = 50 - Left_PWM_order;  
