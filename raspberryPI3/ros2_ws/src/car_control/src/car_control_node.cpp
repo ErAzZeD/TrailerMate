@@ -158,8 +158,8 @@ private:
 
             //Autonomous Mode
             } else if (mode==1){
-                RCLCPP_INFO(this->get_logger(), ao);
-                RCLCPP_INFO(this->get_logger(), eo);
+                RCLCPP_INFO(this->get_logger(), "ao = " , ao);
+                RCLCPP_INFO(this->get_logger(), "eo = ", eo);
                 RPM_order = 20.0;
                 reverse = 1;
                 compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
