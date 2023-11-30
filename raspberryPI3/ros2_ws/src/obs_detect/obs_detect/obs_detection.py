@@ -25,11 +25,11 @@ class ObstacleDetection(Node):
         # Publishers
         # publish informations to StopCar topic
         self.publish_stop_car = self.create_publisher(StopCar, 'stop_car', 10)
-        
+          
         # Subscribers
+        self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
         self.subscription_us = self.create_subscription(Ultrasonic, 'us_data', self.us_callback, 10)
 
-        self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
 
 
     def motors_order_callback(self, motorsOrder: MotorsOrder):
@@ -69,9 +69,9 @@ class ObstacleDetection(Node):
 
         
         # Stop the car
-        if self.FRONT_OBSTACLE and self.GO_FRONT :
+        if self.FRONT_OBSTACLE :
             stop.stop_car_front = True
-        elif self.REAR_OBSTACLE and self.GO_REAR : 
+        elif self.REAR_OBSTACLE : 
             stop.stop_car_rear = True
         else :
             stop.stop_car_front = False
