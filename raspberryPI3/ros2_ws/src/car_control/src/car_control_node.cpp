@@ -9,11 +9,11 @@
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/stop_car.hpp"
 #include "interfaces/msg/direction.hpp"
-
 #include "std_srvs/srv/empty.hpp"
 
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
+#include "../include/car_control/control_loop.h"
 #include "../include/car_control/car_control_node.h"
 
 using namespace std;
@@ -49,11 +49,9 @@ public:
 
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
         "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
-
-        subscription_direction_ = this->create_subscription<interfaces::msg::Direction>(
+        
+          subscription_direction_ = this->create_subscription<interfaces::msg::Direction>(
         "direction", 10, std::bind(&car_control::directionCallback, this, _1));
-
-        RCLCPP_INFO(this->get_logger(), "car_control_node TEST DU CALLBACK DE MOTOR ORDER");
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -81,6 +79,7 @@ private:
                 RCLCPP_INFO(this->get_logger(), "START");
             else 
                 RCLCPP_INFO(this->get_logger(), "STOP");
+
         }
         
 
@@ -105,6 +104,27 @@ private:
     }
 
 
+/* Update command from stop car [callback function]  :
+    *
+    * This function is called when a message is published on the "/stop_car" topic
+    * 
+    */
+    void directionCallback(const interfaces::msg::Direction & car_direction){
+        goFont = car_direction.car_direction_front;
+        goRear = car_direction.car_direction_rear;
+    }
+
+/* Update command from stop car [callback function]  :
+    *
+    * This function is called when a message is published on the "/stop_car" topic
+    * 
+    */
+    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+        frontObstacle = stopCar.stop_car_front;
+        rearObstacle = stopCar.stop_car_rear;
+    }
+
+
     /* Update currentAngle from motors feedback [callback function]  :
     *
     * This function is called when a message is published on the "/motors_feedback" topic
@@ -116,28 +136,7 @@ private:
         currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
-    /* Update command from stop car [callback function]  :
-    *
-    * This function is called when a message is published on the "/stop_car" topic
-    * 
-    */
-    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-        frontObstacle = stopCar.stop_car_front;
-        rearObstacle = stopCar.stop_car_rear;
-    }
-
-    /* Update command from direction [callback function]  :
-    *
-    * This function is called when a message is published on the "/direction" topic
-    * 
-    */
-    void directionCallbackCallback(const interfaces::msg::Direction & car_direction){
-        goFront = car_direction.car_direction_front;
-        goRear = car_direction.car_direction_rear;
-        stopped = car_direction.car_direction_stop;
-        if(goFront || goRear)
-         RCLCPP_INFO(this->get_logger(), "The car is moving");
-    }
+    
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -151,12 +150,14 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start || (frontObstacle && goFront) || (rearObstacle && goRear)){    //Car stopped
+        if (!start||(frontObstacle && goFront) || (rearObstacle && goRear)){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
 
+
         }else{ //Car started
+
             //Manual Mode
             if (mode==0){
                 
@@ -167,9 +168,14 @@ private:
 
             //Autonomous Mode
             } else if (mode==1){
-                
+                RPM_order = 20.0;
+                reverse = 0;
+                compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
+                steeringPwmCmd = 50;
+                reinit = 0;
             }  
         }
+
 
         //Send order to motors
         motorsOrder.left_rear_pwm = leftRearPwmCmd;
@@ -244,9 +250,9 @@ private:
     //Control loop variables
     float RPM_order;
     int reinit;
-
     //Motors feedback variables
     float currentAngle;
+
     float currentRightSpeed;
     float currentLeftSpeed;
 
@@ -254,11 +260,9 @@ private:
     bool frontObstacle;
     bool rearObstacle;
 
-    //Direction variables
+   //direction variables
     bool goFront;
     bool goRear;
-    bool stopped;
-
 
     //Manual Mode variables (with joystick control)
     bool reverse;
@@ -280,6 +284,8 @@ private:
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
     rclcpp::Subscription<interfaces::msg::StopCar>::SharedPtr subscription_stop_car_;
     rclcpp::Subscription<interfaces::msg::Direction>::SharedPtr subscription_direction_;
+    
+
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;
