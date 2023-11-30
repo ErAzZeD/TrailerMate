@@ -8,20 +8,20 @@ from interfaces.msg import MotorsOrder
 
 class ObstacleDetection(Node):
 
+        MINIMAL_DISTANCE = 50
+        STOP = 50
 
+        GO_FRONT = False
+        GO_REAR = False
+        STOPPED = False
+
+        FRONT_OBSTACLE = False
+        REAR_OBSTACLE = False
+    
     def __init__(self):
         super().__init__('obs_detection')
 
-        self.MINIMAL_DISTANCE = 50
-        self.STOP = 50
-
-        self.GO_FRONT = False
-        self.GO_REAR = False
-        self.STOPPED = False
-
-        self.FRONT_OBSTACLE = False
-        self.REAR_OBSTACLE = False
-
+        
         # Publishers
         # publish informations to StopCar topic
         self.publish_stop_car = self.create_publisher(StopCar, 'stop_car', 10)
