@@ -12,7 +12,8 @@
 *   Update of PWM_order is ~~ update of PWM_att
 */
 void attenuation_recurrence(double& PWM_order,double PWM_order_last,double& PWM_att_last){
-    PWM_order = eo * (PWM_order + PWM_order_last) - fo * PWM_att_last;
+    PWM_order = 0.1305 * (PWM_order + PWM_order_last) + 0.7389 * PWM_att_last;
+    //PWM_order = eo * (PWM_order + PWM_order_last) - fo * PWM_att_last;
     PWM_att_last=PWM_order;
 }
 /* Calculate the recurrence equation based on the compensator to move the car forward and backward
@@ -27,9 +28,8 @@ void recurrence_equation(bool attenuation, double RPM_order, double Error, doubl
     Error=RPM_order-currentSpeed; 
     Error=Error*0.9;
 
-    PWM_order = PWM_order_last + ao*Error + bo*Error_last;
-    //PWM_order = PWM_order_last + 1.2*Error + 0.8*Error_last;
-    //PWM_order = std::min(50,std::max(0,PWM_order));
+    PWM_order = PWM_order_last + 1.2295*Error - 0.7705*Error_last;
+    //PWM_order = PWM_order_last + ao*Error + bo*Error_last;
 
     Error_last=Error;
     if (PWM_order > 50.0) {PWM_order=50.0;}
