@@ -136,7 +136,30 @@ private:
         currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
+<<<<<<< HEAD
     
+=======
+    /* Update command from stop car [callback function]  :
+    *
+    * This function is called when a message is published on the "/stop_car" topic
+    * 
+    */
+    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+        frontObstacle = stopCar.stop_car_front;
+        rearObstacle = stopCar.stop_car_rear;
+    }
+
+    /* Update command from direction [callback function]  :
+    *
+    * This function is called when a message is published on the "/direction" topic
+    * 
+    */
+    void directionCallback(const interfaces::msg::Direction & car_direction){
+        goFront = car_direction.car_direction_front;
+        goRear = car_direction.car_direction_rear;
+        stopped = car_direction.car_direction_stop;
+    }
+>>>>>>> fb715721a8648652840400b9376c1c6216fc97d8
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -150,7 +173,11 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
+<<<<<<< HEAD
         if (!start||(frontObstacle && goFront) || (rearObstacle && goRear)){    //Car stopped
+=======
+        if (!start || (frontObstacle && leftRearPwmCmd >= STOP) || (rearObstacle && leftRearPwmCmd <= STOP)){    //Car stopped
+>>>>>>> fb715721a8648652840400b9376c1c6216fc97d8
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
