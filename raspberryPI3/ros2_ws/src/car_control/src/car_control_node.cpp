@@ -135,8 +135,6 @@ private:
         goFront = car_direction.car_direction_front;
         goRear = car_direction.car_direction_rear;
         stopped = car_direction.car_direction_stop;
-        if(goFront || goRear)
-         RCLCPP_INFO(this->get_logger(), "The car is moving");
     }
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
@@ -151,7 +149,7 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start || (frontObstacle && goFront) || (rearObstacle && goRear)){    //Car stopped
+        if (!start || (frontObstacle && leftRearPwmCmd => STOP) || (rearObstacle && leftRearPwmCmd <= STOP)){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
