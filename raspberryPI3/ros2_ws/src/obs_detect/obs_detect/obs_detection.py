@@ -7,26 +7,16 @@ from interfaces.msg import MotorsOrder
 
 
 class ObstacleDetection(Node):
-       MINIMAL_DISTANCE = 50
-       STOP = 50
+    MINIMAL_DISTANCE = 50
+    STOP = 50
 
-       GO_FRONT = False
-       GO_REAR = False
-       STOPPED = False
+    GO_FRONT = False
+    GO_REAR = False
+    STOPPED = False
 
-       FRONT_OBSTACLE = False
-       REAR_OBSTACLE = False
+    FRONT_OBSTACLE = False
+    REAR_OBSTACLE = False
 
-        MINIMAL_DISTANCE = 50
-        STOP = 50
-
-        GO_FRONT = False
-        GO_REAR = False
-        STOPPED = False
-
-        FRONT_OBSTACLE = False
-        REAR_OBSTACLE = False
-    
     def __init__(self):
         super().__init__('obs_detection')
 
@@ -34,11 +24,11 @@ class ObstacleDetection(Node):
         # Publishers
         # publish informations to StopCar topic
         self.publish_stop_car = self.create_publisher(StopCar, 'stop_car', 10)
-        
+          
         # Subscribers
+        self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
         self.subscription_us = self.create_subscription(Ultrasonic, 'us_data', self.us_callback, 10)
 
-        self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
 
 
     def motors_order_callback(self, motorsOrder: MotorsOrder):
@@ -64,7 +54,7 @@ class ObstacleDetection(Node):
     def us_callback(self, us: Ultrasonic):
 
         stop = StopCar()
-        
+
         # Get obstacle position
         if us.front_left < self.MINIMAL_DISTANCE or us.front_center < self.MINIMAL_DISTANCE or us.front_right < self.MINIMAL_DISTANCE :
             self.FRONT_OBSTACLE = True
@@ -76,22 +66,16 @@ class ObstacleDetection(Node):
         else :
             self.REAR_OBSTACLE = False
 
-        
+
         # Stop the car
-<<<<<<< HEAD
-        if self.GO_FRONT and self.FRONT_OBSTACLE :
+        if self.FRONT_OBSTACLE :
             stop.stop_car_front = True
-        elif self.GO_REAR and self.REAR_OBSTACLE : 
-=======
-        if self.FRONT_OBSTACLE and self.GO_FRONT :
-            stop.stop_car_front = True
-        elif self.REAR_OBSTACLE and self.GO_REAR : 
->>>>>>> 1715b466607ad8c270319cfc553ad8cd8e97e512
+        elif self.REAR_OBSTACLE :
             stop.stop_car_rear = True
         else :
             stop.stop_car_front = False
             stop.stop_car_rear = False
-        
+
 
         # Publish stop_car topic
         self.publish_stop_car.publish(stop)
