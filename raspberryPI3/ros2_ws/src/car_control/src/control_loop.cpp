@@ -1,9 +1,9 @@
 #include "../include/car_control/control_loop.h"
 
-double ao = (Kcomp*Te/2) + 1;
-double bo = (Kcomp*Te/2) - 1;
-double eo = Te / (Te + 2*To);
-double fo = (Te - 2*To) / (Te + 2*To);
+//double ao = (Kcomp*Te/2) + 1;
+//double bo = (Kcomp*Te/2) - 1;
+//double eo = Te / (Te + 2*To);
+//double fo = (Te - 2*To) / (Te + 2*To);
 
 /* Calculate the recurrence equation based on the first order attenuation filter to avoid the wheels losing grip
 *   PWM_order -> Output of compensator(k+1)
@@ -71,8 +71,8 @@ void compensator_recurrence(bool init, double RPM_order, bool reverse,double cur
         leftRearPwmCmd = 50 - Left_PWM_order;  
 
     } else{     // => PWM : [50 -> 100] (forward)
-        recurrence_equation(1, RPM_order, Right_Error, Right_Error_last, Right_PWM_order, Right_PWM_order_last, currentRightSpeed);
-        recurrence_equation(1, RPM_order, Left_Error, Left_Error_last, Left_PWM_order, Left_PWM_order_last, currentLeftSpeed);
+        recurrence_equation(0, RPM_order, Right_Error, Right_Error_last, Right_PWM_order, Right_PWM_order_last, currentRightSpeed);
+        recurrence_equation(0, RPM_order, Left_Error, Left_Error_last, Left_PWM_order, Left_PWM_order_last, currentLeftSpeed);
         
         rightRearPwmCmd = Right_PWM_order + 50; 
         leftRearPwmCmd = Left_PWM_order + 50;    

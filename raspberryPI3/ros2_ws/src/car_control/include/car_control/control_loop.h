@@ -8,6 +8,11 @@
 #define Kcomp 4.59  // Ki/Kp 
 #define To 0.333// Time constant of first order filter
 
+#define ao 1.2295
+#define bo -0.7705
+#define eo 0.1305
+#define fo −0.7389
+
 // Calculate the recurrence equation based on the first order attenuation filter to avoid the wheels losing grip
 void attenuation_recurrence(double& PWM_order,double PWM_order_last,double& PWM_att_last);
 
