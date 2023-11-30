@@ -7,6 +7,7 @@ from interfaces.msg import MotorsOrder
 
 
 class ObstacleDetection(Node):
+
     MINIMAL_DISTANCE = 50
     STOP = 50
 
@@ -24,7 +25,7 @@ class ObstacleDetection(Node):
         # Publishers
         # publish informations to StopCar topic
         self.publish_stop_car = self.create_publisher(StopCar, 'stop_car', 10)
-          
+
         # Subscribers
         self.subscription_motors_order = self.create_subscription(MotorsOrder, 'motors_order', self.motors_order_callback, 10)
         self.subscription_us = self.create_subscription(Ultrasonic, 'us_data', self.us_callback, 10)
@@ -68,7 +69,7 @@ class ObstacleDetection(Node):
 
 
         # Stop the car
-        if self.FRONT_OBSTACLE :
+        if self.FRONT_OBSTACLE  :
             stop.stop_car_front = True
         elif self.REAR_OBSTACLE :
             stop.stop_car_rear = True
