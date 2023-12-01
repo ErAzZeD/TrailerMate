@@ -9,7 +9,8 @@
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/stop_car.hpp"
 #include "interfaces/msg/direction.hpp"
-//#include "std_srvs/srv/empty.hpp"
+
+#include "std_srvs/srv/empty.hpp"
 
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
@@ -261,6 +262,7 @@ private:
    //direction variables
     bool goFront;
     bool goRear;
+    bool stopped;
 
     //Manual Mode variables (with joystick control)
     bool reverse;
