@@ -14,7 +14,6 @@
 
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
-#include "../include/car_control/control_loop.h"
 #include "../include/car_control/car_control_node.h"
 
 using namespace std;
@@ -112,8 +111,6 @@ private:
     */
     void motorsFeedbackCallback(const interfaces::msg::MotorsFeedback & motorsFeedback){
         currentAngle = motorsFeedback.steering_angle;
-        currentLeftSpeed = motorsFeedback.left_rear_speed;
-        currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
     /* Update command from stop car [callback function]  :
@@ -154,7 +151,6 @@ private:
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
 
-
         }else{ //Car started
 
             //Manual Mode
@@ -163,15 +159,10 @@ private:
                 manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
                 steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
-                reinit = 1;
 
             //Autonomous Mode
             } else if (mode==1){
-                /* RPM_order = 20.0;
-                reverse = 0;
-                compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
-                steeringPwmCmd = 50;
-                reinit = 0; */
+                //...
             }  
         }
 
@@ -246,14 +237,8 @@ private:
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
 
-    //Control loop variables
-    float RPM_order;
-    int reinit;
     //Motors feedback variables
     float currentAngle;
-
-    float currentRightSpeed;
-    float currentLeftSpeed;
 
     //Obstacles variables
     bool frontObstacle;
@@ -284,8 +269,6 @@ private:
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
     rclcpp::Subscription<interfaces::msg::StopCar>::SharedPtr subscription_stop_car_;
     rclcpp::Subscription<interfaces::msg::Direction>::SharedPtr subscription_direction_;
-    
-
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;
