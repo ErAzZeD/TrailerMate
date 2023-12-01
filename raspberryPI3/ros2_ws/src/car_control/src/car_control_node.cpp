@@ -153,7 +153,7 @@ private:
 
         }else{ //Car started
 
-            if ((frontObstacle && !goFront) || (rearObstacle && !goRear)) {
+            //if ((frontObstacle && !goFront) || (rearObstacle && !goRear)) {
                 //Manual Mode
                 if (mode==0){
                     
@@ -165,12 +165,12 @@ private:
                 } else if (mode==1){
                     //...
                 }  
-            }
+            /*}
             else {
                 leftRearPwmCmd = STOP;
                 rightRearPwmCmd = STOP;
                 steeringPwmCmd = STOP;
-            }
+            }*/
         }
 
 
