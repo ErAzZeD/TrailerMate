@@ -122,7 +122,7 @@ private:
     */
     void stopCarCallback(const interfaces::msg::StopCar & stopCar){
         frontObstacle = stopCar.stop_car_front;
-        rearObstacle = stopCar.stop_car_rear;
+        rearObstacle = stopCar.stop_car_rear
     }
 
     /* Update command from direction [callback function]  :
