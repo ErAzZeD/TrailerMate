@@ -50,8 +50,9 @@ public:
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
         "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
         
-          subscription_direction_ = this->create_subscription<interfaces::msg::Direction>(
+        subscription_direction_ = this->create_subscription<interfaces::msg::Direction>(
         "direction", 10, std::bind(&car_control::directionCallback, this, _1));
+
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -103,28 +104,6 @@ private:
         }
     }
 
-
-/* Update command from stop car [callback function]  :
-    *
-    * This function is called when a message is published on the "/stop_car" topic
-    * 
-    */
-    void directionCallback(const interfaces::msg::Direction & car_direction){
-        goFont = car_direction.car_direction_front;
-        goRear = car_direction.car_direction_rear;
-    }
-
-/* Update command from stop car [callback function]  :
-    *
-    * This function is called when a message is published on the "/stop_car" topic
-    * 
-    */
-    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-        frontObstacle = stopCar.stop_car_front;
-        rearObstacle = stopCar.stop_car_rear;
-    }
-
-
     /* Update currentAngle from motors feedback [callback function]  :
     *
     * This function is called when a message is published on the "/motors_feedback" topic
@@ -136,9 +115,6 @@ private:
         currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
-<<<<<<< HEAD
-    
-=======
     /* Update command from stop car [callback function]  :
     *
     * This function is called when a message is published on the "/stop_car" topic
@@ -159,7 +135,6 @@ private:
         goRear = car_direction.car_direction_rear;
         stopped = car_direction.car_direction_stop;
     }
->>>>>>> fb715721a8648652840400b9376c1c6216fc97d8
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -173,11 +148,7 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-<<<<<<< HEAD
-        if (!start||(frontObstacle && goFront) || (rearObstacle && goRear)){    //Car stopped
-=======
-        if (!start || (frontObstacle && leftRearPwmCmd >= STOP) || (rearObstacle && leftRearPwmCmd <= STOP)){    //Car stopped
->>>>>>> fb715721a8648652840400b9376c1c6216fc97d8
+        if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
@@ -186,7 +157,7 @@ private:
         }else{ //Car started
 
             //Manual Mode
-            if (mode==0){
+            if (mode==0 && ((frontObstacle && !goFront) || (rearObstacle && !goRear))){
                 
                 manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
