@@ -167,11 +167,11 @@ private:
 
             //Autonomous Mode
             } else if (mode==1){
-                RPM_order = 20.0;
+                /* RPM_order = 20.0;
                 reverse = 0;
                 compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
                 steeringPwmCmd = 50;
-                reinit = 0;
+                reinit = 0; */
             }  
         }
 
