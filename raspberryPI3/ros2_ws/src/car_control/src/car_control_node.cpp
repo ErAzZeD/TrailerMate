@@ -141,7 +141,7 @@ private:
             //Manual Mode
             if (mode==0){
                 RCLCPP_INFO(this->get_logger(), "Test1 de la condition");
-                if ((frontObstacle && reverse) || (rearObstacle && !reverse)) {
+                if ((!frontObstacle && reverse) || (!rearObstacle && !reverse) || (!frontObstacle && !rearObstacle)) {
                     RCLCPP_INFO(this->get_logger(), "Test2 de la condition");
 
                     manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
