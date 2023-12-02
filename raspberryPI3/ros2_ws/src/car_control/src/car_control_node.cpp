@@ -8,7 +8,6 @@
 #include "interfaces/msg/steering_calibration.hpp"
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/stop_car.hpp"
-#include "interfaces/msg/direction.hpp"
 
 #include "std_srvs/srv/empty.hpp"
 
@@ -49,9 +48,6 @@ public:
 
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
         "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
-        
-        subscription_direction_ = this->create_subscription<interfaces::msg::Direction>(
-        "direction", 10, std::bind(&car_control::directionCallback, this, _1));
 
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
@@ -121,17 +117,6 @@ private:
     void stopCarCallback(const interfaces::msg::StopCar & stopCar){
         frontObstacle = stopCar.stop_car_front;
         rearObstacle = stopCar.stop_car_rear;
-    }
-
-    /* Update command from direction [callback function]  :
-    *
-    * This function is called when a message is published on the "/direction" topic
-    * 
-    */
-    void directionCallback(const interfaces::msg::Direction & car_direction){
-        goFront = car_direction.car_direction_front;
-        goRear = car_direction.car_direction_rear;
-        stopped = car_direction.car_direction_stop;
     }
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
@@ -253,11 +238,6 @@ private:
     bool frontObstacle;
     bool rearObstacle;
 
-   //direction variables
-    bool goFront;
-    bool goRear;
-    bool stopped;
-
     //Manual Mode variables (with joystick control)
     bool reverse;
     float requestedThrottle;
@@ -277,7 +257,6 @@ private:
     rclcpp::Subscription<interfaces::msg::MotorsFeedback>::SharedPtr subscription_motors_feedback_;
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
     rclcpp::Subscription<interfaces::msg::StopCar>::SharedPtr subscription_stop_car_;
-    rclcpp::Subscription<interfaces::msg::Direction>::SharedPtr subscription_direction_;
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;
