@@ -138,26 +138,25 @@ private:
 
         }else{ //Car started
 
-            //if ((!frontObstacle && goFront) || (!rearObstacle && goRear)) {
-                //Manual Mode
-                if (mode==0){
-                    
-                    if ((frontObstacle && reverse) || (rearObstacle && !reverse)) {
+            //Manual Mode
+            if (mode==0){
+                
+                if ((frontObstacle && reverse) || (rearObstacle && !reverse)) {
 
-                        manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
+                    manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
-                    }
-                    else {
-                        leftRearPwmCmd = STOP;
-                        rightRearPwmCmd = STOP;
-                        steeringPwmCmd = STOP;
-                    }
-                    steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
+                }
+                else {
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
+                }
+                steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
 
-                //Autonomous Mode
-                } else if (mode==1){
-                    //...
-                }  
+            //Autonomous Mode
+            } else if (mode==1){
+                //...
+            }  
         }
 
 
