@@ -10,7 +10,11 @@ msg/MotorsOrder.idl
 msg/MotorsOrder.msg
 msg/SteeringCalibration.idl
 msg/SteeringCalibration.msg
+msg/StopCar.idl
+msg/StopCar.msg
 msg/SystemCheck.idl
 msg/SystemCheck.msg
+msg/TrailerAngle.idl
+msg/TrailerAngle.msg
 msg/Ultrasonic.idl
 msg/Ultrasonic.msg

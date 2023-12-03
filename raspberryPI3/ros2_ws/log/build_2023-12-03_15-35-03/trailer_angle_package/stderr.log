@@ -1,0 +1,7 @@
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+  File "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package/trailer_angle_node.py", line 9
+    ANGLE_ZERO = 0 //Value for which zero is set
+                           ^^^
+SyntaxError: invalid syntax
+

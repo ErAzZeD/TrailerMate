@@ -59,6 +59,12 @@ def generate_launch_description():
         emulate_tty=True
     )
 
+    obs_detection = Node(
+        package="trailer_angle_package",
+        executable="trailer_angle_node",
+        emulate_tty=True
+    )
+
 
     ld.add_action(joystick_node)
     ld.add_action(joystick_to_cmd_node)

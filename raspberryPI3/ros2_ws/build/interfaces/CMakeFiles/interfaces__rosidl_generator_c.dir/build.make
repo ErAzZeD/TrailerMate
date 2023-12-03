@@ -90,6 +90,8 @@ rosidl_generator_c/interfaces/msg/joystick_order.h: rosidl_adapter/interfaces/ms
 rosidl_generator_c/interfaces/msg/joystick_order.h: rosidl_adapter/interfaces/msg/Ultrasonic.idl
 rosidl_generator_c/interfaces/msg/joystick_order.h: rosidl_adapter/interfaces/msg/Gnss.idl
 rosidl_generator_c/interfaces/msg/joystick_order.h: rosidl_adapter/interfaces/msg/SystemCheck.idl
+rosidl_generator_c/interfaces/msg/joystick_order.h: rosidl_adapter/interfaces/msg/StopCar.idl
+rosidl_generator_c/interfaces/msg/joystick_order.h: rosidl_adapter/interfaces/msg/TrailerAngle.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C code for ROS interfaces"
 	/usr/bin/python3.10 /opt/ros/humble/share/rosidl_generator_c/cmake/../../../lib/rosidl_generator_c/rosidl_generator_c --generator-arguments-file /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c__arguments.json
 
@@ -186,6 +188,30 @@ rosidl_generator_c/interfaces/msg/detail/system_check__struct.h: rosidl_generato
 rosidl_generator_c/interfaces/msg/detail/system_check__type_support.h: rosidl_generator_c/interfaces/msg/joystick_order.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/system_check__type_support.h
 
+rosidl_generator_c/interfaces/msg/stop_car.h: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/stop_car.h
+
+rosidl_generator_c/interfaces/msg/detail/stop_car__functions.h: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/stop_car__functions.h
+
+rosidl_generator_c/interfaces/msg/detail/stop_car__struct.h: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/stop_car__struct.h
+
+rosidl_generator_c/interfaces/msg/detail/stop_car__type_support.h: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/stop_car__type_support.h
+
+rosidl_generator_c/interfaces/msg/trailer_angle.h: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/trailer_angle.h
+
+rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.h: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.h
+
+rosidl_generator_c/interfaces/msg/detail/trailer_angle__struct.h: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/trailer_angle__struct.h
+
+rosidl_generator_c/interfaces/msg/detail/trailer_angle__type_support.h: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/trailer_angle__type_support.h
+
 rosidl_generator_c/interfaces/msg/detail/joystick_order__functions.c: rosidl_generator_c/interfaces/msg/joystick_order.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/joystick_order__functions.c
 
@@ -209,6 +235,12 @@ rosidl_generator_c/interfaces/msg/detail/gnss__functions.c: rosidl_generator_c/i
 
 rosidl_generator_c/interfaces/msg/detail/system_check__functions.c: rosidl_generator_c/interfaces/msg/joystick_order.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/system_check__functions.c
+
+rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c
+
+rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c: rosidl_generator_c/interfaces/msg/joystick_order.h
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c
 
 CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/joystick_order__functions.c.o: CMakeFiles/interfaces__rosidl_generator_c.dir/flags.make
 CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/joystick_order__functions.c.o: rosidl_generator_c/interfaces/msg/detail/joystick_order__functions.c
@@ -322,6 +354,34 @@ CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/system_check__functions.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/system_check__functions.c -o CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/system_check__functions.c.s
 
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.o: CMakeFiles/interfaces__rosidl_generator_c.dir/flags.make
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.o: rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.o: CMakeFiles/interfaces__rosidl_generator_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.o -MF CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.o.d -o CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.o -c /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c
+
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c > CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.i
+
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c -o CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.s
+
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.o: CMakeFiles/interfaces__rosidl_generator_c.dir/flags.make
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.o: rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.o: CMakeFiles/interfaces__rosidl_generator_c.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.o -MF CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.o.d -o CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.o -c /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c
+
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c > CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.i
+
+CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c -o CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.s
+
 # Object files for target interfaces__rosidl_generator_c
 interfaces__rosidl_generator_c_OBJECTS = \
 "CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/joystick_order__functions.c.o" \
@@ -331,7 +391,9 @@ interfaces__rosidl_generator_c_OBJECTS = \
 "CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/steering_calibration__functions.c.o" \
 "CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/ultrasonic__functions.c.o" \
 "CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/gnss__functions.c.o" \
-"CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/system_check__functions.c.o"
+"CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/system_check__functions.c.o" \
+"CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.o" \
+"CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.o"
 
 # External object files for target interfaces__rosidl_generator_c
 interfaces__rosidl_generator_c_EXTERNAL_OBJECTS =
@@ -344,11 +406,13 @@ libinterfaces__rosidl_generator_c.so: CMakeFiles/interfaces__rosidl_generator_c.
 libinterfaces__rosidl_generator_c.so: CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/ultrasonic__functions.c.o
 libinterfaces__rosidl_generator_c.so: CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/gnss__functions.c.o
 libinterfaces__rosidl_generator_c.so: CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/system_check__functions.c.o
+libinterfaces__rosidl_generator_c.so: CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c.o
+libinterfaces__rosidl_generator_c.so: CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c.o
 libinterfaces__rosidl_generator_c.so: CMakeFiles/interfaces__rosidl_generator_c.dir/build.make
 libinterfaces__rosidl_generator_c.so: /opt/ros/humble/lib/librosidl_runtime_c.so
 libinterfaces__rosidl_generator_c.so: /opt/ros/humble/lib/librcutils.so
 libinterfaces__rosidl_generator_c.so: CMakeFiles/interfaces__rosidl_generator_c.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking C shared library libinterfaces__rosidl_generator_c.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking C shared library libinterfaces__rosidl_generator_c.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/interfaces__rosidl_generator_c.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -383,10 +447,18 @@ CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfa
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/steering_calibration__functions.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/steering_calibration__struct.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/steering_calibration__type_support.h
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/stop_car__functions.c
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/stop_car__functions.h
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/stop_car__struct.h
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/stop_car__type_support.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/system_check__functions.c
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/system_check__functions.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/system_check__struct.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/system_check__type_support.h
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.c
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/trailer_angle__functions.h
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/trailer_angle__struct.h
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/trailer_angle__type_support.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/ultrasonic__functions.c
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/ultrasonic__functions.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/detail/ultrasonic__struct.h
@@ -397,7 +469,9 @@ CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfa
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/motors_feedback.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/motors_order.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/steering_calibration.h
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/stop_car.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/system_check.h
+CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/trailer_angle.h
 CMakeFiles/interfaces__rosidl_generator_c.dir/depend: rosidl_generator_c/interfaces/msg/ultrasonic.h
 	cd /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles/interfaces__rosidl_generator_c.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/interfaces__rosidl_generator_c.dir/depend

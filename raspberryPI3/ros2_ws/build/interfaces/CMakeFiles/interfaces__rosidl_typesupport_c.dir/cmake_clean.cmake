@@ -11,8 +11,12 @@ file(REMOVE_RECURSE
   "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/motors_order__type_support.cpp.o.d"
   "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/steering_calibration__type_support.cpp.o"
   "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/steering_calibration__type_support.cpp.o.d"
+  "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/stop_car__type_support.cpp.o"
+  "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/stop_car__type_support.cpp.o.d"
   "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/system_check__type_support.cpp.o"
   "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/system_check__type_support.cpp.o.d"
+  "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/trailer_angle__type_support.cpp.o"
+  "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/trailer_angle__type_support.cpp.o.d"
   "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/ultrasonic__type_support.cpp.o"
   "CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/ultrasonic__type_support.cpp.o.d"
   "libinterfaces__rosidl_typesupport_c.pdb"
@@ -23,7 +27,9 @@ file(REMOVE_RECURSE
   "rosidl_typesupport_c/interfaces/msg/motors_feedback__type_support.cpp"
   "rosidl_typesupport_c/interfaces/msg/motors_order__type_support.cpp"
   "rosidl_typesupport_c/interfaces/msg/steering_calibration__type_support.cpp"
+  "rosidl_typesupport_c/interfaces/msg/stop_car__type_support.cpp"
   "rosidl_typesupport_c/interfaces/msg/system_check__type_support.cpp"
+  "rosidl_typesupport_c/interfaces/msg/trailer_angle__type_support.cpp"
   "rosidl_typesupport_c/interfaces/msg/ultrasonic__type_support.cpp"
 )
 
