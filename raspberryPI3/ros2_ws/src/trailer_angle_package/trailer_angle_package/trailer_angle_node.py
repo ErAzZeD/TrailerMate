@@ -10,9 +10,8 @@ class TrailerAngle(Node):
     ANGLE_ZERO = 0 # Value for which zero is set
     
     
-    
     def __init__(self):
-        super().__init__('trailer_angle_package')
+        super().__init__('trailer_angle_node')
 
         # Publishers
         # publish informations to TrailerAngleDegree topic
