@@ -37,7 +37,6 @@ class ObstacleDetection(Node):
         else :
             stop.stop_car_rear = False
 
-        # Publish stop_car topic
         self.publish_stop_car.publish(stop)
 
 
