@@ -13,7 +13,6 @@
 
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
-#include "../include/car_control/control_loop.h"
 #include "../include/car_control/car_control_node.h"
 
 using namespace std;
@@ -110,8 +109,6 @@ private:
     void stopCarCallback(const interfaces::msg::StopCar & stopCar){
         frontObstacle = stopCar.stop_car_front;
         rearObstacle = stopCar.stop_car_rear;
-        if(frontObstacle || rearObstacle)
-         RCLCPP_INFO(this->get_logger(), "obstacle detected car stoped");
     }
 
 
