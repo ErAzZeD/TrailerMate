@@ -100,18 +100,6 @@ private:
         }
     }
 
-
-/* Update command from stop car [callback function]  :
-    *
-    * This function is called when a message is published on the "/stop_car" topic
-    * 
-    */
-    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-        frontObstacle = stopCar.stop_car_front;
-        rearObstacle = stopCar.stop_car_rear;
-    }
-
-
     /* Update currentAngle from motors feedback [callback function]  :
     *
     * This function is called when a message is published on the "/motors_feedback" topic
@@ -146,7 +134,7 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start||frontObstacle==true ||rearObstacle==true){    //Car stopped
+        if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
