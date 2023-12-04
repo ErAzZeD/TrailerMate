@@ -13,7 +13,6 @@ class ObstacleDetection(Node):
     def __init__(self):
         super().__init__('obs_detection')
 
-
         # Publishers
         # publish informations to StopCar topic
         self.publish_stop_car = self.create_publisher(StopCar, 'stop_car', 10)
