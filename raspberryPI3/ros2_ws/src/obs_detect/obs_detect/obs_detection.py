@@ -2,44 +2,42 @@ import rclpy
 from rclpy.node import Node
 
 from interfaces.msg import Ultrasonic
-from interfaces.msg import MotorsOrder
 from interfaces.msg import StopCar
+from interfaces.msg import MotorsOrder
 
 
 class ObstacleDetection(Node):
-    MINIMAL_DISTANCE = 40
+
+    MINIMAL_DISTANCE = 50
 
     def __init__(self):
         super().__init__('obs_detection')
 
+
         # Publishers
         # publish informations to StopCar topic
         self.publish_stop_car = self.create_publisher(StopCar, 'stop_car', 10)
-        # publish on motors_order to stop the car
-        
-        # ICI
+
         # Subscribers
         self.subscription_us = self.create_subscription(Ultrasonic, 'us_data', self.us_callback, 10)
 
 
-    def us_callback(self, msg: Ultrasonic):
+    def us_callback(self, us: Ultrasonic):
 
         stop = StopCar()
 
-        if msg.front_left < self.MINIMAL_DISTANCE \
-                or msg.front_center < self.MINIMAL_DISTANCE \
-                or msg.front_right < self.MINIMAL_DISTANCE:
+        # Get obstacle position
+        if us.front_left < self.MINIMAL_DISTANCE or us.front_center < self.MINIMAL_DISTANCE or us.front_right < self.MINIMAL_DISTANCE :
             stop.stop_car_front = True
         else :
             stop.stop_car_front = False
 
-        if msg.rear_left < self.MINIMAL_DISTANCE \
-               or msg.rear_center < self.MINIMAL_DISTANCE \
-               or msg.rear_right < self.MINIMAL_DISTANCE:
+        if us.rear_left < self.MINIMAL_DISTANCE or us.rear_center < self.MINIMAL_DISTANCE or us.rear_right < self.MINIMAL_DISTANCE :
             stop.stop_car_rear = True
         else :
             stop.stop_car_rear = False
 
+        # Publish stop_car topic
         self.publish_stop_car.publish(stop)
 
 

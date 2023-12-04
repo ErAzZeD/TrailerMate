@@ -1,0 +1,7 @@
+gmake[2]: Warning: File '/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/car_control/src/steeringCmd.cpp' has modification time 22306174 s in the future
+[01m[K/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/car_control/src/car_control_node.cpp:266:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kcout[m[K’ does not name a type
+  266 |     [01;31m[Kcout[m[K << "test 2" << endl;
+      |     [01;31m[K^~~~[m[K
+gmake[2]: *** [CMakeFiles/car_control_node.dir/build.make:76: CMakeFiles/car_control_node.dir/src/car_control_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/car_control_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

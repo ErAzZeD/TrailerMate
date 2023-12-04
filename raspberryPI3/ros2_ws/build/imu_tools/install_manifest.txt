@@ -1,0 +1,15 @@
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/ament_index/resource_index/package_run_dependencies/imu_tools
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/ament_index/resource_index/parent_prefix_path/imu_tools
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/environment/ament_prefix_path.sh
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/environment/ament_prefix_path.dsv
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/environment/path.sh
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/environment/path.dsv
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/local_setup.bash
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/local_setup.sh
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/local_setup.zsh
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/local_setup.dsv
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/package.dsv
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/ament_index/resource_index/packages/imu_tools
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/cmake/imu_toolsConfig.cmake
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/cmake/imu_toolsConfig-version.cmake
+/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools/share/imu_tools/package.xml

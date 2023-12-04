@@ -1,0 +1,71 @@
+[0.225s] Invoking command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check': AMENT_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/system_check -DCMAKE_INSTALL_PREFIX=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check
+[0.295s] -- The C compiler identification is GNU 11.4.0
+[0.378s] -- The CXX compiler identification is GNU 11.4.0
+[0.387s] -- Detecting C compiler ABI info
+[0.469s] -- Detecting C compiler ABI info - done
+[0.482s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.482s] -- Detecting C compile features
+[0.483s] -- Detecting C compile features - done
+[0.487s] -- Detecting CXX compiler ABI info
+[0.587s] -- Detecting CXX compiler ABI info - done
+[0.600s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.600s] -- Detecting CXX compile features
+[0.601s] -- Detecting CXX compile features - done
+[0.604s] -- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.870s] -- Found Python3: /usr/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+[1.000s] -- Found rclcpp: 16.0.6 (/opt/ros/humble/share/rclcpp/cmake)
+[1.060s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.067s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.078s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[1.099s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.129s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.239s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[1.242s] -- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.372s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[1.401s] -- Found FastRTPS: /opt/ros/humble/include  
+[1.460s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.471s] -- Looking for pthread.h
+[1.554s] -- Looking for pthread.h - found
+[1.555s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.651s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[1.652s] -- Found Threads: TRUE  
+[1.917s] -- Found sensor_msgs: 4.2.3 (/opt/ros/humble/share/sensor_msgs/cmake)
+[2.132s] -- Found interfaces: 0.0.0 (/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/share/interfaces/cmake)
+[2.161s] -- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[2.279s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.280s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/system_check/include>
+[2.280s] -- Configured cppcheck exclude dirs and/or files: 
+[2.280s] -- Added test 'lint_cmake' to check CMake code style
+[2.282s] -- Added test 'uncrustify' to check C / C++ code style
+[2.282s] -- Configured uncrustify additional arguments: 
+[2.282s] -- Added test 'xmllint' to check XML markup files
+[2.284s] -- Configuring done
+[2.299s] -- Generating done
+[2.301s] -- Build files have been written to: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check
+[2.316s] Invoked command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check' returned '0': AMENT_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/system_check -DCMAKE_INSTALL_PREFIX=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check
+[2.317s] Invoking command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check': AMENT_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check -- -j16 -l16
+[2.375s] [ 50%] [32mBuilding CXX object CMakeFiles/system_check_node.dir/src/system_check_node.cpp.o[0m
+[25.272s] [100%] [32m[1mLinking CXX executable system_check_node[0m
+[26.202s] [100%] Built target system_check_node
+[26.209s] Invoked command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check' returned '0': AMENT_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check -- -j16 -l16
+[26.228s] Invoking command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check': AMENT_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check
+[26.234s] -- Install configuration: ""
+[26.234s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/lib/system_check/system_check_node
+[26.247s] -- Set runtime path of "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/lib/system_check/system_check_node" to ""
+[26.247s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/ament_index/resource_index/package_run_dependencies/system_check
+[26.247s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/ament_index/resource_index/parent_prefix_path/system_check
+[26.247s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/environment/ament_prefix_path.sh
+[26.247s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/environment/ament_prefix_path.dsv
+[26.247s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/environment/path.sh
+[26.247s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/environment/path.dsv
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/local_setup.bash
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/local_setup.sh
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/local_setup.zsh
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/local_setup.dsv
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/package.dsv
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/ament_index/resource_index/packages/system_check
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/cmake/ament_cmake_export_include_directories-extras.cmake
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/cmake/system_checkConfig.cmake
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/cmake/system_checkConfig-version.cmake
+[26.248s] -- Installing: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check/share/system_check/package.xml
+[26.250s] Invoked command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check' returned '0': AMENT_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/system_check

@@ -1,0 +1,418 @@
+[0.000000] (-) TimerEvent: {}
+[0.001776] (-) JobUnselected: {'identifier': 'can'}
+[0.006864] (-) JobUnselected: {'identifier': 'carla_msgs'}
+[0.007343] (-) JobUnselected: {'identifier': 'geicar_start'}
+[0.007652] (-) JobUnselected: {'identifier': 'geicar_start_jetson'}
+[0.008329] (-) JobUnselected: {'identifier': 'imu_complementary_filter'}
+[0.008747] (-) JobUnselected: {'identifier': 'imu_filter_madgwick'}
+[0.009032] (-) JobUnselected: {'identifier': 'imu_tools'}
+[0.009261] (-) JobUnselected: {'identifier': 'interfaces'}
+[0.009493] (-) JobUnselected: {'identifier': 'interfaces'}
+[0.009722] (-) JobUnselected: {'identifier': 'joystick'}
+[0.009945] (-) JobUnselected: {'identifier': 'obs_detect'}
+[0.010169] (-) JobUnselected: {'identifier': 'rplidar_ros'}
+[0.010391] (-) JobUnselected: {'identifier': 'rviz_imu_plugin'}
+[0.010613] (-) JobUnselected: {'identifier': 'simulation'}
+[0.010841] (-) JobUnselected: {'identifier': 'system_check'}
+[0.011065] (-) JobUnselected: {'identifier': 'system_check_ack'}
+[0.011287] (-) JobUnselected: {'identifier': 'usb_cam'}
+[0.011573] (car_control) JobQueued: {'identifier': 'car_control', 'dependencies': OrderedDict([('interfaces', '/home/pi/TrailerMate/install/interfaces')])}
+[0.011881] (car_control) JobStarted: {'identifier': 'car_control'}
+[0.095284] (-) TimerEvent: {}
+[0.157465] (car_control) JobProgress: {'identifier': 'car_control', 'progress': 'cmake'}
+[0.159638] (car_control) Command: {'cmd': ['/usr/bin/cmake', '/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/car_control', '-DCMAKE_INSTALL_PREFIX=/home/pi/TrailerMate/install/car_control'], 'cwd': '/home/pi/TrailerMate/build/car_control', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'pi'), ('SSH_CLIENT', '10.1.5.172 60106 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/pi/ros2_ws/install/rviz_imu_plugin/lib:/home/pi/ros2_ws/install/interfaces/lib:/home/pi/ros2_ws/install/imu_filter_madgwick/lib:/home/pi/ros2_ws/install/carla_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/pi'), ('OLDPWD', '/home/pi/ros2_ws'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/pi/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'pi'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/home/pi/ros2_ws/install/geicar_start:/home/pi/ros2_ws/install/system_check:/home/pi/ros2_ws/install/simulation:/home/pi/ros2_ws/install/imu_tools:/home/pi/ros2_ws/install/rviz_imu_plugin:/home/pi/ros2_ws/install/obs_detect:/home/pi/ros2_ws/install/joystick:/home/pi/ros2_ws/install/car_control:/home/pi/ros2_ws/install/can:/home/pi/ros2_ws/install/interfaces:/home/pi/ros2_ws/install/imu_filter_madgwick:/home/pi/ros2_ws/install/imu_complementary_filter:/home/pi/ros2_ws/install/carla_msgs:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/pi/TrailerMate/build/car_control'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '10.1.5.172 60106 10.105.1.166 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/pi/ros2_ws/install/obs_detect/lib/python3.10/site-packages:/home/pi/ros2_ws/install/my_package/lib/python3.10/site-packages:/home/pi/ros2_ws/install/joystick/local/lib/python3.10/dist-packages:/home/pi/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:/home/pi/ros2_ws/install/carla_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/pi/ros2_ws/install/geicar_start:/home/pi/ros2_ws/install/system_check:/home/pi/ros2_ws/install/simulation:/home/pi/ros2_ws/install/imu_tools:/home/pi/ros2_ws/install/rviz_imu_plugin:/home/pi/ros2_ws/install/joystick:/home/pi/ros2_ws/install/car_control:/home/pi/ros2_ws/install/can:/home/pi/ros2_ws/install/interfaces:/home/pi/ros2_ws/install/imu_filter_madgwick:/home/pi/ros2_ws/install/imu_complementary_filter:/home/pi/ros2_ws/install/carla_msgs:/home/pi/ros2_ws/install/obs_detect:/opt/ros/humble')]), 'shell': False}
+[0.195763] (-) TimerEvent: {}
+[0.297334] (-) TimerEvent: {}
+[0.398131] (-) TimerEvent: {}
+[0.499189] (-) TimerEvent: {}
+[0.600291] (-) TimerEvent: {}
+[0.701573] (-) TimerEvent: {}
+[0.802655] (-) TimerEvent: {}
+[0.903633] (-) TimerEvent: {}
+[1.004668] (-) TimerEvent: {}
+[1.105672] (-) TimerEvent: {}
+[1.206580] (-) TimerEvent: {}
+[1.307580] (-) TimerEvent: {}
+[1.408543] (-) TimerEvent: {}
+[1.446594] (car_control) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[1.508771] (-) TimerEvent: {}
+[1.610859] (-) TimerEvent: {}
+[1.712292] (-) TimerEvent: {}
+[1.813638] (-) TimerEvent: {}
+[1.914930] (-) TimerEvent: {}
+[2.016237] (-) TimerEvent: {}
+[2.117631] (-) TimerEvent: {}
+[2.219132] (-) TimerEvent: {}
+[2.320475] (-) TimerEvent: {}
+[2.421697] (-) TimerEvent: {}
+[2.522905] (-) TimerEvent: {}
+[2.624318] (-) TimerEvent: {}
+[2.725730] (-) TimerEvent: {}
+[2.827190] (-) TimerEvent: {}
+[2.830129] (car_control) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[2.913449] (car_control) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[2.927400] (-) TimerEvent: {}
+[3.028675] (-) TimerEvent: {}
+[3.129945] (-) TimerEvent: {}
+[3.231222] (-) TimerEvent: {}
+[3.332765] (-) TimerEvent: {}
+[3.434211] (-) TimerEvent: {}
+[3.535561] (-) TimerEvent: {}
+[3.637720] (-) TimerEvent: {}
+[3.740339] (-) TimerEvent: {}
+[3.753237] (car_control) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[3.826623] (car_control) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[3.830845] (car_control) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[3.836813] (car_control) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[3.840641] (-) TimerEvent: {}
+[3.874093] (car_control) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[3.940927] (-) TimerEvent: {}
+[4.042324] (-) TimerEvent: {}
+[4.143942] (-) TimerEvent: {}
+[4.245361] (-) TimerEvent: {}
+[4.346698] (-) TimerEvent: {}
+[4.449069] (-) TimerEvent: {}
+[4.550399] (-) TimerEvent: {}
+[4.651869] (-) TimerEvent: {}
+[4.753355] (-) TimerEvent: {}
+[4.784001] (car_control) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[4.809724] (car_control) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[4.810880] (car_control) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[4.812658] (car_control) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[4.849066] (car_control) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.2 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[4.853454] (-) TimerEvent: {}
+[4.954232] (-) TimerEvent: {}
+[5.055907] (-) TimerEvent: {}
+[5.157688] (-) TimerEvent: {}
+[5.259858] (-) TimerEvent: {}
+[5.362231] (-) TimerEvent: {}
+[5.463571] (-) TimerEvent: {}
+[5.564866] (-) TimerEvent: {}
+[5.666057] (-) TimerEvent: {}
+[5.767451] (-) TimerEvent: {}
+[5.869017] (-) TimerEvent: {}
+[5.970226] (-) TimerEvent: {}
+[6.071428] (-) TimerEvent: {}
+[6.172686] (-) TimerEvent: {}
+[6.273909] (-) TimerEvent: {}
+[6.375100] (-) TimerEvent: {}
+[6.476309] (-) TimerEvent: {}
+[6.577464] (-) TimerEvent: {}
+[6.678598] (-) TimerEvent: {}
+[6.779799] (-) TimerEvent: {}
+[6.880607] (-) TimerEvent: {}
+[6.899306] (car_control) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3.10 (found version "3.10.12") found components: Interpreter \n'}
+[6.980821] (-) TimerEvent: {}
+[7.081983] (-) TimerEvent: {}
+[7.183280] (-) TimerEvent: {}
+[7.284501] (-) TimerEvent: {}
+[7.385622] (-) TimerEvent: {}
+[7.486763] (-) TimerEvent: {}
+[7.588029] (-) TimerEvent: {}
+[7.696394] (-) TimerEvent: {}
+[7.797594] (-) TimerEvent: {}
+[7.898776] (-) TimerEvent: {}
+[8.000020] (-) TimerEvent: {}
+[8.101187] (-) TimerEvent: {}
+[8.202407] (-) TimerEvent: {}
+[8.303617] (-) TimerEvent: {}
+[8.404785] (-) TimerEvent: {}
+[8.505985] (-) TimerEvent: {}
+[8.607146] (-) TimerEvent: {}
+[8.708413] (-) TimerEvent: {}
+[8.809616] (-) TimerEvent: {}
+[8.910847] (-) TimerEvent: {}
+[8.935980] (car_control) StdoutLine: {'line': b'-- Found rclcpp: 16.0.1 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[9.011003] (-) TimerEvent: {}
+[9.111639] (-) TimerEvent: {}
+[9.212280] (-) TimerEvent: {}
+[9.312918] (-) TimerEvent: {}
+[9.413559] (-) TimerEvent: {}
+[9.502632] (car_control) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.3 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[9.513708] (-) TimerEvent: {}
+[9.572491] (car_control) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.3 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[9.613869] (-) TimerEvent: {}
+[9.655666] (car_control) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.3 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[9.714072] (-) TimerEvent: {}
+[9.760701] (car_control) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[9.814233] (-) TimerEvent: {}
+[9.915020] (-) TimerEvent: {}
+[9.951858] (car_control) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[10.015276] (-) TimerEvent: {}
+[10.116554] (-) TimerEvent: {}
+[10.217801] (-) TimerEvent: {}
+[10.318989] (-) TimerEvent: {}
+[10.420564] (-) TimerEvent: {}
+[10.522024] (-) TimerEvent: {}
+[10.623230] (-) TimerEvent: {}
+[10.724514] (-) TimerEvent: {}
+[10.825695] (-) TimerEvent: {}
+[10.926907] (-) TimerEvent: {}
+[11.028204] (-) TimerEvent: {}
+[11.129392] (-) TimerEvent: {}
+[11.230551] (-) TimerEvent: {}
+[11.278651] (car_control) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.0 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[11.330821] (-) TimerEvent: {}
+[11.386461] (car_control) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.1 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[11.431084] (-) TimerEvent: {}
+[11.532332] (-) TimerEvent: {}
+[11.633519] (-) TimerEvent: {}
+[11.734699] (-) TimerEvent: {}
+[11.835930] (-) TimerEvent: {}
+[11.937152] (-) TimerEvent: {}
+[12.038373] (-) TimerEvent: {}
+[12.139614] (-) TimerEvent: {}
+[12.240776] (-) TimerEvent: {}
+[12.341924] (-) TimerEvent: {}
+[12.443143] (-) TimerEvent: {}
+[12.544365] (-) TimerEvent: {}
+[12.645443] (-) TimerEvent: {}
+[12.747944] (-) TimerEvent: {}
+[12.848679] (-) TimerEvent: {}
+[12.882066] (car_control) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[12.948850] (-) TimerEvent: {}
+[13.049566] (-) TimerEvent: {}
+[13.097924] (car_control) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[13.149731] (-) TimerEvent: {}
+[13.250504] (-) TimerEvent: {}
+[13.351716] (-) TimerEvent: {}
+[13.452898] (-) TimerEvent: {}
+[13.554083] (-) TimerEvent: {}
+[13.655258] (-) TimerEvent: {}
+[13.756477] (-) TimerEvent: {}
+[13.857651] (-) TimerEvent: {}
+[13.958899] (-) TimerEvent: {}
+[14.030918] (car_control) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[14.059152] (-) TimerEvent: {}
+[14.160436] (-) TimerEvent: {}
+[14.261629] (-) TimerEvent: {}
+[14.362834] (-) TimerEvent: {}
+[14.464093] (-) TimerEvent: {}
+[14.565622] (-) TimerEvent: {}
+[14.666822] (-) TimerEvent: {}
+[14.768219] (-) TimerEvent: {}
+[14.869933] (-) TimerEvent: {}
+[14.972074] (-) TimerEvent: {}
+[15.073636] (-) TimerEvent: {}
+[15.174861] (-) TimerEvent: {}
+[15.276173] (-) TimerEvent: {}
+[15.377381] (-) TimerEvent: {}
+[15.478586] (-) TimerEvent: {}
+[15.579829] (-) TimerEvent: {}
+[15.681021] (-) TimerEvent: {}
+[15.782232] (-) TimerEvent: {}
+[15.883345] (-) TimerEvent: {}
+[15.917708] (car_control) StdoutLine: {'line': b'-- Found interfaces: 0.0.0 (/home/pi/ros2_ws/install/interfaces/share/interfaces/cmake)\n'}
+[15.983677] (-) TimerEvent: {}
+[16.084908] (-) TimerEvent: {}
+[16.186133] (-) TimerEvent: {}
+[16.198878] (car_control) StdoutLine: {'line': b'-- Found sensor_msgs: 4.2.2 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[16.286393] (-) TimerEvent: {}
+[16.387643] (-) TimerEvent: {}
+[16.488831] (-) TimerEvent: {}
+[16.590032] (-) TimerEvent: {}
+[16.691217] (-) TimerEvent: {}
+[16.792459] (-) TimerEvent: {}
+[16.893650] (-) TimerEvent: {}
+[16.994838] (-) TimerEvent: {}
+[17.096096] (-) TimerEvent: {}
+[17.197297] (-) TimerEvent: {}
+[17.298516] (-) TimerEvent: {}
+[17.399758] (-) TimerEvent: {}
+[17.500878] (-) TimerEvent: {}
+[17.588527] (car_control) StdoutLine: {'line': b'-- Found std_srvs: 4.2.2 (/opt/ros/humble/share/std_srvs/cmake)\n'}
+[17.601048] (-) TimerEvent: {}
+[17.701830] (-) TimerEvent: {}
+[17.782116] (car_control) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.4 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[17.802111] (-) TimerEvent: {}
+[17.903422] (-) TimerEvent: {}
+[18.004962] (-) TimerEvent: {}
+[18.106056] (-) TimerEvent: {}
+[18.207275] (-) TimerEvent: {}
+[18.308510] (-) TimerEvent: {}
+[18.409768] (-) TimerEvent: {}
+[18.511380] (-) TimerEvent: {}
+[18.612570] (-) TimerEvent: {}
+[18.713724] (-) TimerEvent: {}
+[18.814928] (-) TimerEvent: {}
+[18.916157] (-) TimerEvent: {}
+[19.017338] (-) TimerEvent: {}
+[19.118554] (-) TimerEvent: {}
+[19.216713] (car_control) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[19.218170] (car_control) StdoutLine: {'line': b'-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/car_control/include>\n'}
+[19.219101] (-) TimerEvent: {}
+[19.219931] (car_control) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[19.237291] (car_control) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[19.270050] (car_control) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[19.271308] (car_control) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[19.283074] (car_control) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[19.314961] (car_control) StdoutLine: {'line': b'-- Configuring done\n'}
+[19.319377] (-) TimerEvent: {}
+[19.420610] (-) TimerEvent: {}
+[19.490245] (car_control) StdoutLine: {'line': b'-- Generating done\n'}
+[19.508398] (car_control) StdoutLine: {'line': b'-- Build files have been written to: /home/pi/TrailerMate/build/car_control\n'}
+[19.520935] (-) TimerEvent: {}
+[19.576438] (car_control) CommandEnded: {'returncode': 0}
+[19.580637] (car_control) JobProgress: {'identifier': 'car_control', 'progress': 'build'}
+[19.586784] (car_control) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/pi/TrailerMate/build/car_control', '--', '-j4', '-l4'], 'cwd': '/home/pi/TrailerMate/build/car_control', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'pi'), ('SSH_CLIENT', '10.1.5.172 60106 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/pi/ros2_ws/install/rviz_imu_plugin/lib:/home/pi/ros2_ws/install/interfaces/lib:/home/pi/ros2_ws/install/imu_filter_madgwick/lib:/home/pi/ros2_ws/install/carla_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/pi'), ('OLDPWD', '/home/pi/ros2_ws'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLCON_PREFIX_PATH', '/home/pi/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'pi'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/home/pi/ros2_ws/install/geicar_start:/home/pi/ros2_ws/install/system_check:/home/pi/ros2_ws/install/simulation:/home/pi/ros2_ws/install/imu_tools:/home/pi/ros2_ws/install/rviz_imu_plugin:/home/pi/ros2_ws/install/obs_detect:/home/pi/ros2_ws/install/joystick:/home/pi/ros2_ws/install/car_control:/home/pi/ros2_ws/install/can:/home/pi/ros2_ws/install/interfaces:/home/pi/ros2_ws/install/imu_filter_madgwick:/home/pi/ros2_ws/install/imu_complementary_filter:/home/pi/ros2_ws/install/carla_msgs:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/pi/TrailerMate/build/car_control'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '10.1.5.172 60106 10.105.1.166 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/pi/ros2_ws/install/obs_detect/lib/python3.10/site-packages:/home/pi/ros2_ws/install/my_package/lib/python3.10/site-packages:/home/pi/ros2_ws/install/joystick/local/lib/python3.10/dist-packages:/home/pi/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:/home/pi/ros2_ws/install/carla_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/pi/ros2_ws/install/geicar_start:/home/pi/ros2_ws/install/system_check:/home/pi/ros2_ws/install/simulation:/home/pi/ros2_ws/install/imu_tools:/home/pi/ros2_ws/install/rviz_imu_plugin:/home/pi/ros2_ws/install/joystick:/home/pi/ros2_ws/install/car_control:/home/pi/ros2_ws/install/can:/home/pi/ros2_ws/install/interfaces:/home/pi/ros2_ws/install/imu_filter_madgwick:/home/pi/ros2_ws/install/imu_complementary_filter:/home/pi/ros2_ws/install/carla_msgs:/home/pi/ros2_ws/install/obs_detect:/opt/ros/humble')]), 'shell': False}
+[19.621197] (-) TimerEvent: {}
+[19.722489] (-) TimerEvent: {}
+[19.823730] (-) TimerEvent: {}
+[19.882383] (car_control) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.2 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[19.924027] (-) TimerEvent: {}
+[20.025251] (-) TimerEvent: {}
+[20.125960] (-) TimerEvent: {}
+[20.226611] (-) TimerEvent: {}
+[20.327262] (-) TimerEvent: {}
+[20.428046] (-) TimerEvent: {}
+[20.528896] (-) TimerEvent: {}
+[20.595227] (car_control) StdoutLine: {'line': b'-- Found rclcpp: 16.0.1 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[20.629036] (-) TimerEvent: {}
+[20.729841] (-) TimerEvent: {}
+[20.831007] (-) TimerEvent: {}
+[20.932258] (-) TimerEvent: {}
+[20.965870] (car_control) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.3 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[20.995881] (car_control) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.3 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[21.032519] (-) TimerEvent: {}
+[21.064279] (car_control) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.3 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[21.132785] (-) TimerEvent: {}
+[21.193519] (car_control) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[21.233036] (-) TimerEvent: {}
+[21.334224] (-) TimerEvent: {}
+[21.374173] (car_control) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[21.434796] (-) TimerEvent: {}
+[21.536040] (-) TimerEvent: {}
+[21.637219] (-) TimerEvent: {}
+[21.738411] (-) TimerEvent: {}
+[21.839695] (-) TimerEvent: {}
+[21.940888] (-) TimerEvent: {}
+[22.034395] (car_control) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.0 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[22.041107] (-) TimerEvent: {}
+[22.054386] (car_control) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.1 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[22.141447] (-) TimerEvent: {}
+[22.242718] (-) TimerEvent: {}
+[22.343952] (-) TimerEvent: {}
+[22.445161] (-) TimerEvent: {}
+[22.546299] (-) TimerEvent: {}
+[22.647507] (-) TimerEvent: {}
+[22.748660] (-) TimerEvent: {}
+[22.850146] (-) TimerEvent: {}
+[22.951391] (-) TimerEvent: {}
+[23.052598] (-) TimerEvent: {}
+[23.154059] (-) TimerEvent: {}
+[23.255189] (-) TimerEvent: {}
+[23.356291] (-) TimerEvent: {}
+[23.456920] (-) TimerEvent: {}
+[23.557683] (-) TimerEvent: {}
+[23.658442] (-) TimerEvent: {}
+[23.745618] (car_control) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[23.758604] (-) TimerEvent: {}
+[23.859289] (-) TimerEvent: {}
+[23.960106] (-) TimerEvent: {}
+[24.061312] (-) TimerEvent: {}
+[24.162538] (-) TimerEvent: {}
+[24.263737] (-) TimerEvent: {}
+[24.364931] (-) TimerEvent: {}
+[24.466178] (-) TimerEvent: {}
+[24.567378] (-) TimerEvent: {}
+[24.668608] (-) TimerEvent: {}
+[24.769868] (-) TimerEvent: {}
+[24.871112] (-) TimerEvent: {}
+[24.972453] (-) TimerEvent: {}
+[25.006753] (car_control) StdoutLine: {'line': b'-- Found interfaces: 0.0.0 (/home/pi/ros2_ws/install/interfaces/share/interfaces/cmake)\n'}
+[25.072721] (-) TimerEvent: {}
+[25.173897] (-) TimerEvent: {}
+[25.188895] (car_control) StdoutLine: {'line': b'-- Found sensor_msgs: 4.2.2 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[25.274166] (-) TimerEvent: {}
+[25.375373] (-) TimerEvent: {}
+[25.476597] (-) TimerEvent: {}
+[25.578104] (-) TimerEvent: {}
+[25.679359] (-) TimerEvent: {}
+[25.780604] (-) TimerEvent: {}
+[25.881803] (-) TimerEvent: {}
+[25.982976] (-) TimerEvent: {}
+[26.084212] (-) TimerEvent: {}
+[26.185398] (-) TimerEvent: {}
+[26.286641] (-) TimerEvent: {}
+[26.388209] (-) TimerEvent: {}
+[26.489398] (-) TimerEvent: {}
+[26.508842] (car_control) StdoutLine: {'line': b'-- Found std_srvs: 4.2.2 (/opt/ros/humble/share/std_srvs/cmake)\n'}
+[26.589660] (-) TimerEvent: {}
+[26.690907] (-) TimerEvent: {}
+[26.717518] (car_control) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.4 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[26.791168] (-) TimerEvent: {}
+[26.892471] (-) TimerEvent: {}
+[26.994045] (-) TimerEvent: {}
+[27.095134] (-) TimerEvent: {}
+[27.195807] (-) TimerEvent: {}
+[27.211621] (car_control) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[27.212261] (car_control) StdoutLine: {'line': b'-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/car_control/include>\n'}
+[27.212623] (car_control) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[27.216343] (car_control) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[27.225072] (car_control) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[27.225599] (car_control) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[27.227061] (car_control) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[27.231547] (car_control) StdoutLine: {'line': b'-- Configuring done\n'}
+[27.291789] (car_control) StdoutLine: {'line': b'-- Generating done\n'}
+[27.295961] (-) TimerEvent: {}
+[27.299933] (car_control) StdoutLine: {'line': b'-- Build files have been written to: /home/pi/TrailerMate/build/car_control\n'}
+[27.396161] (-) TimerEvent: {}
+[27.426025] (car_control) StderrLine: {'line': b"gmake[2]: Warning: File '/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/car_control/src/steeringCmd.cpp' has modification time 22306346 s in the future\n"}
+[27.496041] (car_control) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/car_control_node.dir/src/car_control_node.cpp.o\x1b[0m\n'}
+[27.497735] (-) TimerEvent: {}
+[27.504937] (car_control) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/car_control_node.dir/src/steeringCmd.cpp.o\x1b[0m\n'}
+[27.515094] (car_control) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/car_control_node.dir/src/propulsionCmd.cpp.o\x1b[0m\n'}
+[27.598100] (-) TimerEvent: {}
+[27.699769] (-) TimerEvent: {}
+[27.801165] (-) TimerEvent: {}
+[27.911886] (-) TimerEvent: {}
+[28.014270] (-) TimerEvent: {}
+[28.117974] (-) TimerEvent: {}
+[28.220399] (-) TimerEvent: {}
+[28.321315] (-) TimerEvent: {}
+[28.423198] (-) TimerEvent: {}
+[28.525847] (-) TimerEvent: {}
+[28.628346] (-) TimerEvent: {}
+[28.731359] (-) TimerEvent: {}
+[28.832919] (-) TimerEvent: {}
+[28.934253] (-) TimerEvent: {}
+[29.035649] (-) TimerEvent: {}
+[29.136986] (-) TimerEvent: {}
+[29.238417] (-) TimerEvent: {}
+[29.341397] (-) TimerEvent: {}
+[29.443540] (-) TimerEvent: {}
+[29.545415] (-) TimerEvent: {}
+[29.646541] (-) TimerEvent: {}
+[29.747939] (-) TimerEvent: {}
+[29.849171] (-) TimerEvent: {}
+[29.950422] (-) TimerEvent: {}
+[30.051664] (-) TimerEvent: {}
+[30.152683] (-) TimerEvent: {}
+[30.253370] (-) TimerEvent: {}
+[30.354064] (-) TimerEvent: {}
+[30.454769] (-) TimerEvent: {}
+[30.555444] (-) TimerEvent: {}
+[30.656308] (-) TimerEvent: {}
+[30.757114] (-) TimerEvent: {}
+[30.857837] (-) TimerEvent: {}
+[30.958699] (-) TimerEvent: {}
+[31.060391] (-) TimerEvent: {}
+[31.161730] (-) TimerEvent: {}
+[31.262989] (-) TimerEvent: {}
+[31.364261] (-) TimerEvent: {}
+[31.465448] (-) TimerEvent: {}
+[31.566743] (-) TimerEvent: {}
+[31.667970] (-) TimerEvent: {}
+[31.762227] (car_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/car_control/src/car_control_node.cpp:16:10:\x1b[m\x1b[K \x1b[01;31m\x1b[Kfatal error: \x1b[m\x1b[K../include/car_control/control_loop.h: No such file or directory\n'}
+[31.762919] (car_control) StderrLine: {'line': b'   16 | #include \x1b[01;31m\x1b[K"../include/car_control/control_loop.h"\x1b[m\x1b[K\n'}
+[31.763362] (car_control) StderrLine: {'line': b'      |          \x1b[01;31m\x1b[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.763890] (car_control) StderrLine: {'line': b'compilation terminated.\n'}
+[31.768161] (-) TimerEvent: {}
+[31.771238] (car_control) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/car_control_node.dir/build.make:76: CMakeFiles/car_control_node.dir/src/car_control_node.cpp.o] Error 1\n'}
+[31.772229] (car_control) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/car_control_node.dir/all] Error 2\n'}
+[31.773109] (car_control) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[31.779159] (car_control) CommandEnded: {'returncode': 2}
+[31.868351] (-) TimerEvent: {}
+[31.969280] (-) TimerEvent: {}
+[32.024379] (car_control) JobEnded: {'identifier': 'car_control', 'rc': 2}
+[32.035777] (-) EventReactorShutdown: {}
