@@ -1,0 +1,4 @@
+Invoking command in '/home/pi/TrailerMate/build/car_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pi/ros2_ws/install/obs_detect:/opt/ros/humble /usr/bin/cmake --build /home/pi/TrailerMate/build/car_control -- -j4 -l4
+Invoked command in '/home/pi/TrailerMate/build/car_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pi/ros2_ws/install/obs_detect:/opt/ros/humble /usr/bin/cmake --build /home/pi/TrailerMate/build/car_control -- -j4 -l4
+Invoking command in '/home/pi/TrailerMate/build/car_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pi/ros2_ws/install/obs_detect:/opt/ros/humble /usr/bin/cmake --install /home/pi/TrailerMate/build/car_control
+Invoked command in '/home/pi/TrailerMate/build/car_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pi/ros2_ws/install/obs_detect:/opt/ros/humble /usr/bin/cmake --install /home/pi/TrailerMate/build/car_control

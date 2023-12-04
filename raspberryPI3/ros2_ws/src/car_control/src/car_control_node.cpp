@@ -9,12 +9,10 @@
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/stop_car.hpp"
 
-
 #include "std_srvs/srv/empty.hpp"
 
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
-#include "../include/car_control/control_loop.h"
 #include "../include/car_control/car_control_node.h"
 
 using namespace std;
@@ -58,10 +56,10 @@ public:
 
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
+
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
         "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
 
-        
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -89,6 +87,7 @@ private:
                 RCLCPP_INFO(this->get_logger(), "START");
             else 
                 RCLCPP_INFO(this->get_logger(), "STOP");
+
         }
         
 
@@ -112,20 +111,6 @@ private:
         }
     }
 
-
-/* Update command from stop car [callback function]  :
-    *
-    * This function is called when a message is published on the "/stop_car" topic
-    * 
-    */
-    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-        frontObstacle = stopCar.stop_car_front;
-        rearObstacle = stopCar.stop_car_rear;
-        //if(frontObstacle || rearObstacle)
-         //RCLCPP_INFO(this->get_logger(), "obstacle detected car stoped");
-    }
-
-
     /* Update currentAngle from motors feedback [callback function]  :
     *
     * This function is called when a message is published on the "/motors_feedback" topic
@@ -135,6 +120,16 @@ private:
         currentAngle = motorsFeedback.steering_angle;
         currentLeftSpeed = motorsFeedback.left_rear_speed;
         currentRightSpeed = motorsFeedback.right_rear_speed;
+    }
+
+    /* Update command from stop car [callback function]  :
+    *
+    * This function is called when a message is published on the "/stop_car" topic
+    * 
+    */
+    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+        frontObstacle = stopCar.stop_car_front;
+        rearObstacle = stopCar.stop_car_rear;
     }
 
 // --------------------------------------------------------------
@@ -182,22 +177,29 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start){    //Car stopped  ||frontObstacle==true ||rearObstacle==true
+        if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
-
 
         }else{ //Car started
 
             //Manual Mode
             if (mode==0){
-                
-                manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
-		//attenuation_recurrence(PWM_order_filter, leftRearPwmCmd_last, PWM_att_last);
-                //leftRearPwmCmd=PWM_order_filter;
-                //rightRearPwmCmd=PWM_order_filter;
-                
+
+                if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
+
+                    manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
+                    //attenuation_recurrence(PWM_order_filter, leftRearPwmCmd_last, PWM_att_last);
+                    //leftRearPwmCmd=PWM_order_filter;
+                    //rightRearPwmCmd=PWM_order_filter;
+
+                }
+                else {
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
+                }
                 steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
                 reinit = 1;
 
@@ -223,7 +225,6 @@ private:
                 reinit = 0;
             }  
         }
-
 
         //Send order to motors
         motorsOrder.left_rear_pwm = leftRearPwmCmd;

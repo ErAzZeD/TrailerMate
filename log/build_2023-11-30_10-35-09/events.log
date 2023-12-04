@@ -1,0 +1,114 @@
+[0.000000] (-) TimerEvent: {}
+[0.004239] (-) JobUnselected: {'identifier': 'can'}
+[0.004637] (-) JobUnselected: {'identifier': 'car_control'}
+[0.005262] (-) JobUnselected: {'identifier': 'carla_msgs'}
+[0.005415] (-) JobUnselected: {'identifier': 'geicar_start'}
+[0.005533] (-) JobUnselected: {'identifier': 'geicar_start_jetson'}
+[0.005662] (-) JobUnselected: {'identifier': 'imu_complementary_filter'}
+[0.005831] (-) JobUnselected: {'identifier': 'imu_filter_madgwick'}
+[0.005965] (-) JobUnselected: {'identifier': 'imu_tools'}
+[0.006071] (-) JobUnselected: {'identifier': 'interfaces'}
+[0.008212] (-) JobUnselected: {'identifier': 'interfaces'}
+[0.008496] (-) JobUnselected: {'identifier': 'joystick'}
+[0.008611] (-) JobUnselected: {'identifier': 'rplidar_ros'}
+[0.009035] (-) JobUnselected: {'identifier': 'rviz_imu_plugin'}
+[0.009296] (-) JobUnselected: {'identifier': 'simulation'}
+[0.009424] (-) JobUnselected: {'identifier': 'system_check'}
+[0.009554] (-) JobUnselected: {'identifier': 'system_check_ack'}
+[0.009715] (-) JobUnselected: {'identifier': 'trailer_angle_package'}
+[0.009823] (-) JobUnselected: {'identifier': 'usb_cam'}
+[0.009936] (obs_detect) JobQueued: {'identifier': 'obs_detect', 'dependencies': OrderedDict()}
+[0.010104] (obs_detect) JobStarted: {'identifier': 'obs_detect'}
+[0.095987] (-) TimerEvent: {}
+[0.196817] (-) TimerEvent: {}
+[0.297666] (-) TimerEvent: {}
+[0.398448] (-) TimerEvent: {}
+[0.499467] (-) TimerEvent: {}
+[0.600149] (-) TimerEvent: {}
+[0.700866] (-) TimerEvent: {}
+[0.801659] (-) TimerEvent: {}
+[0.902395] (-) TimerEvent: {}
+[1.003148] (-) TimerEvent: {}
+[1.103936] (-) TimerEvent: {}
+[1.204651] (-) TimerEvent: {}
+[1.305372] (-) TimerEvent: {}
+[1.406085] (-) TimerEvent: {}
+[1.506858] (-) TimerEvent: {}
+[1.608507] (-) TimerEvent: {}
+[1.711191] (-) TimerEvent: {}
+[1.812903] (-) TimerEvent: {}
+[1.914669] (-) TimerEvent: {}
+[2.017087] (-) TimerEvent: {}
+[2.119928] (-) TimerEvent: {}
+[2.220702] (-) TimerEvent: {}
+[2.321439] (-) TimerEvent: {}
+[2.422521] (-) TimerEvent: {}
+[2.523633] (-) TimerEvent: {}
+[2.624659] (-) TimerEvent: {}
+[2.725741] (-) TimerEvent: {}
+[2.826801] (-) TimerEvent: {}
+[2.927997] (-) TimerEvent: {}
+[3.029121] (-) TimerEvent: {}
+[3.130167] (-) TimerEvent: {}
+[3.231296] (-) TimerEvent: {}
+[3.332417] (-) TimerEvent: {}
+[3.433304] (-) TimerEvent: {}
+[3.535353] (-) TimerEvent: {}
+[3.636839] (-) TimerEvent: {}
+[3.686506] (obs_detect) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../../../build/obs_detect', 'build', '--build-base', '/home/pi/TrailerMate/build/obs_detect/build', 'install', '--prefix', '/home/pi/TrailerMate/install/obs_detect', '--record', '/home/pi/TrailerMate/build/obs_detect/install.log', '--single-version-externally-managed'], 'cwd': '/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/obs_detect', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'pi', 'SSH_CLIENT': '10.1.5.126 58174 22', 'XDG_SESSION_TYPE': 'tty', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/pi/ros2_ws/install/rviz_imu_plugin/lib:/home/pi/ros2_ws/install/interfaces/lib:/home/pi/ros2_ws/install/imu_filter_madgwick/lib:/home/pi/ros2_ws/install/carla_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'MOTD_SHOWN': 'pam', 'HOME': '/home/pi', 'OLDPWD': '/home/pi/TrailerMate/raspberryPI3/ros2_ws', 'SSH_TTY': '/dev/pts/2', 'ROS_PYTHON_VERSION': '3', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLCON_PREFIX_PATH': '/home/pi/ros2_ws/install', 'ROS_DISTRO': 'humble', 'LOGNAME': 'pi', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '4', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_DOMAIN_ID': '1', 'AMENT_PREFIX_PATH': '/home/pi/ros2_ws/install/geicar_start:/home/pi/ros2_ws/install/system_check:/home/pi/ros2_ws/install/simulation:/home/pi/ros2_ws/install/imu_tools:/home/pi/ros2_ws/install/rviz_imu_plugin:/home/pi/ros2_ws/install/obs_detect:/home/pi/ros2_ws/install/joystick:/home/pi/ros2_ws/install/car_control:/home/pi/ros2_ws/install/can:/home/pi/ros2_ws/install/interfaces:/home/pi/ros2_ws/install/imu_filter_madgwick:/home/pi/ros2_ws/install/imu_complementary_filter:/home/pi/ros2_ws/install/carla_msgs:/opt/ros/humble', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'PWD': '/home/pi/TrailerMate/build/obs_detect', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '10.1.5.126 58174 10.105.1.166 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages:/home/pi/ros2_ws/install/obs_detect/lib/python3.10/site-packages:/home/pi/ros2_ws/install/my_package/lib/python3.10/site-packages:/home/pi/ros2_ws/install/joystick/local/lib/python3.10/dist-packages:/home/pi/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:/home/pi/ros2_ws/install/carla_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/pi/ros2_ws/install/geicar_start:/home/pi/ros2_ws/install/system_check:/home/pi/ros2_ws/install/simulation:/home/pi/ros2_ws/install/imu_tools:/home/pi/ros2_ws/install/rviz_imu_plugin:/home/pi/ros2_ws/install/joystick:/home/pi/ros2_ws/install/car_control:/home/pi/ros2_ws/install/can:/home/pi/ros2_ws/install/interfaces:/home/pi/ros2_ws/install/imu_filter_madgwick:/home/pi/ros2_ws/install/imu_complementary_filter:/home/pi/ros2_ws/install/carla_msgs'}, 'shell': False}
+[3.737057] (-) TimerEvent: {}
+[3.839099] (-) TimerEvent: {}
+[3.941050] (-) TimerEvent: {}
+[4.042715] (-) TimerEvent: {}
+[4.144580] (-) TimerEvent: {}
+[4.246344] (-) TimerEvent: {}
+[4.347105] (-) TimerEvent: {}
+[4.448397] (-) TimerEvent: {}
+[4.549869] (-) TimerEvent: {}
+[4.650915] (-) TimerEvent: {}
+[5.600134] (obs_detect) StdoutLine: {'line': b'running egg_info\n'}
+[5.601886] (-) TimerEvent: {}
+[5.603911] (obs_detect) StdoutLine: {'line': b'creating ../../../../build/obs_detect/obs_detect.egg-info\n'}
+[5.604956] (obs_detect) StdoutLine: {'line': b'writing ../../../../build/obs_detect/obs_detect.egg-info/PKG-INFO\n'}
+[5.605932] (obs_detect) StdoutLine: {'line': b'writing dependency_links to ../../../../build/obs_detect/obs_detect.egg-info/dependency_links.txt\n'}
+[5.606851] (obs_detect) StdoutLine: {'line': b'writing entry points to ../../../../build/obs_detect/obs_detect.egg-info/entry_points.txt\n'}
+[5.607628] (obs_detect) StdoutLine: {'line': b'writing requirements to ../../../../build/obs_detect/obs_detect.egg-info/requires.txt\n'}
+[5.608312] (obs_detect) StdoutLine: {'line': b'writing top-level names to ../../../../build/obs_detect/obs_detect.egg-info/top_level.txt\n'}
+[5.608865] (obs_detect) StdoutLine: {'line': b"writing manifest file '../../../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'\n"}
+[5.617521] (obs_detect) StdoutLine: {'line': b"reading manifest file '../../../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'\n"}
+[5.622850] (obs_detect) StdoutLine: {'line': b"writing manifest file '../../../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'\n"}
+[5.677326] (obs_detect) StdoutLine: {'line': b'running build\n'}
+[5.679863] (obs_detect) StdoutLine: {'line': b'running build_py\n'}
+[5.681540] (obs_detect) StdoutLine: {'line': b'creating /home/pi/TrailerMate/build/obs_detect/build\n'}
+[5.682250] (obs_detect) StdoutLine: {'line': b'creating /home/pi/TrailerMate/build/obs_detect/build/lib\n'}
+[5.683171] (obs_detect) StdoutLine: {'line': b'creating /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect\n'}
+[5.685990] (obs_detect) StdoutLine: {'line': b'copying obs_detect/obs_detection.py -> /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect\n'}
+[5.686812] (obs_detect) StdoutLine: {'line': b'copying obs_detect/__init__.py -> /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect\n'}
+[5.688094] (obs_detect) StdoutLine: {'line': b'running install\n'}
+[5.688930] (obs_detect) StderrLine: {'line': b'/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[5.690147] (obs_detect) StderrLine: {'line': b'  warnings.warn(\n'}
+[5.690856] (obs_detect) StdoutLine: {'line': b'running install_lib\n'}
+[5.693955] (obs_detect) StdoutLine: {'line': b'creating /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect\n'}
+[5.695746] (obs_detect) StdoutLine: {'line': b'copying /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect/obs_detection.py -> /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect\n'}
+[5.696894] (obs_detect) StdoutLine: {'line': b'copying /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect/__init__.py -> /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect\n'}
+[5.700529] (obs_detect) StdoutLine: {'line': b'byte-compiling /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect/obs_detection.py to obs_detection.cpython-310.pyc\n'}
+[5.701957] (obs_detect) StderrLine: {'line': b'Sorry: IndentationError: unindent does not match any outer indentation level (obs_detection.py, line 21)\n'}
+[5.702685] (-) TimerEvent: {}
+[5.704273] (obs_detect) StdoutLine: {'line': b'byte-compiling /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect/__init__.py to __init__.cpython-310.pyc\n'}
+[5.705027] (obs_detect) StdoutLine: {'line': b'running install_data\n'}
+[5.707226] (obs_detect) StdoutLine: {'line': b'creating /home/pi/TrailerMate/install/obs_detect/share/ament_index\n'}
+[5.708320] (obs_detect) StdoutLine: {'line': b'creating /home/pi/TrailerMate/install/obs_detect/share/ament_index/resource_index\n'}
+[5.709031] (obs_detect) StdoutLine: {'line': b'creating /home/pi/TrailerMate/install/obs_detect/share/ament_index/resource_index/packages\n'}
+[5.710068] (obs_detect) StdoutLine: {'line': b'copying resource/obs_detect -> /home/pi/TrailerMate/install/obs_detect/share/ament_index/resource_index/packages\n'}
+[5.710700] (obs_detect) StdoutLine: {'line': b'copying package.xml -> /home/pi/TrailerMate/install/obs_detect/share/obs_detect\n'}
+[5.711415] (obs_detect) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.719370] (obs_detect) StdoutLine: {'line': b'Copying ../../../../build/obs_detect/obs_detect.egg-info to /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect-0.0.0-py3.10.egg-info\n'}
+[5.727308] (obs_detect) StdoutLine: {'line': b'running install_scripts\n'}
+[5.802888] (-) TimerEvent: {}
+[5.833959] (obs_detect) StdoutLine: {'line': b'Installing obs_detection script to /home/pi/TrailerMate/install/obs_detect/lib/obs_detect\n'}
+[5.835824] (obs_detect) StdoutLine: {'line': b"writing list of installed files to '/home/pi/TrailerMate/build/obs_detect/install.log'\n"}
+[5.903419] (-) TimerEvent: {}
+[5.987636] (obs_detect) CommandEnded: {'returncode': 0}
+[6.003611] (-) TimerEvent: {}
+[6.065821] (obs_detect) JobEnded: {'identifier': 'obs_detect', 'rc': 0}
+[6.070004] (-) EventReactorShutdown: {}
