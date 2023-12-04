@@ -1,0 +1,3 @@
+[console_scripts]
+obs_detection = obs_detect.obs_detection:main
+

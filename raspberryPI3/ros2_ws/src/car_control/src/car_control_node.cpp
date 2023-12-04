@@ -9,7 +9,6 @@
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/stop_car.hpp"
 
-
 #include "std_srvs/srv/empty.hpp"
 
 #include "../include/car_control/steeringCmd.h"
@@ -47,10 +46,10 @@ public:
 
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
+
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
         "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
 
-        
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -78,6 +77,7 @@ private:
                 RCLCPP_INFO(this->get_logger(), "START");
             else 
                 RCLCPP_INFO(this->get_logger(), "STOP");
+
         }
         
 
@@ -126,6 +126,15 @@ private:
         currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
+    /* Update command from stop car [callback function]  :
+    *
+    * This function is called when a message is published on the "/stop_car" topic
+    * 
+    */
+    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+        frontObstacle = stopCar.stop_car_front;
+        rearObstacle = stopCar.stop_car_rear;
+    }
 
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
@@ -145,27 +154,28 @@ private:
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
 
-
         }else{ //Car started
 
             //Manual Mode
             if (mode==0){
-                
-                manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
+                if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
+
+                    manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
+
+                }
+                else {
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
+                }
                 steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
-                reinit = 1;
 
             //Autonomous Mode
             } else if (mode==1){
-                RPM_order = 20.0;
-                reverse = 0;
-                compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
-                steeringPwmCmd = 50;
-                reinit = 0;
+                //...
             }  
         }
-
 
         //Send order to motors
         motorsOrder.left_rear_pwm = leftRearPwmCmd;
@@ -237,9 +247,6 @@ private:
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
 
-    //Control loop variables
-    double RPM_order;
-    int reinit;
     //Motors feedback variables
     float currentAngle;
     double currentRightSpeed;
@@ -248,7 +255,6 @@ private:
     //Obstacles variables
     bool frontObstacle;
     bool rearObstacle;
-
 
     //Manual Mode variables (with joystick control)
     bool reverse;

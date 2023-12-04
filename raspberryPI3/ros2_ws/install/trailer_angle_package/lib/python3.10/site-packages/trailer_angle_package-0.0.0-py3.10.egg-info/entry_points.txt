@@ -1,0 +1,3 @@
+[console_scripts]
+trailer_angle_node = trailer_angle_package.trailer_angle_node:main
+

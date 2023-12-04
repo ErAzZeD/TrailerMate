@@ -1,0 +1,16 @@
+package.xml
+setup.cfg
+setup.py
+../../build/trailer_angle_package/trailer_angle_package.egg-info/PKG-INFO
+../../build/trailer_angle_package/trailer_angle_package.egg-info/SOURCES.txt
+../../build/trailer_angle_package/trailer_angle_package.egg-info/dependency_links.txt
+../../build/trailer_angle_package/trailer_angle_package.egg-info/entry_points.txt
+../../build/trailer_angle_package/trailer_angle_package.egg-info/requires.txt
+../../build/trailer_angle_package/trailer_angle_package.egg-info/top_level.txt
+../../build/trailer_angle_package/trailer_angle_package.egg-info/zip-safe
+resource/trailer_angle_package
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py
+trailer_angle_package/__init__.py
+trailer_angle_package/trailer_angle_node.py

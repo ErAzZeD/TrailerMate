@@ -1,0 +1,40 @@
+[3.677s] Invoking command in '/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/obs_detect': PYTHONPATH=/home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../../build/obs_detect build --build-base /home/pi/TrailerMate/build/obs_detect/build install --prefix /home/pi/TrailerMate/install/obs_detect --record /home/pi/TrailerMate/build/obs_detect/install.log --single-version-externally-managed
+[5.590s] running egg_info
+[5.593s] creating ../../../../build/obs_detect/obs_detect.egg-info
+[5.594s] writing ../../../../build/obs_detect/obs_detect.egg-info/PKG-INFO
+[5.595s] writing dependency_links to ../../../../build/obs_detect/obs_detect.egg-info/dependency_links.txt
+[5.596s] writing entry points to ../../../../build/obs_detect/obs_detect.egg-info/entry_points.txt
+[5.596s] writing requirements to ../../../../build/obs_detect/obs_detect.egg-info/requires.txt
+[5.597s] writing top-level names to ../../../../build/obs_detect/obs_detect.egg-info/top_level.txt
+[5.597s] writing manifest file '../../../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+[5.606s] reading manifest file '../../../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+[5.612s] writing manifest file '../../../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+[5.666s] running build
+[5.669s] running build_py
+[5.670s] creating /home/pi/TrailerMate/build/obs_detect/build
+[5.671s] creating /home/pi/TrailerMate/build/obs_detect/build/lib
+[5.674s] creating /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect
+[5.675s] copying obs_detect/obs_detection.py -> /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect
+[5.676s] copying obs_detect/__init__.py -> /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect
+[5.677s] running install
+[5.678s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[5.679s]   warnings.warn(
+[5.680s] running install_lib
+[5.683s] creating /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect
+[5.684s] copying /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect/obs_detection.py -> /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect
+[5.686s] copying /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect/__init__.py -> /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect
+[5.689s] byte-compiling /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect/obs_detection.py to obs_detection.cpython-310.pyc
+[5.691s] Sorry: IndentationError: unindent does not match any outer indentation level (obs_detection.py, line 21)
+[5.693s] byte-compiling /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect/__init__.py to __init__.cpython-310.pyc
+[5.694s] running install_data
+[5.696s] creating /home/pi/TrailerMate/install/obs_detect/share/ament_index
+[5.697s] creating /home/pi/TrailerMate/install/obs_detect/share/ament_index/resource_index
+[5.698s] creating /home/pi/TrailerMate/install/obs_detect/share/ament_index/resource_index/packages
+[5.699s] copying resource/obs_detect -> /home/pi/TrailerMate/install/obs_detect/share/ament_index/resource_index/packages
+[5.699s] copying package.xml -> /home/pi/TrailerMate/install/obs_detect/share/obs_detect
+[5.700s] running install_egg_info
+[5.708s] Copying ../../../../build/obs_detect/obs_detect.egg-info to /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect-0.0.0-py3.10.egg-info
+[5.716s] running install_scripts
+[5.823s] Installing obs_detection script to /home/pi/TrailerMate/install/obs_detect/lib/obs_detect
+[5.824s] writing list of installed files to '/home/pi/TrailerMate/build/obs_detect/install.log'
+[5.977s] Invoked command in '/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/obs_detect' returned '0': PYTHONPATH=/home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../../build/obs_detect build --build-base /home/pi/TrailerMate/build/obs_detect/build install --prefix /home/pi/TrailerMate/install/obs_detect --record /home/pi/TrailerMate/build/obs_detect/install.log --single-version-externally-managed
