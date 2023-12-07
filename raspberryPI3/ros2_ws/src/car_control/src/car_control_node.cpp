@@ -31,13 +31,19 @@ public:
         requestedSteerAngle = 0;
     
         RCLCPP_INFO(this->get_logger(), "INIT of Error and PWM to 0.0");
+        // Motors control loop
         Error_last_right = 0.0f;
         Error_last_left = 0.0f;
         PWM_order_right = 0.0f;
         PWM_order_left = 0.0f;
         PWM_order_last_right = 0.0f;
         PWM_order_last_left = 0.0f;
-        
+        // Steering control loop
+        PWM_angle = 0.0f;
+        PWM_angle_last = 0.0f;
+        ErrorAngle_last = 0.0f;
+        direction_prec = true;
+        // Attenuation
         //PWM_att_last= 0.0f;
         //PWM_order_filter= 0.0f;
         //leftRearPwmCmd_last= 0.0f;
@@ -141,7 +147,7 @@ private:
 *   Error -> Erreur(k+1)
 *   Error_last -> Erreur(k)
 */
-    void recurrence_PI(float RPM_order, float& Error_last, float& PWM_order, float& PWM_order_last, float currentSpeed){
+    void recurrence_PI_motors(float RPM_order, float& Error_last, float& PWM_order, float& PWM_order_last, float currentSpeed){
         float Error=RPM_order-currentSpeed; 
         Error=Error*0.9;
         RCLCPP_INFO(this->get_logger(), "Valeur de Erreur(k+1) : %.2f et de Erreur(k) : %.2f", Error, Error_last);
@@ -160,6 +166,63 @@ private:
     }
 
 
+/* Calculate the recurrence equation based on the compensator to steer
+*   requestedSteerAngle -> Desired angle [-1,1]
+*   PWM_angle -> I(k+1)
+*   PWM_angle_last -> I(k)
+*   ErrorAngle -> Erreur(k+1)
+*   ErrorAngle_last -> Erreur(k)
+*   direction -> direction(k+1) : Gauche 0, Droite 1 
+*   direction_prec -> direction(k) : Gauche 0, Droite 1 
+*/
+    void recurrence_PI_steering(float requestedSteerAngle, float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec){
+        // static bool direction_prec; // (a mettre en static si pas de pb)
+        bool direction = requestedSteerAngle >= currentSteerAngle;  
+        float ErrorAngle = currentSteerAngle - requestedSteerAngle;
+        ErrorAngle = (ErrorAngle+2)*12.5;  // ErrorAngle : [-2,2] -> [0,50]
+        RCLCPP_INFO(this->get_logger(), "Valeur de Erreur(k+1) : %.2f et de Erreur(k) : %.2f", ErrorAngle, ErrorAngle_last);
+
+        if (direction != direction_prec) {  // Si changement de direction reinit 
+            PWM_angle_last=0.0;
+            ErrorAngle_last=0.0;
+        }
+        PWM_angle = PWM_angle_last + 0.5005*ErrorAngle - 0.4995*ErrorAngle_last;   // Ki = 1  et Kp = 0.5   ao = Ki*Te/2 + Kp, bo = Ki*Te/2 - Kp
+        RCLCPP_INFO(this->get_logger(), "Valeur de PWM_angle : %.2f", PWM_angle);
+
+        if (PWM_angle > 50.0) {
+            PWM_angle=50.0f;
+        } else if (PWM_angle < 0.0) {
+            PWM_angle=0.0f;
+        }
+
+        PWM_angle_last=PWM_angle;
+        ErrorAngle_last=ErrorAngle;
+        direction_prec=direction;
+
+        if (direction) {  // Vers la droite
+            RCLCPP_INFO(this->get_logger(), "Tourne à droite");
+            PWM_angle = 50 + PWM_angle;
+        } else {          // Vers la gauche
+            RCLCPP_INFO(this->get_logger(), "Tourne à gauche");
+            PWM_angle = 50 - PWM_angle;
+        }
+    }
+
+/*  void recurrence_PI_steering(float requestedSteerAngle, float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle_last, uint8_t & steeringPwmCmd){
+        float ErrorAngle = currentSteerAngle - requestedSteerAngle;
+        RCLCPP_INFO(this->get_logger(), "Valeur de Erreur(k+1) : %.2f et de Erreur(k) : %.2f", ErrorAngle, ErrorAngle_last);
+
+        steeringPwmCmd = PWM_angle_last + 1.002*ErrorAngle - 0.998*ErrorAngle_last;   // Ki = 4  et Kp = 1   ao = Ki*Te/2 + Kp, bo = Ki*Te/2 - Kp
+        RCLCPP_INFO(this->get_logger(), "Valeur de PWM_order : %.2f", steeringPwmCmd);
+
+        if (steeringPwmCmd > 50.0) {
+            steeringPwmCmd=50.0f;
+        } else if (steeringPwmCmd < 0.0) {
+            steeringPwmCmd=0.0f;
+        }
+        ErrorAngle_last=ErrorAngle;
+        PWM_angle_last=steeringPwmCmd;
+    }    */
 
 // --------------------------------------------------------------
 
@@ -200,7 +263,9 @@ private:
                     rightRearPwmCmd = STOP;
                     steeringPwmCmd = STOP;
                 }
-                steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
+                //steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
+                recurrence_PI_steering(requestedSteerAngle, currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
+                steeringPwmCmd=PWM_angle;
                 reinit = 1;
 
             //Autonomous Mode
@@ -209,14 +274,14 @@ private:
                 reverse = 1;
                 
                 if (reverse) {    // => PWM : [50 -> 0] (reverse)
-                    recurrence_PI(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
-                    recurrence_PI(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+                    recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                    recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
                     rightRearPwmCmd = 50 - PWM_order_right; 
                     //leftRearPwmCmd = 50 - PWM_order_left; capteur cassé, donc on se base sur la roue droite
                     leftRearPwmCmd = rightRearPwmCmd; 
                 } else {   // => PWM : [50 -> 100] (forward)
-                    recurrence_PI(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
-                    recurrence_PI(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+                    recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                    recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
                     rightRearPwmCmd = PWM_order_right + 50; 
                     //leftRearPwmCmd = PWM_order_left + 50; capteur cassé, donc on se base sur la roue droite  
                     leftRearPwmCmd = rightRearPwmCmd; 
@@ -297,21 +362,27 @@ private:
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
 
     //Control loop variables
-        //Error
+        // Motors
+            //Error
     float Error_last_right;
     float Error_last_left;
-        //PWM
+            //PWM
     float PWM_order_right;
     float PWM_order_left;
     float PWM_order_last_right;
     float PWM_order_last_left;
-    	// attenuation
+            //Others
+    float RPM_order;
+    int reinit;
+        // Attenuation
     //float PWM_att_last;
     //float PWM_order_filter;
     //float leftRearPwmCmd_last;
-        //Others
-    float RPM_order;
-    int reinit;
+        // Steering
+    float PWM_angle;
+    float PWM_angle_last;
+    float ErrorAngle_last;
+    bool direction_prec;
     //Motors feedback variables
     float currentAngle;
     float currentRightSpeed;
