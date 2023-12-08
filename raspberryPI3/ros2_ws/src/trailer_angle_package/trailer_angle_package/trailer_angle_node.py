@@ -26,7 +26,7 @@ class TrailerAngle(Node):
     def call_node(self):
         baudrate = 115200
         serial_addr = "/dev/ttyACM0"
-        serial_connection = serial.Serial(port=self.serial_addr, baudrate=self.baudrate)
+        serial_connection = serial.Serial(port=serial_addr, baudrate=baudrate)
         
         while(True):
             size = serial_connection.inWaiting()
