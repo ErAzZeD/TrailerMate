@@ -26,12 +26,12 @@ class TrailerAngle(Node):
     def call_node(self):
         baudrate = 115200
         serial_addr = "/dev/ttyACM0"
-        serial = serial.Serial(port=self.serial_addr, baudrate=self.baudrate)
+        serial_connection = serial.Serial(port=self.serial_addr, baudrate=self.baudrate)
         
         while(True):
-            size = serial.inWaiting()
+            size = serial_connection.inWaiting()
             if size:
-                data = serial.read(size)
+                data = serial_connection.read(size)
                 print(data)
 
         # TODO : Récupérer valeur du potentiomètre via ADC
