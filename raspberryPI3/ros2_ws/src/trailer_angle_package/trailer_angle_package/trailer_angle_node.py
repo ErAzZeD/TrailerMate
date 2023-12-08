@@ -24,6 +24,10 @@ class TrailerAngle(Node):
         # self.subscription_us = self.create_subscription(PotentiometerData, 'us_data', self.us_callback, 10)
 
     def call_node(self):
+
+        type_export_topic = AngleTrailer()
+
+
         baudrate = 115200
         serial_addr = "/dev/ttyACM0"
         serial_connection = serial.Serial(port=serial_addr, baudrate=baudrate)
@@ -32,7 +36,8 @@ class TrailerAngle(Node):
             size = serial_connection.inWaiting()
             if size:
                 data = serial_connection.read(size)
-                self.publish_trailer_angle.publish(ord(data))
+                type_export_topic.trailer_angle = float(ord(data))
+                self.publish_trailer_angle.publish(type_export_topic)
 
         # TODO : Récupérer valeur du potentiomètre via ADC
         #PotentiometerData = 100
