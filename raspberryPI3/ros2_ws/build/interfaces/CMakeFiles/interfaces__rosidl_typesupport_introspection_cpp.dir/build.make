@@ -86,7 +86,7 @@ rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosid
 rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp: rosidl_adapter/interfaces/msg/Gnss.idl
 rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp: rosidl_adapter/interfaces/msg/SystemCheck.idl
 rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp: rosidl_adapter/interfaces/msg/StopCar.idl
-rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp: rosidl_adapter/interfaces/msg/TrailerAngle.idl
+rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp: rosidl_adapter/interfaces/msg/AngleTrailer.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ introspection for ROS interfaces"
 	/usr/bin/python3.10 /opt/ros/humble/lib/rosidl_typesupport_introspection_cpp/rosidl_typesupport_introspection_cpp --generator-arguments-file /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_typesupport_introspection_cpp__arguments.json
 
@@ -114,8 +114,8 @@ rosidl_typesupport_introspection_cpp/interfaces/msg/detail/system_check__rosidl_
 rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__rosidl_typesupport_introspection_cpp.hpp: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__rosidl_typesupport_introspection_cpp.hpp
 
-rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__rosidl_typesupport_introspection_cpp.hpp: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp
-	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__rosidl_typesupport_introspection_cpp.hpp
+rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__rosidl_typesupport_introspection_cpp.hpp: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__rosidl_typesupport_introspection_cpp.hpp
 
 rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__type_support.cpp: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__type_support.cpp
@@ -144,8 +144,8 @@ rosidl_typesupport_introspection_cpp/interfaces/msg/detail/system_check__type_su
 rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__type_support.cpp: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__type_support.cpp
 
-rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp
-	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp
+rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__rosidl_typesupport_introspection_cpp.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp
 
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__type_support.cpp.o: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/flags.make
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__type_support.cpp.o: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/joystick_order__type_support.cpp
@@ -273,19 +273,19 @@ CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesuppo
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__type_support.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__type_support.cpp -o CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__type_support.cpp.s
 
-CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.o: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/flags.make
-CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.o: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp
-CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.o: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.o -MF CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.o.d -o CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.o -c /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp
+CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.o: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/flags.make
+CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.o: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp
+CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.o: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.o -MF CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.o.d -o CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.o -c /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp
 
-CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp > CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.i
+CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp > CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.i
 
-CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp -o CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.s
+CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp -o CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.s
 
 # Object files for target interfaces__rosidl_typesupport_introspection_cpp
 interfaces__rosidl_typesupport_introspection_cpp_OBJECTS = \
@@ -298,7 +298,7 @@ interfaces__rosidl_typesupport_introspection_cpp_OBJECTS = \
 "CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/gnss__type_support.cpp.o" \
 "CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/system_check__type_support.cpp.o" \
 "CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__type_support.cpp.o" \
-"CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.o"
+"CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.o"
 
 # External object files for target interfaces__rosidl_typesupport_introspection_cpp
 interfaces__rosidl_typesupport_introspection_cpp_EXTERNAL_OBJECTS =
@@ -312,7 +312,7 @@ libinterfaces__rosidl_typesupport_introspection_cpp.so: CMakeFiles/interfaces__r
 libinterfaces__rosidl_typesupport_introspection_cpp.so: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/gnss__type_support.cpp.o
 libinterfaces__rosidl_typesupport_introspection_cpp.so: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/system_check__type_support.cpp.o
 libinterfaces__rosidl_typesupport_introspection_cpp.so: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__type_support.cpp.o
-libinterfaces__rosidl_typesupport_introspection_cpp.so: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp.o
+libinterfaces__rosidl_typesupport_introspection_cpp.so: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp.o
 libinterfaces__rosidl_typesupport_introspection_cpp.so: CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/build.make
 libinterfaces__rosidl_typesupport_introspection_cpp.so: /opt/ros/humble/lib/librosidl_typesupport_introspection_cpp.so
 libinterfaces__rosidl_typesupport_introspection_cpp.so: /opt/ros/humble/lib/librosidl_runtime_c.so
@@ -330,6 +330,8 @@ CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/clean
 
+CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__rosidl_typesupport_introspection_cpp.hpp
+CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/angle_trailer__type_support.cpp
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/general_data__rosidl_typesupport_introspection_cpp.hpp
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/general_data__type_support.cpp
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/gnss__rosidl_typesupport_introspection_cpp.hpp
@@ -346,8 +348,6 @@ CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_t
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/stop_car__type_support.cpp
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/system_check__rosidl_typesupport_introspection_cpp.hpp
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/system_check__type_support.cpp
-CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__rosidl_typesupport_introspection_cpp.hpp
-CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/trailer_angle__type_support.cpp
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/ultrasonic__rosidl_typesupport_introspection_cpp.hpp
 CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/depend: rosidl_typesupport_introspection_cpp/interfaces/msg/detail/ultrasonic__type_support.cpp
 	cd /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/DependInfo.cmake --color=$(COLOR)

@@ -59,7 +59,7 @@ def generate_launch_description():
         emulate_tty=True
     )
 
-    trailer_angle = Node(
+    trailer_angle_node = Node(
         package="trailer_angle_package",
         executable="trailer_angle_node",
         emulate_tty=True

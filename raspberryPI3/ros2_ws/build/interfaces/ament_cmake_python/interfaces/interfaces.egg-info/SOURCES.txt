@@ -5,6 +5,7 @@ interfaces.egg-info/SOURCES.txt
 interfaces.egg-info/dependency_links.txt
 interfaces.egg-info/top_level.txt
 interfaces/msg/__init__.py
+interfaces/msg/_angle_trailer.py
 interfaces/msg/_general_data.py
 interfaces/msg/_gnss.py
 interfaces/msg/_joystick_order.py
@@ -13,4 +14,5 @@ interfaces/msg/_motors_order.py
 interfaces/msg/_steering_calibration.py
 interfaces/msg/_stop_car.py
 interfaces/msg/_system_check.py
+interfaces/msg/_trailer_angle.py
 interfaces/msg/_ultrasonic.py

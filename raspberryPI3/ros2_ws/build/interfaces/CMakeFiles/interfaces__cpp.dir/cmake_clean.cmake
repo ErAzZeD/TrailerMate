@@ -1,5 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/interfaces__cpp"
+  "rosidl_generator_cpp/interfaces/msg/angle_trailer.hpp"
+  "rosidl_generator_cpp/interfaces/msg/detail/angle_trailer__builder.hpp"
+  "rosidl_generator_cpp/interfaces/msg/detail/angle_trailer__struct.hpp"
+  "rosidl_generator_cpp/interfaces/msg/detail/angle_trailer__traits.hpp"
   "rosidl_generator_cpp/interfaces/msg/detail/general_data__builder.hpp"
   "rosidl_generator_cpp/interfaces/msg/detail/general_data__struct.hpp"
   "rosidl_generator_cpp/interfaces/msg/detail/general_data__traits.hpp"
@@ -24,9 +28,6 @@ file(REMOVE_RECURSE
   "rosidl_generator_cpp/interfaces/msg/detail/system_check__builder.hpp"
   "rosidl_generator_cpp/interfaces/msg/detail/system_check__struct.hpp"
   "rosidl_generator_cpp/interfaces/msg/detail/system_check__traits.hpp"
-  "rosidl_generator_cpp/interfaces/msg/detail/trailer_angle__builder.hpp"
-  "rosidl_generator_cpp/interfaces/msg/detail/trailer_angle__struct.hpp"
-  "rosidl_generator_cpp/interfaces/msg/detail/trailer_angle__traits.hpp"
   "rosidl_generator_cpp/interfaces/msg/detail/ultrasonic__builder.hpp"
   "rosidl_generator_cpp/interfaces/msg/detail/ultrasonic__struct.hpp"
   "rosidl_generator_cpp/interfaces/msg/detail/ultrasonic__traits.hpp"
@@ -38,7 +39,6 @@ file(REMOVE_RECURSE
   "rosidl_generator_cpp/interfaces/msg/steering_calibration.hpp"
   "rosidl_generator_cpp/interfaces/msg/stop_car.hpp"
   "rosidl_generator_cpp/interfaces/msg/system_check.hpp"
-  "rosidl_generator_cpp/interfaces/msg/trailer_angle.hpp"
   "rosidl_generator_cpp/interfaces/msg/ultrasonic.hpp"
 )
 

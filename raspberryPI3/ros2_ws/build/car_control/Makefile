@@ -234,6 +234,30 @@ src/car_control_node.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/car_control_node.dir/build.make CMakeFiles/car_control_node.dir/src/car_control_node.cpp.s
 .PHONY : src/car_control_node.cpp.s
 
+src/control_loop.o: src/control_loop.cpp.o
+.PHONY : src/control_loop.o
+
+# target to build an object file
+src/control_loop.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/car_control_node.dir/build.make CMakeFiles/car_control_node.dir/src/control_loop.cpp.o
+.PHONY : src/control_loop.cpp.o
+
+src/control_loop.i: src/control_loop.cpp.i
+.PHONY : src/control_loop.i
+
+# target to preprocess a source file
+src/control_loop.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/car_control_node.dir/build.make CMakeFiles/car_control_node.dir/src/control_loop.cpp.i
+.PHONY : src/control_loop.cpp.i
+
+src/control_loop.s: src/control_loop.cpp.s
+.PHONY : src/control_loop.s
+
+# target to generate assembly for a file
+src/control_loop.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/car_control_node.dir/build.make CMakeFiles/car_control_node.dir/src/control_loop.cpp.s
+.PHONY : src/control_loop.cpp.s
+
 src/propulsionCmd.o: src/propulsionCmd.cpp.o
 .PHONY : src/propulsionCmd.o
 
@@ -301,6 +325,9 @@ help:
 	@echo "... src/car_control_node.o"
 	@echo "... src/car_control_node.i"
 	@echo "... src/car_control_node.s"
+	@echo "... src/control_loop.o"
+	@echo "... src/control_loop.i"
+	@echo "... src/control_loop.s"
 	@echo "... src/propulsionCmd.o"
 	@echo "... src/propulsionCmd.i"
 	@echo "... src/propulsionCmd.s"

@@ -271,8 +271,15 @@ CMakeFiles/interfaces__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator
   rosidl_generator_c/interfaces/msg/detail/system_check__functions.h \
   rosidl_generator_c/interfaces/msg/detail/stop_car__type_support.h \
   rosidl_generator_c/interfaces/msg/detail/stop_car__struct.h \
-  rosidl_generator_c/interfaces/msg/detail/stop_car__functions.h
+  rosidl_generator_c/interfaces/msg/detail/stop_car__functions.h \
+  rosidl_generator_c/interfaces/msg/detail/angle_trailer__type_support.h \
+  rosidl_generator_c/interfaces/msg/detail/angle_trailer__struct.h \
+  rosidl_generator_c/interfaces/msg/detail/angle_trailer__functions.h
 
+
+rosidl_generator_c/interfaces/msg/detail/angle_trailer__functions.h:
+
+rosidl_generator_c/interfaces/msg/detail/angle_trailer__type_support.h:
 
 rosidl_generator_c/interfaces/msg/detail/stop_car__functions.h:
 
@@ -343,6 +350,8 @@ rosidl_generator_c/interfaces/msg/detail/joystick_order__functions.h:
 /usr/include/x86_64-linux-gnu/bits/statx.h:
 
 /usr/include/unistd.h:
+
+rosidl_generator_c/interfaces/msg/detail/angle_trailer__struct.h:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
 

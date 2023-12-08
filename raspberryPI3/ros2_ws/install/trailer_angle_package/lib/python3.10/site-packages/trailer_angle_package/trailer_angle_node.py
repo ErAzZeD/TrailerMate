@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from interfaces.msg import TrailerAngle
+from interfaces.msg import AngleTrailer
 
 
 
@@ -15,7 +15,8 @@ class TrailerAngle(Node):
 
         # Publishers
         # publish informations to TrailerAngleDegree topic
-        self.publish_trailer_angle = self.create_publisher(TrailerAngle, 'trailer_angle', 10)
+        self.publish_trailer_angle = self.create_publisher(AngleTrailer, 'trailer_angle', 10)
+        print("OKkkk")
         self.call_node()
 
         # Subscribers
@@ -37,12 +38,10 @@ class TrailerAngle(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    trailer_angle_instance = TrailerAngle()
-    rclpy.spin(trailer_angle_instance)
-    trailer_angle_instance.destroy_node()
+    trailer_angle_node = TrailerAngle()
+    rclpy.spin(trailer_angle_node)
+    trailer_angle_node.destroy_node()
     rclpy.shutdown()
-
-
 
 
 if __name__ == '__main__':

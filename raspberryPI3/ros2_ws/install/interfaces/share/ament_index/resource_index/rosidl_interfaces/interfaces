@@ -1,3 +1,5 @@
+msg/AngleTrailer.idl
+msg/AngleTrailer.msg
 msg/GeneralData.idl
 msg/GeneralData.msg
 msg/Gnss.idl
@@ -14,7 +16,5 @@ msg/StopCar.idl
 msg/StopCar.msg
 msg/SystemCheck.idl
 msg/SystemCheck.msg
-msg/TrailerAngle.idl
-msg/TrailerAngle.msg
 msg/Ultrasonic.idl
 msg/Ultrasonic.msg

@@ -1,3 +1,4 @@
+from interfaces.msg._angle_trailer import AngleTrailer  # noqa: F401
 from interfaces.msg._general_data import GeneralData  # noqa: F401
 from interfaces.msg._gnss import Gnss  # noqa: F401
 from interfaces.msg._joystick_order import JoystickOrder  # noqa: F401

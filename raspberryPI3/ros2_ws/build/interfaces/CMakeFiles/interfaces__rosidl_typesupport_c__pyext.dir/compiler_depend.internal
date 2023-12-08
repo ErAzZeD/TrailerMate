@@ -273,4 +273,7 @@ CMakeFiles/interfaces__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/inter
  /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/stop_car__type_support.h
  /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/stop_car__struct.h
  /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/stop_car__functions.h
+ /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/angle_trailer__type_support.h
+ /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/angle_trailer__struct.h
+ /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_generator_c/interfaces/msg/detail/angle_trailer__functions.h
 
