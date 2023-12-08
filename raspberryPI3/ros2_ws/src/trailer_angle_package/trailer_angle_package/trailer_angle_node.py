@@ -32,7 +32,7 @@ class TrailerAngle(Node):
             size = serial_connection.inWaiting()
             if size:
                 data = serial_connection.read(size)
-                print(data)
+                self.publish_trailer_angle.publish(ord(data))
 
         # TODO : Récupérer valeur du potentiomètre via ADC
         #PotentiometerData = 100
@@ -44,7 +44,7 @@ class TrailerAngle(Node):
         #    TrailerAngleDegree = 200
 
         # TODO : add a message to publish
-        #self.publish_trailer_angle.publish()
+        
 
 
 def main(args=None):
