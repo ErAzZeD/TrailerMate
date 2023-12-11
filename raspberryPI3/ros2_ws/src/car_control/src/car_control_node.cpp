@@ -38,11 +38,13 @@ public:
         PWM_order_left = 0.0f;
         PWM_order_last_right = 0.0f;
         PWM_order_last_left = 0.0f;
+        // test PID Steering
+        VAR_PID param_PID = {0.0f, 0.0f, 0.0f, 0.0f, Kp + (Te*Ki / 2) + 2*Kd/Te, Te*Ki 4*Kd/Te, (Te*Ki / 2) - Kp + 2*Kd/Te, true};
         // Steering control loop
-        PWM_angle = 0.0f;
-        PWM_angle_last = 0.0f;
-        ErrorAngle_last = 0.0f;
-        direction_prec = true;
+        //PWM_angle = 0.0f;
+        //PWM_angle_last = 0.0f;
+        //ErrorAngle_last = 0.0f;
+        //direction_prec = true;
         // Attenuation
         //PWM_att_last= 0.0f;
         //PWM_order_filter= 0.0f;
@@ -175,7 +177,40 @@ private:
 *   direction -> direction(k+1) : Gauche 0, Droite 1 
 *   direction_prec -> direction(k) : Gauche 0, Droite 1 
 */
-    void recurrence_PI_steering(float requestedSteerAngle, float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec){
+    void recurrence_PI_steering(float requestedSteerAngle, float currentSteerAngle, param_PID){
+        // static bool direction_prec; // (a mettre en static si pas de pb)
+        bool direction = requestedSteerAngle >= currentSteerAngle;  
+        float ErrorAngle = currentSteerAngle - requestedSteerAngle;
+        ErrorAngle = (ErrorAngle+2)*12.5;  // ErrorAngle : [-2,2] -> [0,50]
+        RCLCPP_INFO(this->get_logger(), "Valeur de Erreur(k+2) : %.2f , de Erreur(k+1) : %.2f , , de Erreur(k) : %.2f", ErrorAngle, param_PID.ErrorAngle_last,  param_PID.ErrorAngle_last_last);
+
+        if (direction != direction_prec) {  // Si changement de direction reinit 
+            PWM_angle_last=0.0;
+            ErrorAngle_last=0.0;
+        }
+        PWM_angle = PWM_angle_last + 0.5005*ErrorAngle - 0.4995*ErrorAngle_last;   // Ki = 1  et Kp = 0.5   ao = Ki*Te/2 + Kp, bo = Ki*Te/2 - Kp
+        RCLCPP_INFO(this->get_logger(), "Valeur de PWM_angle : %.2f", PWM_angle);
+
+        if (PWM_angle > 50.0) {
+            PWM_angle=50.0f;
+        } else if (PWM_angle < 0.0) {
+            PWM_angle=0.0f;
+        }
+
+        PWM_angle_last=PWM_angle;
+        ErrorAngle_last=ErrorAngle;
+        direction_prec=direction;
+
+        if (direction) {  // Vers la droite
+            RCLCPP_INFO(this->get_logger(), "Tourne à droite");
+            PWM_angle = 50 + PWM_angle;
+        } else {          // Vers la gauche
+            RCLCPP_INFO(this->get_logger(), "Tourne à gauche");
+            PWM_angle = 50 - PWM_angle;
+        }
+    }
+
+/*  void recurrence_PI_steering(float requestedSteerAngle, float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec){
         // static bool direction_prec; // (a mettre en static si pas de pb)
         bool direction = requestedSteerAngle >= currentSteerAngle;  
         float ErrorAngle = currentSteerAngle - requestedSteerAngle;
@@ -206,7 +241,7 @@ private:
             RCLCPP_INFO(this->get_logger(), "Tourne à gauche");
             PWM_angle = 50 - PWM_angle;
         }
-    }
+    }  */
 
 /*  void recurrence_PI_steering(float requestedSteerAngle, float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle_last, uint8_t & steeringPwmCmd){
         float ErrorAngle = currentSteerAngle - requestedSteerAngle;
@@ -379,10 +414,22 @@ private:
     //float PWM_order_filter;
     //float leftRearPwmCmd_last;
         // Steering
-    float PWM_angle;
-    float PWM_angle_last;
-    float ErrorAngle_last;
-    bool direction_prec;
+    //float PWM_angle;
+    //float PWM_angle_last;
+    //float ErrorAngle_last;
+    //bool direction_prec;
+        // Test PID Steering
+    typedef struct {
+        float PWM_angle;            // PWM(k+2)
+        float PWM_angle_last;       // PWM(k)
+        float ErrorAngle_last;      // Error(k+1)
+        float ErrorAngle_last_last; // Error(k)
+        float Ao;                   // Kp + (Te*Ki / 2) + 2*Kd/Te
+        float Bo;                   // Te*Ki 4*Kd/Te
+        float Co;                   // (Te*Ki / 2) - Kp + 2*Kd/Te
+        bool direction_prec;        // detect changement de direction pour reset error_last
+    } VAR_PID;
+
     //Motors feedback variables
     float currentAngle;
     float currentRightSpeed;
