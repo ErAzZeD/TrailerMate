@@ -73,7 +73,7 @@ uint8_t dataTransmit;
   */
 int main(void)
 {
-
+  /*Values to remove when calibration will work*/
 	int angle45 = 2000;
 	int angle90 = 2750;
 	int angle135 = 3500;
@@ -112,6 +112,29 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    //CALIBRATION
+    if (is_blue_button_pressed())  //Calibration of the 90 degree angle (// 0 for the user)
+    {
+        angle90 = HAL_ADC_GetValue(&hadc1);
+        
+        while (1)  //Waiting for the next calibration step
+        {
+            if (is_blue_button_pressed())  //Calibration of the 135 degree angle (// 45 for the user)
+            {
+                angle45 = HAL_ADC_GetValue(&hadc1);
+                
+                while (1)    //Waiting for the next calibration step
+                {
+                    if (is_blue_button_pressed())  //Calibration of the 45 degree angle (// -45 for the user)
+                    {
+                      angle135 = HAL_ADC_GetValue(&hadc1);
+                    }
+                }
+            }
+        }
+    }
+
+   //DATA TRANSMISSION
 	 data = HAL_ADC_GetValue(&hadc1);
 	 HAL_Delay(50);
 
