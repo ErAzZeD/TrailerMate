@@ -74,10 +74,10 @@ uint8_t dataTransmit;
 int main(void)
 {
 
-	int angleMoins45 = 2000;
-	int angleMilieu = 2750;
-	int angle45 = 3500;
-	int valeurUnDegre = (angle45-angleMoins45)/90;
+	int angle45 = 2000;
+	int angle90 = 2750;
+	int angle135 = 3500;
+	int valeurUnDegre = (angle135-angle45)/90;
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -116,17 +116,17 @@ int main(void)
 	 HAL_Delay(50);
 
 	 // TODO : Faire angle remorque et envoyer sur UART
-	 if (data < angleMilieu)
+	 if (data < angle90)
 	 {
-		 dataTransmit = 90 - ((angleMilieu - data) / valeurUnDegre);
+		 dataTransmit = 90 - ((angle90 - data) / valeurUnDegre);
 	 }
-	 else if (data > angleMilieu)
+	 else if (data > angle90)
 	 {
-		 dataTransmit = 90 + ((data - angleMilieu) / valeurUnDegre);
+		 dataTransmit = 90 + ((data - angle90) / valeurUnDegre);
 	 }
 	 else
 	 {
-		 dataTransmit = angleMilieu;
+		 dataTransmit = angle90;
 	 }
 
 
