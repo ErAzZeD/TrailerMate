@@ -103,8 +103,8 @@ int main(void)
   MX_DMA_Init();
   MX_USART2_UART_Init();
   MX_ADC1_Init();
-  /* USER CODE BEGIN 2 */
 
+  /* USER CODE BEGIN 2 */
   HAL_ADC_Start(&hadc1);
   /* USER CODE END 2 */
 
@@ -115,7 +115,6 @@ int main(void)
 	 data = HAL_ADC_GetValue(&hadc1);
 	 HAL_Delay(50);
 
-	 // TODO : Faire angle remorque et envoyer sur UART
 	 if (data < angle90)
 	 {
 		 dataTransmit = 90 - ((angle90 - data) / valeurUnDegre);
@@ -129,11 +128,9 @@ int main(void)
 		 dataTransmit = angle90;
 	 }
 
-
-
-	 //dataTransmit = 104;
 	 HAL_UART_Transmit(&huart2, &dataTransmit, 1, 100);
-	 HAL_Delay(50);    /* USER CODE END WHILE */
+	 HAL_Delay(50);    
+   /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
@@ -226,6 +223,7 @@ static void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
+
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
@@ -259,6 +257,7 @@ static void MX_USART2_UART_Init(void)
   {
     Error_Handler();
   }
+  
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
