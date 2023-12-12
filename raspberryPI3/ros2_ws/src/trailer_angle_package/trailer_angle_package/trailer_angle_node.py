@@ -36,21 +36,8 @@ class TrailerAngle(Node):
             size = serial_connection.inWaiting()
             if size:
                 data = serial_connection.read(size)
-                type_export_topic.trailer_angle = float(ord(data))
-                self.publish_trailer_angle.publish(type_export_topic)
-
-        # TODO : Récupérer valeur du potentiomètre via ADC
-        #PotentiometerData = 100
-        #if PotentiometerData == self.ANGLE_ZERO:
-        #    TrailerAngleDegree = 0
-        #elif PotentiometerData > self.ANGLE_ZERO: #la remorque est à droite
-        #    TrailerAngleDegree = 100
-        #elif PotentiometerData < self.ANGLE_ZERO: #la remorque est à gauche
-        #    TrailerAngleDegree = 200
-
-        # TODO : add a message to publish
-        
-
+                type_export_topic.trailer_angle = float(ord(data) - 90)
+                self.publish_trailer_angle.publish(type_export_topic)        
 
 def main(args=None):
     rclpy.init(args=args)
