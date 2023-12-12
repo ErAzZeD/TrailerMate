@@ -115,20 +115,8 @@ int main(void)
 	 data = HAL_ADC_GetValue(&hadc1);
 	 HAL_Delay(50);
 
-	 if (data < angle90)
-	 {
-		 dataTransmit = 90 - ((angle90 - data) / valeurUnDegre);
-	 }
-	 else if (data > angle90)
-	 {
-		 dataTransmit = 90 + ((data - angle90) / valeurUnDegre);
-	 }
-	 else
-	 {
-		 dataTransmit = angle90;
-	 }
-
-	 HAL_UART_Transmit(&huart2, &dataTransmit, 1, 100);
+	 dataTransmit = 90 + ((data - angle90) / valeurUnDegre);  //data processing
+	 HAL_UART_Transmit(&huart2, &dataTransmit, 1, 100);       //data transmission
 	 HAL_Delay(50);    
    /* USER CODE END WHILE */
 
@@ -257,7 +245,7 @@ static void MX_USART2_UART_Init(void)
   {
     Error_Handler();
   }
-  
+
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
