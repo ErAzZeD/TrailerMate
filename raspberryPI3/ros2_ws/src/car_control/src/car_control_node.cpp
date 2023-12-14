@@ -7,7 +7,7 @@
 #include "interfaces/msg/motors_feedback.hpp"
 #include "interfaces/msg/steering_calibration.hpp"
 #include "interfaces/msg/joystick_order.hpp"
-#include "interfaces/msg/stop_car.hpp"
+#include "interfaces/msg/obstacle_detection.hpp"
 
 #include "std_srvs/srv/empty.hpp"
 
@@ -57,8 +57,8 @@ public:
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
 
-        subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
-        "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
+        subscription_obstacle_detection_ = this->create_subscription<interfaces::msg::ObstacleDetection>(
+        "obstacle_detection", 10, std::bind(&car_control::obstacleDetectionCallback, this, _1));
 
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
@@ -127,9 +127,9 @@ private:
     * This function is called when a message is published on the "/stop_car" topic
     * 
     */
-    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-        frontObstacle = stopCar.stop_car_front;
-        rearObstacle = stopCar.stop_car_rear;
+    void obstacleDetectionCallback(const interfaces::msg::ObstacleDetection & obstacleDetection){
+        frontObstacle = obstacleDetection.obstacle_detected_front;
+        rearObstacle = obstacleDetection.obstacle_detected_rear;
     }
 
 // --------------------------------------------------------------
@@ -339,7 +339,7 @@ private:
     rclcpp::Subscription<interfaces::msg::JoystickOrder>::SharedPtr subscription_joystick_order_;
     rclcpp::Subscription<interfaces::msg::MotorsFeedback>::SharedPtr subscription_motors_feedback_;
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
-    rclcpp::Subscription<interfaces::msg::StopCar>::SharedPtr subscription_stop_car_;
+    rclcpp::Subscription<interfaces::msg::ObstacleDetection>::SharedPtr subscription_obstacle_detection_;
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;

@@ -21,7 +21,7 @@ set(msg_files
   "msg/Ultrasonic.msg"
   "msg/Gnss.msg"
   "msg/SystemCheck.msg"
-  "msg/StopCar.msg"
+  "msg/ObstacleDetection.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
