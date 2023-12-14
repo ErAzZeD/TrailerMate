@@ -6,7 +6,7 @@ from interfaces.msg import ObstacleDetection
 from interfaces.msg import MotorsOrder
 
 
-class ObstacleDetection(Node):
+class ObsDetection(Node):
 
     MINIMAL_DISTANCE = 50
 
@@ -63,7 +63,7 @@ class ObstacleDetection(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    obs_detection = ObstacleDetection()
+    obs_detection = ObsDetection()
     rclpy.spin(obs_detection)
     obs_detection.destroy_node()
     rclpy.shutdown()
