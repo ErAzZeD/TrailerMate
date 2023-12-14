@@ -26,6 +26,7 @@ public:
     : Node("car_control_node")
     {
         start = false;
+        record = false;
         mode = 0;
         requestedThrottle = 0;
         requestedSteerAngle = 0;
@@ -66,7 +67,9 @@ public:
 
         timer_ = this->create_wall_timer(PERIOD_UPDATE_CMD, std::bind(&car_control::updateCmd, this));
 
-        
+        recorder_options.prefix = "car_data";
+        recorder_options.append_date = true;
+
         RCLCPP_INFO(this->get_logger(), "car_control_node READY");
     }
 
@@ -90,7 +93,11 @@ private:
 
         }
         
-
+        if (joyOrder.record != record) {
+            record = joyOrder.record;
+            handle_recording();
+        }
+            
         if (joyOrder.mode != mode && joyOrder.mode != -1){ //if mode change
             mode = joyOrder.mode;
 
@@ -108,6 +115,28 @@ private:
             requestedThrottle = joyOrder.throttle;
             requestedSteerAngle = joyOrder.steer;
             reverse = joyOrder.reverse;
+        }
+    }
+    //les deux fonctions qui enregistrent les donneés de la tajectoire
+    void start_recording() {
+        recording_start_time = this->now();
+        recorder_options.prefix += "_" + recording_start_time.to_human_string();
+        recorder.initialize(recorder_options);
+        recorder.record();
+        RCLCPP_INFO(this->get_logger(), "Start recording...");
+    }
+
+    void stop_recording() {
+        recorder.stop();
+        recorder_options = rosbag::RecorderOptions(); // Réinitialiser les options
+        RCLCPP_INFO(this->get_logger(), "Stop recording...");
+    }
+
+    void handle_recording() {
+        if (record && !recorder.is_recording()) {
+            start_recording();
+        } else if (!record && recorder.is_recording()) {
+            stop_recording();
         }
     }
 
@@ -295,7 +324,7 @@ private:
     //General variables
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
-
+    bool record;
     //Control loop variables
         //Error
     float Error_last_right;
