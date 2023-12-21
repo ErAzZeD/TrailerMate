@@ -8,6 +8,8 @@
     "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/SteeringCalibration.msg",
     "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/Ultrasonic.msg",
     "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/Gnss.msg",
-    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/SystemCheck.msg"
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/SystemCheck.msg",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/StopCar.msg",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/interfaces:msg/AngleTrailer.msg"
   ]
 }

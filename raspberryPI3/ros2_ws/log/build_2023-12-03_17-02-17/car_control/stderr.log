@@ -1,0 +1,8 @@
+[01m[K/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/car_control/src/control_loop.cpp:[m[K In function ‘[01m[Kvoid compensator_recurrence(bool, double, bool, double, double, uint8_t&, uint8_t&)[m[K’:
+[01m[K/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/car_control/src/control_loop.cpp:35:14:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K:[m[K’ token
+   35 |     if (init)[01;31m[K:[m[K
+      |              [01;31m[K^[m[K
+gmake[2]: *** [CMakeFiles/car_control_node.dir/build.make:118: CMakeFiles/car_control_node.dir/src/control_loop.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/car_control_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

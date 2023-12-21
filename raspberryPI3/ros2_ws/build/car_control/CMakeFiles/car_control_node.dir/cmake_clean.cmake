@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/car_control_node.dir/src/car_control_node.cpp.o"
   "CMakeFiles/car_control_node.dir/src/car_control_node.cpp.o.d"
+  "CMakeFiles/car_control_node.dir/src/control_loop.cpp.o"
+  "CMakeFiles/car_control_node.dir/src/control_loop.cpp.o.d"
   "CMakeFiles/car_control_node.dir/src/propulsionCmd.cpp.o"
   "CMakeFiles/car_control_node.dir/src/propulsionCmd.cpp.o.d"
   "CMakeFiles/car_control_node.dir/src/steeringCmd.cpp.o"

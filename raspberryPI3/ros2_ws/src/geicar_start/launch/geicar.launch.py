@@ -59,6 +59,12 @@ def generate_launch_description():
         emulate_tty=True
     )
 
+    trailer_angle_node = Node(
+        package="trailer_angle_package",
+        executable="trailer_angle_node",
+        emulate_tty=True
+    )
+
 
     ld.add_action(joystick_node)
     ld.add_action(joystick_to_cmd_node)
@@ -68,5 +74,6 @@ def generate_launch_description():
     ld.add_action(imu_filter_madgwick_node)
     ld.add_action(system_check_node)
     ld.add_action(obs_detection)
+    ld.add_action(trailer_angle)
 
     return ld
