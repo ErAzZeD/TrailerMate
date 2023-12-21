@@ -16,11 +16,7 @@ fi
 _colcon_package_bash_source_script() {
   if [ -f "$1" ]; then
     if [ -n "$COLCON_TRACE" ]; then
-<<<<<<< HEAD
       echo "# . \"$1\""
-=======
-      echo ". \"$1\""
->>>>>>> develop
     fi
     . "$@"
   else

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import rclpy
 from rclpy.node import Node
 
@@ -43,10 +42,6 @@ def main(args=None):
     rclpy.spin(trailer_angle_node)
     trailer_angle_node.destroy_node()
     rclpy.shutdown()
-=======
-def main():
-    print('Hi from trailer_angle_package.')
->>>>>>> develop
 
 
 if __name__ == '__main__':
