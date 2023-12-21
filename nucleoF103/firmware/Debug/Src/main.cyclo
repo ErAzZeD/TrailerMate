@@ -1,0 +1,7 @@
+../Src/main.c:131:6:HAL_TIM_PeriodElapsedCallback	4
+../Src/main.c:145:6:HAL_TIM_IC_CaptureCallback	3
+../Src/main.c:174:6:HAL_GPIO_EXTI_Callback	2
+../Src/main.c:195:6:SYS_MicroDelay	2
+../Src/main.c:211:5:main	13
+../Src/main.c:429:6:SystemClock_Config	4
+../Src/main.c:492:6:_Error_Handler	1

@@ -22,6 +22,7 @@ set(msg_files
   "msg/Gnss.msg"
   "msg/SystemCheck.msg"
   "msg/ObstacleDetection.msg"
+  "msg/AngleTrailer.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}

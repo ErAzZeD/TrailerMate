@@ -1,0 +1,26 @@
+[0.501s] Invoking command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/trailer_angle_package': PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/prefix_override:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/trailer_angle_package build --build-base /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build install --record /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/install.log --single-version-externally-managed
+[0.696s] running egg_info
+[0.696s] writing ../../build/trailer_angle_package/trailer_angle_package.egg-info/PKG-INFO
+[0.696s] writing dependency_links to ../../build/trailer_angle_package/trailer_angle_package.egg-info/dependency_links.txt
+[0.696s] writing entry points to ../../build/trailer_angle_package/trailer_angle_package.egg-info/entry_points.txt
+[0.696s] writing requirements to ../../build/trailer_angle_package/trailer_angle_package.egg-info/requires.txt
+[0.696s] writing top-level names to ../../build/trailer_angle_package/trailer_angle_package.egg-info/top_level.txt
+[0.697s] reading manifest file '../../build/trailer_angle_package/trailer_angle_package.egg-info/SOURCES.txt'
+[0.698s] writing manifest file '../../build/trailer_angle_package/trailer_angle_package.egg-info/SOURCES.txt'
+[0.698s] running build
+[0.698s] running build_py
+[0.698s] copying trailer_angle_package/trailer_angle_node.py -> /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build/lib/trailer_angle_package
+[0.698s] running install
+[0.698s] running install_lib
+[0.698s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.698s]   warnings.warn(
+[0.699s] copying /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build/lib/trailer_angle_package/trailer_angle_node.py -> /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package
+[0.699s] byte-compiling /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package/trailer_angle_node.py to trailer_angle_node.cpython-310.pyc
+[0.699s] running install_data
+[0.699s] running install_egg_info
+[0.700s] removing '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package-0.0.0-py3.10.egg-info' (and everything under it)
+[0.701s] Copying ../../build/trailer_angle_package/trailer_angle_package.egg-info to /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package-0.0.0-py3.10.egg-info
+[0.701s] running install_scripts
+[0.712s] Installing trailer_angle_node script to /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/trailer_angle_package
+[0.712s] writing list of installed files to '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/install.log'
+[0.725s] Invoked command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/trailer_angle_package' returned '0': PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/prefix_override:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/trailer_angle_package build --build-base /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build install --record /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/install.log --single-version-externally-managed
