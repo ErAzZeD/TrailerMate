@@ -9,19 +9,17 @@
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/stop_car.hpp"
 
-
 #include "std_srvs/srv/empty.hpp"
 
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
-#include "../include/car_control/control_loop.h"
 #include "../include/car_control/car_control_node.h"
 
 using namespace std;
 using placeholders::_1;
 
 
-class car_control : public rclcpp::Node {
+class car_control : public rclcpp::Node {                 
 
 public:
     car_control()
@@ -32,6 +30,17 @@ public:
         requestedThrottle = 0;
         requestedSteerAngle = 0;
     
+        RCLCPP_INFO(this->get_logger(), "INIT of Error and PWM to 0.0");
+        Error_last_right = 0.0f;
+        Error_last_left = 0.0f;
+        PWM_order_right = 0.0f;
+        PWM_order_left = 0.0f;
+        PWM_order_last_right = 0.0f;
+        PWM_order_last_left = 0.0f;
+        
+        //PWM_att_last= 0.0f;
+        //PWM_order_filter= 0.0f;
+        //leftRearPwmCmd_last= 0.0f;
 
         publisher_can_= this->create_publisher<interfaces::msg::MotorsOrder>("motors_order", 10);
 
@@ -47,10 +56,10 @@ public:
 
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
+
         subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
         "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
 
-        
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -78,6 +87,7 @@ private:
                 RCLCPP_INFO(this->get_logger(), "START");
             else 
                 RCLCPP_INFO(this->get_logger(), "STOP");
+
         }
         
 
@@ -101,20 +111,6 @@ private:
         }
     }
 
-
-/* Update command from stop car [callback function]  :
-    *
-    * This function is called when a message is published on the "/stop_car" topic
-    * 
-    */
-    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-        frontObstacle = stopCar.stop_car_front;
-        rearObstacle = stopCar.stop_car_rear;
-        if(frontObstacle || rearObstacle)
-         RCLCPP_INFO(this->get_logger(), "obstacle detected car stoped");
-    }
-
-
     /* Update currentAngle from motors feedback [callback function]  :
     *
     * This function is called when a message is published on the "/motors_feedback" topic
@@ -125,6 +121,47 @@ private:
         currentLeftSpeed = motorsFeedback.left_rear_speed;
         currentRightSpeed = motorsFeedback.right_rear_speed;
     }
+
+    /* Update command from stop car [callback function]  :
+    *
+    * This function is called when a message is published on the "/stop_car" topic
+    * 
+    */
+    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
+        frontObstacle = stopCar.stop_car_front;
+        rearObstacle = stopCar.stop_car_rear;
+    }
+
+// --------------------------------------------------------------
+
+/* Calculate the recurrence equation based on the compensator to move the car forward and backward
+*   RPM_order -> Desired Speed (RPM)
+*   PWM_order -> I(k+1)
+*   PWM_order_last -> I(k)
+*   Error -> Erreur(k+1)
+*   Error_last -> Erreur(k)
+*/
+    void recurrence_PI(float RPM_order, float& Error_last, float& PWM_order, float& PWM_order_last, float currentSpeed){
+        float Error=RPM_order-currentSpeed; 
+        Error=Error*0.9;
+        RCLCPP_INFO(this->get_logger(), "Valeur de Erreur(k+1) : %.2f et de Erreur(k) : %.2f", Error, Error_last);
+
+        PWM_order = PWM_order_last + 1.002*Error - 0.998*Error_last;   // Ki = 4  et Kp = 1   ao = Ki*Te/2 + Kp, bo = Ki*Te/2 - Kp
+        RCLCPP_INFO(this->get_logger(), "Valeur de PWM_order : %.2f", PWM_order);
+
+        if (PWM_order > 50.0) {
+            PWM_order=50.0f;
+        } else if (PWM_order < 0.0) {
+            PWM_order=0.0f;
+        }
+
+        Error_last=Error;
+        PWM_order_last=PWM_order;
+    }
+
+
+
+// --------------------------------------------------------------
 
 
 
@@ -140,32 +177,54 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start||frontObstacle==true ||rearObstacle==true){    //Car stopped
+        if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP;
             steeringPwmCmd = STOP;
-
 
         }else{ //Car started
 
             //Manual Mode
             if (mode==0){
-                
-                manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
 
+                if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
+
+                    manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
+                    //attenuation_recurrence(PWM_order_filter, leftRearPwmCmd_last, PWM_att_last);
+                    //leftRearPwmCmd=PWM_order_filter;
+                    //rightRearPwmCmd=PWM_order_filter;
+
+                }
+                else {
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
+                }
                 steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
                 reinit = 1;
 
             //Autonomous Mode
             } else if (mode==1){
-                RPM_order = 20.0;
-                reverse = 0;
-                compensator_recurrence(reinit ,RPM_order, reverse, currentRightSpeed, currentLeftSpeed, rightRearPwmCmd, leftRearPwmCmd);
+                RPM_order = 20.0f;
+                reverse = 1;
+                
+                if (reverse) {    // => PWM : [50 -> 0] (reverse)
+                    recurrence_PI(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                    recurrence_PI(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+                    rightRearPwmCmd = 50 - PWM_order_right; 
+                    //leftRearPwmCmd = 50 - PWM_order_left; capteur cassé, donc on se base sur la roue droite
+                    leftRearPwmCmd = rightRearPwmCmd; 
+                } else {   // => PWM : [50 -> 100] (forward)
+                    recurrence_PI(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                    recurrence_PI(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+                    rightRearPwmCmd = PWM_order_right + 50; 
+                    //leftRearPwmCmd = PWM_order_left + 50; capteur cassé, donc on se base sur la roue droite  
+                    leftRearPwmCmd = rightRearPwmCmd; 
+                }
                 steeringPwmCmd = 50;
                 reinit = 0;
             }  
         }
-
 
         //Send order to motors
         motorsOrder.left_rear_pwm = leftRearPwmCmd;
@@ -238,17 +297,29 @@ private:
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
 
     //Control loop variables
-    double RPM_order;
+        //Error
+    float Error_last_right;
+    float Error_last_left;
+        //PWM
+    float PWM_order_right;
+    float PWM_order_left;
+    float PWM_order_last_right;
+    float PWM_order_last_left;
+    	// attenuation
+    //float PWM_att_last;
+    //float PWM_order_filter;
+    //float leftRearPwmCmd_last;
+        //Others
+    float RPM_order;
     int reinit;
     //Motors feedback variables
     float currentAngle;
-    double currentRightSpeed;
-    double currentLeftSpeed;
+    float currentRightSpeed;
+    float currentLeftSpeed;
 
     //Obstacles variables
     bool frontObstacle;
     bool rearObstacle;
-
 
     //Manual Mode variables (with joystick control)
     bool reverse;

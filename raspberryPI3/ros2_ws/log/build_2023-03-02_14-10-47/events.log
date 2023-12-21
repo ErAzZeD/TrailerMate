@@ -1,0 +1,183 @@
+[0.000000] (-) TimerEvent: {}
+[0.001650] (-) JobUnselected: {'identifier': 'can'}
+[0.002381] (-) JobUnselected: {'identifier': 'car_control'}
+[0.006948] (-) JobUnselected: {'identifier': 'carla_msgs'}
+[0.008897] (-) JobUnselected: {'identifier': 'geicar_start'}
+[0.020042] (-) JobUnselected: {'identifier': 'imu_complementary_filter'}
+[0.020996] (-) JobUnselected: {'identifier': 'imu_filter_madgwick'}
+[0.021758] (-) JobUnselected: {'identifier': 'imu_tools'}
+[0.022102] (-) JobUnselected: {'identifier': 'interfaces'}
+[0.025928] (-) JobUnselected: {'identifier': 'joystick'}
+[0.026908] (-) JobUnselected: {'identifier': 'obs_detect'}
+[0.028085] (-) JobUnselected: {'identifier': 'rviz_imu_plugin'}
+[0.028810] (-) JobUnselected: {'identifier': 'simulation'}
+[0.029139] (-) JobUnselected: {'identifier': 'system_check'}
+[0.030019] (trailer_angle_package) JobQueued: {'identifier': 'trailer_angle_package', 'dependencies': OrderedDict()}
+[0.031013] (trailer_angle_package) JobStarted: {'identifier': 'trailer_angle_package'}
+[0.102561] (-) TimerEvent: {}
+[0.212742] (-) TimerEvent: {}
+[0.315523] (-) TimerEvent: {}
+[0.416898] (-) TimerEvent: {}
+[0.518199] (-) TimerEvent: {}
+[0.619492] (-) TimerEvent: {}
+[0.721119] (-) TimerEvent: {}
+[0.822389] (-) TimerEvent: {}
+[0.924516] (-) TimerEvent: {}
+[1.025666] (-) TimerEvent: {}
+[1.126756] (-) TimerEvent: {}
+[1.229179] (-) TimerEvent: {}
+[1.332075] (-) TimerEvent: {}
+[1.434835] (-) TimerEvent: {}
+[1.537109] (-) TimerEvent: {}
+[1.638632] (-) TimerEvent: {}
+[1.740294] (-) TimerEvent: {}
+[1.841950] (-) TimerEvent: {}
+[1.943325] (-) TimerEvent: {}
+[2.044961] (-) TimerEvent: {}
+[2.146340] (-) TimerEvent: {}
+[2.253577] (-) TimerEvent: {}
+[2.358414] (-) TimerEvent: {}
+[2.459637] (-) TimerEvent: {}
+[2.560997] (-) TimerEvent: {}
+[2.662206] (-) TimerEvent: {}
+[2.763552] (-) TimerEvent: {}
+[2.864862] (-) TimerEvent: {}
+[2.966163] (-) TimerEvent: {}
+[3.067926] (-) TimerEvent: {}
+[3.170800] (-) TimerEvent: {}
+[3.277641] (-) TimerEvent: {}
+[3.378993] (-) TimerEvent: {}
+[3.480402] (-) TimerEvent: {}
+[3.581758] (-) TimerEvent: {}
+[3.682978] (-) TimerEvent: {}
+[3.784369] (-) TimerEvent: {}
+[3.885730] (-) TimerEvent: {}
+[3.987423] (-) TimerEvent: {}
+[4.094575] (-) TimerEvent: {}
+[4.196644] (-) TimerEvent: {}
+[4.298664] (-) TimerEvent: {}
+[4.400456] (-) TimerEvent: {}
+[4.502072] (-) TimerEvent: {}
+[4.604196] (-) TimerEvent: {}
+[4.705795] (-) TimerEvent: {}
+[4.808484] (-) TimerEvent: {}
+[4.910173] (-) TimerEvent: {}
+[5.011989] (-) TimerEvent: {}
+[5.113691] (-) TimerEvent: {}
+[5.215249] (-) TimerEvent: {}
+[5.316837] (-) TimerEvent: {}
+[5.420404] (-) TimerEvent: {}
+[5.523263] (-) TimerEvent: {}
+[5.626574] (-) TimerEvent: {}
+[5.729395] (-) TimerEvent: {}
+[5.833396] (-) TimerEvent: {}
+[5.935336] (-) TimerEvent: {}
+[6.041348] (-) TimerEvent: {}
+[6.146083] (-) TimerEvent: {}
+[6.249289] (-) TimerEvent: {}
+[6.353715] (-) TimerEvent: {}
+[6.456463] (-) TimerEvent: {}
+[6.557841] (-) TimerEvent: {}
+[6.659913] (-) TimerEvent: {}
+[6.761330] (-) TimerEvent: {}
+[6.862665] (-) TimerEvent: {}
+[6.963515] (-) TimerEvent: {}
+[7.066260] (-) TimerEvent: {}
+[7.169415] (-) TimerEvent: {}
+[7.271600] (-) TimerEvent: {}
+[7.373749] (-) TimerEvent: {}
+[7.475097] (-) TimerEvent: {}
+[7.576578] (-) TimerEvent: {}
+[7.678232] (-) TimerEvent: {}
+[7.780778] (-) TimerEvent: {}
+[7.882747] (-) TimerEvent: {}
+[7.987002] (-) TimerEvent: {}
+[8.088400] (-) TimerEvent: {}
+[8.193543] (-) TimerEvent: {}
+[8.294983] (-) TimerEvent: {}
+[8.396297] (-) TimerEvent: {}
+[8.497535] (-) TimerEvent: {}
+[8.598982] (-) TimerEvent: {}
+[8.700795] (-) TimerEvent: {}
+[8.802453] (-) TimerEvent: {}
+[8.846418] (trailer_angle_package) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../build/trailer_angle_package', 'build', '--build-base', '/home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build', 'install', '--prefix', '/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package', '--record', '/home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/install.log', '--single-version-externally-managed'], 'cwd': '/home/pi/TrailerMate/raspberryPI3/ros2_ws/src/trailer_angle_package', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'pi', 'SSH_CLIENT': '192.168.1.112 57946 22', 'XDG_SESSION_TYPE': 'tty', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/rviz_imu_plugin/lib:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/lib:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/imu_filter_madgwick/lib:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/carla_msgs/lib:/home/pi/ros2_ws/install/rviz_imu_plugin/lib:/home/pi/ros2_ws/install/interfaces/lib:/home/pi/ros2_ws/install/imu_filter_madgwick/lib:/home/pi/ros2_ws/install/carla_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'MOTD_SHOWN': 'pam', 'HOME': '/home/pi', 'OLDPWD': '/home/pi/TrailerMate/raspberryPI3/ros2_ws/src', 'SSH_TTY': '/dev/pts/1', 'ROS_PYTHON_VERSION': '3', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLCON_PREFIX_PATH': '/home/pi/TrailerMate/raspberryPI3/ros2_ws/install:/home/pi/ros2_ws/install', 'ROS_DISTRO': 'humble', 'LOGNAME': 'pi', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '3', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_DOMAIN_ID': '1', 'AMENT_PREFIX_PATH': '/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/geicar_start:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/system_check:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/simulation:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/rviz_imu_plugin:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/joystick:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/car_control:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/can:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/imu_filter_madgwick:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/imu_complementary_filter:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/carla_msgs:/home/pi/ros2_ws/install/geicar_start:/home/pi/ros2_ws/install/system_check:/home/pi/ros2_ws/install/simulation:/home/pi/ros2_ws/install/imu_tools:/home/pi/ros2_ws/install/rviz_imu_plugin:/home/pi/ros2_ws/install/obs_detect:/home/pi/ros2_ws/install/joystick:/home/pi/ros2_ws/install/car_control:/home/pi/ros2_ws/install/can:/home/pi/ros2_ws/install/interfaces:/home/pi/ros2_ws/install/imu_filter_madgwick:/home/pi/ros2_ws/install/imu_complementary_filter:/home/pi/ros2_ws/install/carla_msgs:/opt/ros/humble', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'PWD': '/home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '192.168.1.112 57946 192.168.1.1 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/joystick/local/lib/python3.10/dist-packages:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/carla_msgs/local/lib/python3.10/dist-packages:/home/pi/ros2_ws/install/obs_detect/lib/python3.10/site-packages:/home/pi/ros2_ws/install/my_package/lib/python3.10/site-packages:/home/pi/ros2_ws/install/joystick/local/lib/python3.10/dist-packages:/home/pi/ros2_ws/install/interfaces/local/lib/python3.10/dist-packages:/home/pi/ros2_ws/install/carla_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/geicar_start:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/system_check:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/simulation:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/rviz_imu_plugin:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/joystick:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/car_control:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/can:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/imu_filter_madgwick:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/imu_complementary_filter:/home/pi/TrailerMate/raspberryPI3/ros2_ws/install/carla_msgs:/home/pi/ros2_ws/install/geicar_start:/home/pi/ros2_ws/install/system_check:/home/pi/ros2_ws/install/simulation:/home/pi/ros2_ws/install/imu_tools:/home/pi/ros2_ws/install/rviz_imu_plugin:/home/pi/ros2_ws/install/joystick:/home/pi/ros2_ws/install/car_control:/home/pi/ros2_ws/install/can:/home/pi/ros2_ws/install/interfaces:/home/pi/ros2_ws/install/imu_filter_madgwick:/home/pi/ros2_ws/install/imu_complementary_filter:/home/pi/ros2_ws/install/carla_msgs'}, 'shell': False}
+[8.902822] (-) TimerEvent: {}
+[9.005242] (-) TimerEvent: {}
+[9.127192] (-) TimerEvent: {}
+[9.233255] (-) TimerEvent: {}
+[9.334832] (-) TimerEvent: {}
+[9.436867] (-) TimerEvent: {}
+[9.538411] (-) TimerEvent: {}
+[9.639328] (-) TimerEvent: {}
+[9.740733] (-) TimerEvent: {}
+[9.842054] (-) TimerEvent: {}
+[9.943426] (-) TimerEvent: {}
+[10.044738] (-) TimerEvent: {}
+[10.146156] (-) TimerEvent: {}
+[10.248061] (-) TimerEvent: {}
+[10.352606] (-) TimerEvent: {}
+[10.453927] (-) TimerEvent: {}
+[10.555185] (-) TimerEvent: {}
+[10.656598] (-) TimerEvent: {}
+[10.757862] (-) TimerEvent: {}
+[10.859302] (-) TimerEvent: {}
+[10.960695] (-) TimerEvent: {}
+[11.062043] (-) TimerEvent: {}
+[11.163291] (-) TimerEvent: {}
+[11.264687] (-) TimerEvent: {}
+[11.365949] (-) TimerEvent: {}
+[11.467198] (-) TimerEvent: {}
+[11.568643] (-) TimerEvent: {}
+[11.670069] (-) TimerEvent: {}
+[11.771552] (-) TimerEvent: {}
+[11.873132] (-) TimerEvent: {}
+[11.974386] (-) TimerEvent: {}
+[12.077858] (-) TimerEvent: {}
+[12.179299] (-) TimerEvent: {}
+[12.280677] (-) TimerEvent: {}
+[12.382088] (-) TimerEvent: {}
+[12.418026] (trailer_angle_package) StdoutLine: {'line': b'running egg_info\n'}
+[12.424945] (trailer_angle_package) StdoutLine: {'line': b'creating ../../build/trailer_angle_package/trailer_angle_package.egg-info\n'}
+[12.426936] (trailer_angle_package) StdoutLine: {'line': b'writing ../../build/trailer_angle_package/trailer_angle_package.egg-info/PKG-INFO\n'}
+[12.429819] (trailer_angle_package) StdoutLine: {'line': b'writing dependency_links to ../../build/trailer_angle_package/trailer_angle_package.egg-info/dependency_links.txt\n'}
+[12.431627] (trailer_angle_package) StdoutLine: {'line': b'writing entry points to ../../build/trailer_angle_package/trailer_angle_package.egg-info/entry_points.txt\n'}
+[12.433417] (trailer_angle_package) StdoutLine: {'line': b'writing requirements to ../../build/trailer_angle_package/trailer_angle_package.egg-info/requires.txt\n'}
+[12.435212] (trailer_angle_package) StdoutLine: {'line': b'writing top-level names to ../../build/trailer_angle_package/trailer_angle_package.egg-info/top_level.txt\n'}
+[12.437213] (trailer_angle_package) StdoutLine: {'line': b"writing manifest file '../../build/trailer_angle_package/trailer_angle_package.egg-info/SOURCES.txt'\n"}
+[12.458178] (trailer_angle_package) StdoutLine: {'line': b"reading manifest file '../../build/trailer_angle_package/trailer_angle_package.egg-info/SOURCES.txt'\n"}
+[12.472239] (trailer_angle_package) StdoutLine: {'line': b"writing manifest file '../../build/trailer_angle_package/trailer_angle_package.egg-info/SOURCES.txt'\n"}
+[12.475301] (trailer_angle_package) StdoutLine: {'line': b'running build\n'}
+[12.476929] (trailer_angle_package) StdoutLine: {'line': b'running build_py\n'}
+[12.481023] (trailer_angle_package) StdoutLine: {'line': b'creating /home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build\n'}
+[12.482531] (-) TimerEvent: {}
+[12.484403] (trailer_angle_package) StdoutLine: {'line': b'creating /home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build/lib\n'}
+[12.485975] (trailer_angle_package) StdoutLine: {'line': b'creating /home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build/lib/trailer_angle_package\n'}
+[12.487151] (trailer_angle_package) StdoutLine: {'line': b'copying trailer_angle_package/trailer_angle_node.py -> /home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build/lib/trailer_angle_package\n'}
+[12.488823] (trailer_angle_package) StdoutLine: {'line': b'copying trailer_angle_package/__init__.py -> /home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build/lib/trailer_angle_package\n'}
+[12.493008] (trailer_angle_package) StdoutLine: {'line': b'running install\n'}
+[12.496090] (trailer_angle_package) StderrLine: {'line': b'/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[12.500173] (trailer_angle_package) StderrLine: {'line': b'  warnings.warn(\n'}
+[12.505564] (trailer_angle_package) StdoutLine: {'line': b'running install_lib\n'}
+[12.508856] (trailer_angle_package) StdoutLine: {'line': b'creating /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package\n'}
+[12.509789] (trailer_angle_package) StdoutLine: {'line': b'copying /home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build/lib/trailer_angle_package/trailer_angle_node.py -> /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package\n'}
+[12.512646] (trailer_angle_package) StdoutLine: {'line': b'copying /home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/build/lib/trailer_angle_package/__init__.py -> /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package\n'}
+[12.518134] (trailer_angle_package) StdoutLine: {'line': b'byte-compiling /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package/trailer_angle_node.py to trailer_angle_node.cpython-310.pyc\n'}
+[12.522007] (trailer_angle_package) StdoutLine: {'line': b'byte-compiling /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package/__init__.py to __init__.cpython-310.pyc\n'}
+[12.524823] (trailer_angle_package) StdoutLine: {'line': b'running install_data\n'}
+[12.532145] (trailer_angle_package) StdoutLine: {'line': b'creating /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/share/ament_index\n'}
+[12.536695] (trailer_angle_package) StdoutLine: {'line': b'creating /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/share/ament_index/resource_index\n'}
+[12.538340] (trailer_angle_package) StdoutLine: {'line': b'creating /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/share/ament_index/resource_index/packages\n'}
+[12.542881] (trailer_angle_package) StdoutLine: {'line': b'copying resource/trailer_angle_package -> /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/share/ament_index/resource_index/packages\n'}
+[12.544360] (trailer_angle_package) StdoutLine: {'line': b'copying package.xml -> /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/share/trailer_angle_package\n'}
+[12.545556] (trailer_angle_package) StdoutLine: {'line': b'running install_egg_info\n'}
+[12.560092] (trailer_angle_package) StdoutLine: {'line': b'Copying ../../build/trailer_angle_package/trailer_angle_package.egg-info to /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/python3.10/site-packages/trailer_angle_package-0.0.0-py3.10.egg-info\n'}
+[12.581393] (trailer_angle_package) StdoutLine: {'line': b'running install_scripts\n'}
+[12.582743] (-) TimerEvent: {}
+[12.685364] (-) TimerEvent: {}
+[12.705187] (trailer_angle_package) StdoutLine: {'line': b'Installing trailer_angle_node script to /home/pi/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package/lib/trailer_angle_package\n'}
+[12.706946] (trailer_angle_package) StdoutLine: {'line': b"writing list of installed files to '/home/pi/TrailerMate/raspberryPI3/ros2_ws/build/trailer_angle_package/install.log'\n"}
+[12.785624] (-) TimerEvent: {}
+[12.843119] (trailer_angle_package) CommandEnded: {'returncode': 0}
+[12.886047] (-) TimerEvent: {}
+[12.914574] (trailer_angle_package) JobEnded: {'identifier': 'trailer_angle_package', 'rc': 0}
+[12.917779] (-) EventReactorShutdown: {}

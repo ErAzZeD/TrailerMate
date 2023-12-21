@@ -1,0 +1,35 @@
+running egg_info
+creating ../../../../build/obs_detect/obs_detect.egg-info
+writing ../../../../build/obs_detect/obs_detect.egg-info/PKG-INFO
+writing dependency_links to ../../../../build/obs_detect/obs_detect.egg-info/dependency_links.txt
+writing entry points to ../../../../build/obs_detect/obs_detect.egg-info/entry_points.txt
+writing requirements to ../../../../build/obs_detect/obs_detect.egg-info/requires.txt
+writing top-level names to ../../../../build/obs_detect/obs_detect.egg-info/top_level.txt
+writing manifest file '../../../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+reading manifest file '../../../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+writing manifest file '../../../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/pi/TrailerMate/build/obs_detect/build
+creating /home/pi/TrailerMate/build/obs_detect/build/lib
+creating /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect
+copying obs_detect/obs_detection.py -> /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect
+copying obs_detect/__init__.py -> /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect
+running install
+running install_lib
+creating /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect
+copying /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect/obs_detection.py -> /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect
+copying /home/pi/TrailerMate/build/obs_detect/build/lib/obs_detect/__init__.py -> /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect
+byte-compiling /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect/obs_detection.py to obs_detection.cpython-310.pyc
+byte-compiling /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/pi/TrailerMate/install/obs_detect/share/ament_index
+creating /home/pi/TrailerMate/install/obs_detect/share/ament_index/resource_index
+creating /home/pi/TrailerMate/install/obs_detect/share/ament_index/resource_index/packages
+copying resource/obs_detect -> /home/pi/TrailerMate/install/obs_detect/share/ament_index/resource_index/packages
+copying package.xml -> /home/pi/TrailerMate/install/obs_detect/share/obs_detect
+running install_egg_info
+Copying ../../../../build/obs_detect/obs_detect.egg-info to /home/pi/TrailerMate/install/obs_detect/lib/python3.10/site-packages/obs_detect-0.0.0-py3.10.egg-info
+running install_scripts
+Installing obs_detection script to /home/pi/TrailerMate/install/obs_detect/lib/obs_detect
+writing list of installed files to '/home/pi/TrailerMate/build/obs_detect/install.log'

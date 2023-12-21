@@ -4,7 +4,11 @@
   <name>trailer_angle_package</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
+<<<<<<< HEAD
   <maintainer email="kilou28800@gmail.com">killian</maintainer>
+=======
+  <maintainer email="a.pierreditlambert@gmail.com">pi</maintainer>
+>>>>>>> develop
   <license>TODO: License declaration</license>
 
   <test_depend>ament_copyright</test_depend>
