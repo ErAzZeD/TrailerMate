@@ -218,7 +218,7 @@ private:
 */
     void attenuate_recurrence(float& PWM_order,float& PWM_order_last,float& PWM_att_last){
         PWM_order = 0.004975124 * (PWM_order + PWM_order_last) + 0.990049751 * PWM_att_last;   // To = 0.1
-        #RCLCPP_INFO(this->get_logger(), "Valeur PMW attenuated : %.2f", PWM_order);
+        //RCLCPP_INFO(this->get_logger(), "Valeur PMW attenuated : %.2f", PWM_order);
 	PWM_att_last=PWM_order;
         PWM_order_last = PWM_order;
     }
@@ -260,8 +260,8 @@ private:
                         attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
                         rightRearPwmCmd = 50 - PWM_order_filter; 
-                        leftRearPwmCmd = 50 - PWM_order_left; // capteur cassé, donc on se base sur la roue droite
-                        //leftRearPwmCmd = rightRearPwmCmd; 
+                        //leftRearPwmCmd = 50 - PWM_order_left; // capteur cassé, donc on se base sur la roue droite
+                        leftRearPwmCmd = rightRearPwmCmd; 
                     } else {   // => PWM : [50 -> 100] (forward)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                         recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
@@ -270,8 +270,8 @@ private:
                         attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
                         rightRearPwmCmd = PWM_order_filter + 50; 
-                        leftRearPwmCmd = PWM_order_left + 50; //capteur cassé, donc on se base sur la roue droite  
-                        //leftRearPwmCmd = rightRearPwmCmd; 
+                        //leftRearPwmCmd = PWM_order_left + 50; //capteur cassé, donc on se base sur la roue droite  
+                        leftRearPwmCmd = rightRearPwmCmd; 
                     }
 
                     recurrence_PI_steering(requestedSteerAngle, currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
@@ -296,8 +296,8 @@ private:
                     attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
 	                rightRearPwmCmd = 50 - PWM_order_filter; 
-                    leftRearPwmCmd = 50 - PWM_order_left; //capteur cassé, donc on se base sur la roue droite
-                    // leftRearPwmCmd = rightRearPwmCmd; 
+                    //leftRearPwmCmd = 50 - PWM_order_left; //capteur cassé, donc on se base sur la roue droite
+                     leftRearPwmCmd = rightRearPwmCmd; 
                 } else {   // => PWM : [50 -> 100] (forward)
                     recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                     recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
@@ -306,8 +306,8 @@ private:
                     attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
 		            rightRearPwmCmd = PWM_order_filter + 50; 
-                    leftRearPwmCmd = PWM_order_left + 50; // capteur cassé, donc on se base sur la roue droite  
-                    // leftRearPwmCmd = rightRearPwmCmd; 
+                    //leftRearPwmCmd = PWM_order_left + 50; // capteur cassé, donc on se base sur la roue droite  
+                     leftRearPwmCmd = rightRearPwmCmd; 
                 }
                 steeringPwmCmd= STOP;                
             }  
