@@ -2,11 +2,11 @@ import rclpy
 from rclpy.node import Node
 
 from interfaces.msg import Ultrasonic
-from interfaces.msg import StopCar
+from interfaces.msg import ObstacleDetection
 from interfaces.msg import MotorsOrder
 
 
-class ObstacleDetection(Node):
+class ObsDetection(Node):
 
     MINIMAL_DISTANCE = 50
 
@@ -14,8 +14,8 @@ class ObstacleDetection(Node):
         super().__init__('obs_detection')
 
         # Publishers
-        # publish informations to StopCar topic
-        self.publish_stop_car = self.create_publisher(StopCar, 'stop_car', 10)
+        # publish informations to ObstacleDetection topic
+        self.publish_obstacle_detection = self.create_publisher(ObstacleDetection, 'obstacle_detection', 10)
 
         # Subscribers
         self.subscription_us = self.create_subscription(Ultrasonic, 'us_data', self.us_callback, 10)
@@ -23,25 +23,47 @@ class ObstacleDetection(Node):
 
     def us_callback(self, us: Ultrasonic):
 
-        stop = StopCar()
+        obstacle = ObstacleDetection()
 
         # Get obstacle position
-        if us.front_left < self.MINIMAL_DISTANCE or us.front_center < self.MINIMAL_DISTANCE or us.front_right < self.MINIMAL_DISTANCE :
-            stop.stop_car_front = True
+        if us.front_left < self.MINIMAL_DISTANCE :
+            obstacle.obstacle_detected_front_left = True
+        elif us.front_center < self.MINIMAL_DISTANCE :
+            obstacle.obstacle_detected_front_center = True
+        elif us.front_right < self.MINIMAL_DISTANCE :
+            obstacle.obstacle_detected_front_right = True
         else :
-            stop.stop_car_front = False
+            obstacle.obstacle_detected_front_left = False
+            obstacle.obstacle_detected_front_center = False
+            obstacle.obstacle_detected_front_right = False
 
-        if us.rear_left < self.MINIMAL_DISTANCE or us.rear_center < self.MINIMAL_DISTANCE or us.rear_right < self.MINIMAL_DISTANCE :
-            stop.stop_car_rear = True
+        if us.rear_left < self.MINIMAL_DISTANCE :
+            obstacle.obstacle_detected_rear_left = True
+        elif us.rear_center < self.MINIMAL_DISTANCE :
+            obstacle.obstacle_detected_rear_center = True
+        elif us.rear_right < self.MINIMAL_DISTANCE :
+            obstacle.obstacle_detected_rear_right = True
         else :
-            stop.stop_car_rear = False
+            obstacle.obstacle_detected_rear_left = False
+            obstacle.obstacle_detected_rear_center = False
+            obstacle.obstacle_detected_rear_right = False
 
-        self.publish_stop_car.publish(stop)
+        if obstacle.obstacle_detected_rear_left or obstacle.obstacle_detected_rear_center or obstacle.obstacle_detected_rear_right :
+            obstacle.obstacle_detected_rear = True
+        else :
+            obstacle.obstacle_detected_rear = False
+        
+        if obstacle.obstacle_detected_front_left or obstacle.obstacle_detected_front_center or obstacle.obstacle_detected_front_right :
+            obstacle.obstacle_detected_front = True
+        else :
+            obstacle.obstacle_detected_front = False
+
+        self.publish_obstacle_detection.publish(obstacle)
 
 
 def main(args=None):
     rclpy.init(args=args)
-    obs_detection = ObstacleDetection()
+    obs_detection = ObsDetection()
     rclpy.spin(obs_detection)
     obs_detection.destroy_node()
     rclpy.shutdown()
@@ -49,4 +71,3 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-
