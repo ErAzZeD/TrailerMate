@@ -2,7 +2,8 @@
 #include <chrono>
 #include <functional>
 #include <memory>
-
+#include <rosbag/recorder.h>
+#include <rosbag/player.h>
 #include "interfaces/msg/motors_order.hpp"
 #include "interfaces/msg/motors_feedback.hpp"
 #include "interfaces/msg/steering_calibration.hpp"
@@ -118,9 +119,13 @@ private:
         }
     }
     //les deux fonctions qui enregistrent les donneés de la tajectoire
-    void start_recording() {
+        void start_recording() {
         recording_start_time = this->now();
-        recorder_options.prefix += "_" + recording_start_time.to_human_string();
+        // Spécifier les topics à enregistrer
+        recorder_options.add_topic("motors_order");
+        // Spécifier le chemin d'enregistrement
+        std::string record_path = "/home/amadar/Bureau";
+        recorder_options.prefix = record_path + "/car_data_" + recording_start_time.to_human_string();
         recorder.initialize(recorder_options);
         recorder.record();
         RCLCPP_INFO(this->get_logger(), "Start recording...");
