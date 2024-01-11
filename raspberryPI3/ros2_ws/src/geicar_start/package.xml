@@ -21,6 +21,7 @@
   <exec_depend>system_check</exec_depend>
   <exec_depend>ros2launch</exec_depend>
   <exec_depend>obs_detect</exec_depend>
+  <exec_depend>send_data</exec_depend>
 
 
   <export>

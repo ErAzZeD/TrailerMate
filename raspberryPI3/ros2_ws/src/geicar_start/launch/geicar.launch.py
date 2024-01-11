@@ -65,6 +65,12 @@ def generate_launch_description():
         emulate_tty=True
     )
 
+    send_data_node = Node(
+        package="send_data",
+        executable="send_data_node",
+        emulate_tty=True
+    )
+
 
     ld.add_action(joystick_node)
     ld.add_action(joystick_to_cmd_node)
@@ -75,5 +81,6 @@ def generate_launch_description():
     ld.add_action(system_check_node)
     ld.add_action(obs_detection)
     ld.add_action(trailer_angle)
+    ld.add_action(send_data_node)
 
     return ld
