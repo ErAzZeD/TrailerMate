@@ -8,6 +8,7 @@
 #include "interfaces/msg/steering_calibration.hpp"
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/obstacle_detection.hpp"
+#include "interfaces/msg/angle_trailer.hpp"
 
 #include "std_srvs/srv/empty.hpp"
 
@@ -66,6 +67,8 @@ public:
         subscription_obstacle_detection_ = this->create_subscription<interfaces::msg::ObstacleDetection>(
         "obstacle_detection", 10, std::bind(&car_control::obstacleDetectionCallback, this, _1));
 
+        subscription_trailer_angle_package_ = this->create_subscription<interfaces::msg::AngleTrailer>(
+        "trailer_angle_package", 10, std::bind(&car_control::trailerAngleCallback, this, _1));
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -136,6 +139,15 @@ private:
     void obstacleDetectionCallback(const interfaces::msg::ObstacleDetection & obstacleDetection){
         frontObstacle = obstacleDetection.obstacle_detected_front;
         rearObstacle = obstacleDetection.obstacle_detected_rear;
+    }
+
+     /* Update command from Trailer Angle [callback function]  :
+    *
+    * This function is called when a message is published on the "/trailer_angle_package" topic
+    * 
+    */
+    void trailerAngleCallback(const interfaces::msg::AngleTrailer & angleTrailer){
+        trailerAngle = angleTrailer.trailer_angle;
     }
 
 // --------------------------------------------------------------
@@ -223,6 +235,23 @@ private:
         PWM_order_last = PWM_order;
     }
 
+/* Calculate the recurrence equation based on the compensator to keep trailer and car aligned while reversing
+*
+*
+* 
+*/
+    void trailer_angle_compensator(float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec, float trailerAngle){
+        float SteerAngle = (trailerAngle / 90) * 5;	// trailerAngle normalization and proportional gain
+        if (SteerAngle > 1.0) {
+            SteerAngle=1.0f;
+        } else if (SteerAngle < -1.0) {
+            SteerAngle=-1.0f;
+        }
+        RCLCPP_INFO(this->get_logger(), "Valeur de TrailerAngle : %.2f et de SteerAngle : %.2f", trailerAngle, SteerAngle);
+        recurrence_PI_steering(SteerAngle, currentSteerAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
+    }
+
+
 // --------------------------------------------------------------
 
 
@@ -286,7 +315,8 @@ private:
 
             //Autonomous Mode
             } else if (mode==1){
-                RPM_order = 20.0f;
+                RPM_order = 10.0f;
+                reverse = 1;
                 
                 if (reverse) {    // => PWM : [50 -> 0] (reverse)
                     recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -295,9 +325,12 @@ private:
                     PWM_order_filter = PWM_order_right;
                     attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
-	                rightRearPwmCmd = 50 - PWM_order_filter; 
+	            rightRearPwmCmd = 50 - PWM_order_filter; 
                     //leftRearPwmCmd = 50 - PWM_order_left; //capteur cassé, donc on se base sur la roue droite
-                     leftRearPwmCmd = rightRearPwmCmd; 
+                    leftRearPwmCmd = rightRearPwmCmd; 
+                    
+                    trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
+                    
                 } else {   // => PWM : [50 -> 100] (forward)
                     recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                     recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
@@ -305,7 +338,7 @@ private:
                     PWM_order_filter = PWM_order_right;
                     attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
-		            rightRearPwmCmd = PWM_order_filter + 50; 
+		     rightRearPwmCmd = PWM_order_filter + 50; 
                     //leftRearPwmCmd = PWM_order_left + 50; // capteur cassé, donc on se base sur la roue droite  
                      leftRearPwmCmd = rightRearPwmCmd; 
                 }
@@ -409,6 +442,9 @@ private:
     float currentAngle;
     float currentRightSpeed;
     float currentLeftSpeed;
+    
+    //Traile Angle variables
+    float trailerAngle;
 
     //Obstacles variables
     bool frontObstacle;
@@ -433,6 +469,7 @@ private:
     rclcpp::Subscription<interfaces::msg::MotorsFeedback>::SharedPtr subscription_motors_feedback_;
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
     rclcpp::Subscription<interfaces::msg::ObstacleDetection>::SharedPtr subscription_obstacle_detection_;
+    rclcpp::Subscription<interfaces::msg::AngleTrailer>::SharedPtr subscription_trailer_angle_package_;
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;
