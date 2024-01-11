@@ -2,8 +2,11 @@
 #include <chrono>
 #include <functional>
 #include <memory>
-#include <rosbag/recorder.h>
-#include <rosbag/player.h>
+#include <rosbag2_cpp/writer.hpp> //         [RAJOUTER]
+#include <rosbag2_cpp/writer_options.hpp> // [RAJOUTER]
+//#include <rosbag/recorder.h>
+//#include <rosbag/player.h>
+
 #include "interfaces/msg/motors_order.hpp"
 #include "interfaces/msg/motors_feedback.hpp"
 #include "interfaces/msg/steering_calibration.hpp"
@@ -15,6 +18,9 @@
 #include "../include/car_control/steeringCmd.h"
 #include "../include/car_control/propulsionCmd.h"
 #include "../include/car_control/car_control_node.h"
+
+#include "rcutils/logging_macros.h" // For logging macros  [RAJOUTER]
+#include "rcutils/time.h"           // For time functions  [RAJOUTER]
 
 using namespace std;
 using placeholders::_1;
@@ -117,10 +123,27 @@ private:
             requestedSteerAngle = joyOrder.steer;
             reverse = joyOrder.reverse;
         }
+
+        
     }
+
+    rosbag2_cpp::Writer writer;  //*********************************************  [RAJOUTER]
+    rosbag2_cpp::ConverterOptions converter_options; // ************************  [RAJOUTER] 
+
     //les deux fonctions qui enregistrent les donneés de la tajectoire
-        void start_recording() {
+        void start_recording() { //*********************************************  [RAJOUTER]
         recording_start_time = this->now();
+        recorder_options.prefix += "_" + recording_start_time.to_human_string();
+        converter_options.uri = recorder_options.prefix + ".bag";
+
+        if (writer.open(converter_options) == rosbag2_cpp::storage_options_ret_t::ERROR) {
+            RCLCPP_ERROR(this->get_logger(), "Failed to open bag for writing");
+            return;
+        }
+
+        recording_started = true;
+        RCLCPP_INFO(this->get_logger(), "Start recording...");
+       /* recording_start_time = this->now();
         // Spécifier les topics à enregistrer
         recorder_options.add_topic("motors_order");
         // Spécifier le chemin d'enregistrement
@@ -128,21 +151,37 @@ private:
         recorder_options.prefix = record_path + "/car_data_" + recording_start_time.to_human_string();
         recorder.initialize(recorder_options);
         recorder.record();
-        RCLCPP_INFO(this->get_logger(), "Start recording...");
+        RCLCPP_INFO(this->get_logger(), "Start recording...");*/
+       
     }
+    
 
-    void stop_recording() {
-        recorder.stop();
+    void stop_recording() { //************************************************  [RAJOUTER]
+        if (recording_started) {
+            if (writer.close() == rosbag2_cpp::storage_options_ret_t::ERROR) {
+                RCLCPP_ERROR(this->get_logger(), "Failed to close bag");
+            }
+            recording_started = false;
+            RCLCPP_INFO(this->get_logger(), "Stop recording...");
+        }
+
+        /*recorder.stop();
         recorder_options = rosbag::RecorderOptions(); // Réinitialiser les options
-        RCLCPP_INFO(this->get_logger(), "Stop recording...");
+        RCLCPP_INFO(this->get_logger(), "Stop recording...");*/
     }
 
-    void handle_recording() {
-        if (record && !recorder.is_recording()) {
+    void handle_recording() {//************************************************  [RAJOUTER]
+        if (record && !recording_started) {
+            start_recording();
+        } else if (!record && recording_started) {
+            stop_recording();
+        }
+        
+        /*if (record && !recorder.is_recording()) {
             start_recording();
         } else if (!record && recorder.is_recording()) {
             stop_recording();
-        }
+        }*/
     }
 
     /* Update currentAngle from motors feedback [callback function]  :
