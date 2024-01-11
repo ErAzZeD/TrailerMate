@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'SendData = send_data.SendData:main'
+            'send_data_node = send_data.send_data_node:main'
         ],
     },
 )

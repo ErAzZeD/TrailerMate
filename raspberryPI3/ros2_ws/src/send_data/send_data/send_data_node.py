@@ -32,10 +32,10 @@ class SendData (Node):
         self.us_back_right = us.us_back_right
 
         
-     def motors_feedback_callback(self, motors_feedback: MotorsFeedback):
+    def motors_feedback_callback(self, motors_feedback: MotorsFeedback):
+        self.currentRightSpeed = motorsFeedback.right_rear_speed
         #currentAngle = motorsFeedback.steering_angle
         #currentLeftSpeed = motorsFeedback.left_rear_speed
-        self.currentRightSpeed = motorsFeedback.right_rear_speed
 
     def trailer_angle_callback(self, angle: AngleTrailer):
         self.trailer_angle = angle.trailer_angle
