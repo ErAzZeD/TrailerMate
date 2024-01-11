@@ -68,7 +68,7 @@ public:
         "obstacle_detection", 10, std::bind(&car_control::obstacleDetectionCallback, this, _1));
 
         subscription_trailer_angle_package_ = this->create_subscription<interfaces::msg::AngleTrailer>(
-        "trailer_angle_package", 10, std::bind(&car_control::trailerAngleCallback, this, _1));
+        "trailer_angle", 10, std::bind(&car_control::trailerAngleCallback, this, _1));
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -247,8 +247,10 @@ private:
         } else if (SteerAngle < -1.0) {
             SteerAngle=-1.0f;
         }
-        RCLCPP_INFO(this->get_logger(), "Valeur de TrailerAngle : %.2f et de SteerAngle : %.2f", trailerAngle, SteerAngle);
         recurrence_PI_steering(SteerAngle, currentSteerAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
+        RCLCPP_INFO(this->get_logger(), "Valeur de TrailerAngle : %.2f et de SteerAngle : %.2f", trailerAngle, SteerAngle);
+	//steeringCmd(SteerAngle, currentSteerAngle, steeringPwmCmd);
+
     }
 
 
@@ -330,7 +332,7 @@ private:
                     leftRearPwmCmd = rightRearPwmCmd; 
                     
                     trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
-                    
+                    steeringPwmCmd=PWM_angle;
                 } else {   // => PWM : [50 -> 100] (forward)
                     recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                     recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
@@ -341,8 +343,9 @@ private:
 		     rightRearPwmCmd = PWM_order_filter + 50; 
                     //leftRearPwmCmd = PWM_order_left + 50; // capteur cassé, donc on se base sur la roue droite  
                      leftRearPwmCmd = rightRearPwmCmd; 
+                     steeringPwmCmd= STOP; 
                 }
-                steeringPwmCmd= STOP;                
+                               
             }  
         }
         //Send order to motors
