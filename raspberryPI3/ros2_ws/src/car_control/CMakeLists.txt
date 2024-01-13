@@ -11,6 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(interfaces REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
+find_package(rosbag2_cpp REQUIRED)
 
 add_executable(car_control_node 
   src/car_control_node.cpp
