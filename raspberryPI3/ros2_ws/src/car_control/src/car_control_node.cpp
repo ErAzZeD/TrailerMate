@@ -93,7 +93,6 @@ private:
         
         if (joyOrder.record != record) {
             record = joyOrder.record;
-            handle_recording();
         }
             
         if (joyOrder.mode != mode && joyOrder.mode != -1){ //if mode change
@@ -118,7 +117,7 @@ private:
         
     }
 
-   
+
     /* Update currentAngle from motors feedback [callback function]  :
     *
     * This function is called when a message is published on the "/motors_feedback" topic
@@ -187,7 +186,7 @@ private:
 
         if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
-            rightRearPwmCmd = STOP;
+            rightRearPwmCmd = STOP; handle_recording();
             steeringPwmCmd = STOP;
 
         }else{ //Car started

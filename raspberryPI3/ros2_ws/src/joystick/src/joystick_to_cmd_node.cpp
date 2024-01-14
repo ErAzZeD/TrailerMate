@@ -146,7 +146,7 @@ private:
         if (buttonLB){       // LB start recording
             record = true;
 
-        }else if (butonRB){   // RB stop recording 
+        }else if (buttonRB){   // RB stop recording 
             record = false;
         }
         // ------ Propulsion ------
@@ -189,7 +189,7 @@ private:
     //Joystick variables
     map<string,int> axisMap;
     map<string,int> buttonsMap;
-    bool buttonB, buttonStart, buttonA, buttonY, buttonDpadBottom, buttonDpadLeft ;
+    bool buttonB, buttonStart, buttonA, buttonLB, buttonRB, buttonY, buttonDpadBottom, buttonDpadLeft ;
     
     float axisRT, axisLT, axisLS_X;
 
