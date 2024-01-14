@@ -72,6 +72,16 @@ def generate_launch_description():
     )
 
 
+    car_park_node = Node(
+        package="car_park",
+        executable="car_park_node",
+        emulate_tty=True
+    )
+
+
+
+
+
     ld.add_action(joystick_node)
     ld.add_action(joystick_to_cmd_node)
     ld.add_action(can_rx_node)
@@ -82,5 +92,6 @@ def generate_launch_description():
     ld.add_action(obs_detection)
     ld.add_action(trailer_angle_node)
     ld.add_action(send_data_node)
+    ld.add_action(car_park_node)
 
     return ld
