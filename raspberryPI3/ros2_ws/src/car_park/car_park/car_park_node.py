@@ -35,8 +35,7 @@ class parking(Node):
 
         if self.is_recording:
             # Enregistre les données dans le fichier texte
-            self.file_handle.write(rclpy.shutdown()
-                'Right Rear PWM: %d, Left Rear PWM: %d, Steering PWM: %d\n' %
+            self.file_handle.write('Right Rear PWM: %d, Left Rear PWM: %d, Steering PWM: %d\n' %
                 (right_rear_pwm, left_rear_pwm, steering_pwm)
             )
 
@@ -75,7 +74,7 @@ def main(args=None):
         if filerecorder.is_recording:
             filerecorder.file_handle.close()
         filerecorder.destroy_node()
-        
+        rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
