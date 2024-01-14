@@ -24,7 +24,7 @@ class parking(Node):
             10
         )
 
-        self.file_path = 'motors_order_values.txt'
+        self.file_path = '/home/pi/motors_order_values.txt'
         self.file_handle = None
         self.is_recording = False
 
@@ -35,7 +35,7 @@ class parking(Node):
 
         if self.is_recording:
             # Enregistre les données dans le fichier texte
-            self.file_handle.write('Right Rear PWM: %d, Left Rear PWM: %d, Steering PWM: %d\n' %
+            self.file_handle.write('%d %d %d\n' %
                 (right_rear_pwm, left_rear_pwm, steering_pwm)
             )
 

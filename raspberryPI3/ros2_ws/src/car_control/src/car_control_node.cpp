@@ -384,7 +384,7 @@ private:
     //General variables
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
-
+    bool play
     //Control loop variables
         // Motors
             //Error

@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'obs_detection = obs_detect.obs_detection:main'
+            'car_parking_node = obs_detect.car_parking_node:main'
         ],
     },
 )
