@@ -192,7 +192,7 @@ private:
         joystickOrderMsg.steer  = requestedAngle;
         joystickOrderMsg.reverse = reverse;
         joystickOrderMsg.record = record;
-        joystickOrderMsg.play = play;
+        //joystickOrderMsg.play = play;
         publisher_joystick_order_->publish(joystickOrderMsg); //Send order to the car_control_node
     }
 
