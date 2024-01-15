@@ -250,7 +250,7 @@ private:
         }else{ //Car started
 
             //Manual Mode
-            if (mode==0){
+            if (mode==0 && !playing){
 
                 if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
                     RPM_order = requestedThrottle*50.0f;
@@ -288,7 +288,7 @@ private:
                 }
 
             //Autonomous Mode
-            } else if (mode==1){
+            } else if (mode==1 && !playing){
                 RPM_order = 20.0f;
                 
                 if (reverse) {    // => PWM : [50 -> 0] (reverse)
@@ -315,9 +315,10 @@ private:
                 steeringPwmCmd= STOP;                
              //playing mode
             } else if (mode==3){
+                playing=true;
             // Lire une ligne différente à chaque appel de la fonction
                 RCLCPP_ERROR(get_logger(), "start playing the text file.");
-                std::string file_path = "home/pi/motors_order_values.txt"; // Remplacez cela par le chemin de votre fichier
+                std::string file_path = "/home/pi/motors_order_values.txt"; // Remplacez cela par le chemin de votre fichier
 
                 std::ifstream file(file_path);
 
@@ -351,7 +352,9 @@ private:
 
                     file.close();
                 }
+               playing= false;
             }
+        
             
 
         }
@@ -424,6 +427,7 @@ private:
     //General variables
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
+    bool playing = false ;
     //bool play;
     int currentLine = 0;
     std::string line;
