@@ -315,44 +315,51 @@ private:
                 steeringPwmCmd= STOP;                
              //playing mode
             } else if (mode==3){
-                playing=true;
+               
+                int var1 ,var2 ,var3;
             // Lire une ligne différente à chaque appel de la fonction
-                RCLCPP_ERROR(get_logger(), "start playing the text file.");
-                std::string file_path = "/home/pi/motors_order_values.txt"; // Remplacez cela par le chemin de votre fichier
-
-                std::ifstream file(file_path);
-
-                if (!file.is_open()) {
-                    RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier %s.", file_path.c_str());
-                } else {
+               // RCLCPP_ERROR(get_logger(), "start playing the text file.");
+                if (!playing) {
+                    file.open("/home/pi/motors_order_values.txt");
+                    if (!file.is_open()) {
+                        RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier ");
+                    }
+                    else{
+                        playing=true;
+                    }
+                }
+                else if(playing &&  ) { //conditin fermeture fichier
+                    playing= false;
+                    file.close();
+                }
+                else if (playing) {
                     // Avancez jusqu'à la ligne actuelle
-                    for (int i = 0; i < currentLine; ++i) {
+ /*                  for (int i = 0; i < currentLine; ++i) {
                         if (!std::getline(file, line)) {
                             // Si on atteint la fin du fichier, revenez au début
+                            RCLCPP_ERROR(get_logger(), "fin du fichier");
                             file.clear();
                             file.seekg(0, std::ios::beg);
                         }
-                    }
+                    }*/
 
                     // Lire la ligne actuelle
-                    if (std::getline(file, line)) {
-                        std::istringstream iss(line);
-                        if (iss >> leftRearPwmCmd >> rightRearPwmCmd >> steeringPwmCmd) {
-                            // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
-                            RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd);
-                        } else {
-                            RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
-                        }
-
-                        // Incrémente la position actuelle dans le fichier pour la prochaine fois
-                        currentLine = (currentLine + 1) % totalNumberOfLines;  // Mettez à jour totalNumberOfLines avec le nombre total de lignes dans votre fichier
+                    if (!file.eof) {
+                    file >> var1 >> var2 >> var3;
+                    file.std::ignore(256, '\n');
+                    // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
+                    RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
+                    leftRearPwmCmd = var1;
+                    rightRearPwmCmd = var2;
+                    steeringPwmCmd = var3;
                     } else {
-                        RCLCPP_ERROR(get_logger(), "Impossible de lire la ligne du fichier.");
+                        RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
                     }
+   
 
-                    file.close();
+                   
                 }
-               playing= false;
+               
             }
         
             
@@ -473,6 +480,9 @@ private:
     uint8_t leftRearPwmCmd;
     uint8_t rightRearPwmCmd;
     uint8_t steeringPwmCmd;
+
+    //file
+    std::ifstream file
 
     //Publishers
     rclcpp::Publisher<interfaces::msg::MotorsOrder>::SharedPtr publisher_can_;
