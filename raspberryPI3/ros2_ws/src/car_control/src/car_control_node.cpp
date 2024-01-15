@@ -2,7 +2,8 @@
 #include <chrono>
 #include <functional>
 #include <memory>
-
+#include <fstream>  //rajouter
+#include <sstream>   //rajouter
 #include "interfaces/msg/motors_order.hpp"
 #include "interfaces/msg/motors_feedback.hpp"
 #include "interfaces/msg/steering_calibration.hpp"
@@ -313,6 +314,7 @@ private:
                      leftRearPwmCmd = rightRearPwmCmd; 
                 }
                 steeringPwmCmd= STOP;                
+             //playing mode
             } else if (play){
             // Lire une ligne différente à chaque appel de la fonction
                 std::string file_path = "home/pi/motors_order_values.txt"; // Remplacez cela par le chemin de votre fichier
