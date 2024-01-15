@@ -97,9 +97,6 @@ private:
 
         }
         
-        if (joyOrder.record != record) {
-            record = joyOrder.record;
-        }
             
         if (joyOrder.mode != mode && joyOrder.mode != -1){ //if mode change
             mode = joyOrder.mode;
@@ -245,7 +242,7 @@ private:
 
         if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
-            rightRearPwmCmd = STOP; handle_recording();
+            rightRearPwmCmd = STOP; 
             steeringPwmCmd = STOP;
 
         }else{ //Car started
@@ -425,6 +422,9 @@ private:
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
     bool play;
+    int currentLine = 0;
+    std::string line;
+    int totalNumberOfLines = 0;
     //Control loop variables
         // Motors
             //Error
