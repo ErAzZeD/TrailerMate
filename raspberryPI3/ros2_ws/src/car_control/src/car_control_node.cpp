@@ -313,7 +313,45 @@ private:
                      leftRearPwmCmd = rightRearPwmCmd; 
                 }
                 steeringPwmCmd= STOP;                
-            }  
+            } else if (play){
+            // Lire une ligne différente à chaque appel de la fonction
+                std::string file_path = "home/pi/motors_order_values.txt"; // Remplacez cela par le chemin de votre fichier
+
+                std::ifstream file(file_path);
+
+                if (!file.is_open()) {
+                    RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier %s.", file_path.c_str());
+                } else {
+                    // Avancez jusqu'à la ligne actuelle
+                    for (int i = 0; i < currentLine; ++i) {
+                        if (!std::getline(file, line)) {
+                            // Si on atteint la fin du fichier, revenez au début
+                            file.clear();
+                            file.seekg(0, std::ios::beg);
+                        }
+                    }
+
+                    // Lire la ligne actuelle
+                    if (std::getline(file, line)) {
+                        std::istringstream iss(line);
+                        if (iss >> leftRearPwmCmd >> rightRearPwmCmd >> steeringPwmCmd) {
+                            // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
+                            RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd);
+                        } else {
+                            RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
+                        }
+
+                        // Incrémente la position actuelle dans le fichier pour la prochaine fois
+                        currentLine = (currentLine + 1) % totalNumberOfLines;  // Mettez à jour totalNumberOfLines avec le nombre total de lignes dans votre fichier
+                    } else {
+                        RCLCPP_ERROR(get_logger(), "Impossible de lire la ligne du fichier.");
+                    }
+
+                    file.close();
+                }
+            }
+            
+
         }
         //Send order to motors
         motorsOrder.left_rear_pwm = leftRearPwmCmd;
@@ -384,7 +422,7 @@ private:
     //General variables
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
-    bool play
+    bool play;
     //Control loop variables
         // Motors
             //Error

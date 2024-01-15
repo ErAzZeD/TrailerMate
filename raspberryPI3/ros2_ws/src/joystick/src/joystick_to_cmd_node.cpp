@@ -82,6 +82,7 @@ private:
         buttonY = joy.buttons[buttonsMap.find("Y")->second]; 
         buttonLB = joy.buttons[buttonsMap.find("LB")->second];  
         buttonRB = joy.buttons[buttonsMap.find("RB")->second]; 
+        buttonX = joy.buttons[buttonsMap.find("X")->second]; 
 
         axisRT = joy.axes[axisMap.find("RT")->second];      //Motors (go forward)
         axisLT = joy.axes[axisMap.find("LT")->second];      //Motors (go backward)
@@ -149,6 +150,12 @@ private:
         }else if (buttonRB){   // RB stop recording 
             record = false;
         }
+        // playing button
+        if (buttonX){       // LB start reading text file
+            play = true;
+        }else{                // RB stop reading text file
+            play = false;
+        }
         // ------ Propulsion ------
         if (axisLT > DEADZONE_LT_RT && axisRT > DEADZONE_LT_RT){  //Incompatible orders : Stop the car
             requestedThrottle = STOP;
@@ -183,13 +190,14 @@ private:
         joystickOrderMsg.steer  = requestedAngle;
         joystickOrderMsg.reverse = reverse;
         joystickOrderMsg.record = record;
+        joystickOrderMsg.play = play;
         publisher_joystick_order_->publish(joystickOrderMsg); //Send order to the car_control_node
     }
 
     //Joystick variables
     map<string,int> axisMap;
     map<string,int> buttonsMap;
-    bool buttonB, buttonStart, buttonA, buttonLB, buttonRB, buttonY, buttonDpadBottom, buttonDpadLeft ;
+    bool buttonB, buttonX, buttonStart, buttonA, buttonLB, buttonRB, buttonY, buttonDpadBottom, buttonDpadLeft ;
     
     float axisRT, axisLT, axisLS_X;
 
@@ -198,7 +206,7 @@ private:
     int mode;
     bool record;
     bool systemCheckPrintRequest;
-
+    bool play;
 
     //Manual mode variables
     float requestedAngle, requestedThrottle;
