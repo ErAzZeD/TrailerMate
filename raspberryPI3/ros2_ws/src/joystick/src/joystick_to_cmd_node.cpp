@@ -112,7 +112,7 @@ private:
             mode = -1;
         
 
-        if (buttonA || buttonY || buttonDpadBottom){
+        if (buttonA || buttonX || buttonY || buttonDpadBottom){
 
             if (buttonY)
                 mode = 0;
@@ -122,7 +122,8 @@ private:
                 mode = 3;
             else if (buttonDpadBottom && buttonStart){
                 mode = 2;
-                start = false;
+                start = 
+                false;
             }
         }
 
@@ -152,12 +153,12 @@ private:
         }else if (buttonRB){   // RB stop recording 
             record = false;
         }
-        // playing button
-        //if (buttonX){       // X start reading text file
-          //  play = true;
-        //}else{                // X stop reading text file
-          //  play = false;
-        //}
+        //playing button
+        /*if (buttonX){       // X start reading text file
+          play = true;
+        }else{                // X stop reading text file
+          play = false;
+        }*/
         // ------ Propulsion ------
         if (axisLT > DEADZONE_LT_RT && axisRT > DEADZONE_LT_RT){  //Incompatible orders : Stop the car
             requestedThrottle = STOP;
