@@ -118,6 +118,8 @@ private:
                 mode = 0;
             else if (buttonA)
                 mode = 1;
+            else if (buttonX)
+                mode = 3;
             else if (buttonDpadBottom && buttonStart){
                 mode = 2;
                 start = false;
@@ -151,11 +153,11 @@ private:
             record = false;
         }
         // playing button
-        if (buttonX){       // LB start reading text file
-            play = true;
-        }else{                // RB stop reading text file
-            play = false;
-        }
+        //if (buttonX){       // X start reading text file
+          //  play = true;
+        //}else{                // X stop reading text file
+          //  play = false;
+        //}
         // ------ Propulsion ------
         if (axisLT > DEADZONE_LT_RT && axisRT > DEADZONE_LT_RT){  //Incompatible orders : Stop the car
             requestedThrottle = STOP;
@@ -206,7 +208,7 @@ private:
     int mode;
     bool record;
     bool systemCheckPrintRequest;
-    bool play;
+    //bool play;
 
     //Manual mode variables
     float requestedAngle, requestedThrottle;

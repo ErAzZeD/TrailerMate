@@ -108,6 +108,8 @@ private:
             }else if (mode==2){
                 RCLCPP_INFO(this->get_logger(), "Switching to STEERING CALIBRATION Mode");
                 startSteeringCalibration();
+            }else if (mode==3){
+                RCLCPP_INFO(this->get_logger(), "Switching to PARKING Mode");
             }
         }
         
@@ -312,8 +314,9 @@ private:
                 }
                 steeringPwmCmd= STOP;                
              //playing mode
-            } else if (play){
+            } else if (mode==3){
             // Lire une ligne différente à chaque appel de la fonction
+                RCLCPP_ERROR(get_logger(), "start playing the text file.");
                 std::string file_path = "home/pi/motors_order_values.txt"; // Remplacez cela par le chemin de votre fichier
 
                 std::ifstream file(file_path);
@@ -421,7 +424,7 @@ private:
     //General variables
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
-    bool play;
+    //bool play;
     int currentLine = 0;
     std::string line;
     int totalNumberOfLines = 0;
