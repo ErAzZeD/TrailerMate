@@ -328,14 +328,14 @@ private:
                         playing=true;
                     }
                 }
-                else if(playing && file.eof ) { //conditin fermeture fichier
+                else if(playing && file.eof() ) { //conditin fermeture fichier
                     playing= false;
                     file.close();
                 }
                 else if (playing) {
 
                  // Lire la ligne actuelle
-                    if (!file.eof) {
+                    if (!file.eof()) {
                     file >> var1 >> var2 >> var3;
                     file.std::ignore(256, '\n');
                     // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
@@ -468,7 +468,7 @@ private:
     uint8_t steeringPwmCmd;
 
     //file
-    std::ifstream file
+    std::ifstream file;
 
     //Publishers
     rclcpp::Publisher<interfaces::msg::MotorsOrder>::SharedPtr publisher_can_;
