@@ -322,17 +322,19 @@ private:
                 if (!playing) {
                     file.open("/home/pi/motors_order_values.txt");
                     if (!file.is_open()) {
-                        RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier");
+                        RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier ");
                     }
                     else{
                         playing=true;
                     }
                 }
-                else if(playing &&   ) { //conditin fermeture fichier
-                    playing = false;
+                else if(playing && file.eof ) { //conditin fermeture fichier
+                    playing= false;
                     file.close();
                 }
                 else if (playing) {
+
+                 // Lire la ligne actuelle
                     if (!file.eof) {
                     file >> var1 >> var2 >> var3;
                     file.std::ignore(256, '\n');
@@ -343,12 +345,10 @@ private:
                     steeringPwmCmd = var3;
                     } else {
                         RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
-                    }                   
+                    }   
                 }
                
             }
-        
-            
 
         }
         //Send order to motors
