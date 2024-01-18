@@ -1,0 +1,23 @@
+[0.457s] Invoking command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/obs_detect': PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/obs_detect/prefix_override:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/obs_detect/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/obs_detect build --build-base /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/obs_detect/build install --record /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/obs_detect/install.log --single-version-externally-managed
+[0.608s] running egg_info
+[0.608s] writing ../../build/obs_detect/obs_detect.egg-info/PKG-INFO
+[0.610s] writing dependency_links to ../../build/obs_detect/obs_detect.egg-info/dependency_links.txt
+[0.610s] writing entry points to ../../build/obs_detect/obs_detect.egg-info/entry_points.txt
+[0.610s] writing requirements to ../../build/obs_detect/obs_detect.egg-info/requires.txt
+[0.610s] writing top-level names to ../../build/obs_detect/obs_detect.egg-info/top_level.txt
+[0.612s] reading manifest file '../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+[0.613s] writing manifest file '../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+[0.613s] running build
+[0.613s] running build_py
+[0.614s] running install
+[0.614s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.614s]   warnings.warn(
+[0.614s] running install_lib
+[0.615s] running install_data
+[0.615s] running install_egg_info
+[0.616s] removing '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/obs_detect/lib/python3.10/site-packages/obs_detect-0.0.0-py3.10.egg-info' (and everything under it)
+[0.616s] Copying ../../build/obs_detect/obs_detect.egg-info to /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/obs_detect/lib/python3.10/site-packages/obs_detect-0.0.0-py3.10.egg-info
+[0.617s] running install_scripts
+[0.632s] Installing obs_detection script to /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/obs_detect/lib/obs_detect
+[0.633s] writing list of installed files to '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/obs_detect/install.log'
+[0.650s] Invoked command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/obs_detect' returned '0': PYTHONPATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/obs_detect/prefix_override:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/obs_detect/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/obs_detect build --build-base /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/obs_detect/build install --record /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/obs_detect/install.log --single-version-externally-managed

@@ -1,0 +1,19 @@
+running egg_info
+writing ../../build/obs_detect/obs_detect.egg-info/PKG-INFO
+writing dependency_links to ../../build/obs_detect/obs_detect.egg-info/dependency_links.txt
+writing entry points to ../../build/obs_detect/obs_detect.egg-info/entry_points.txt
+writing requirements to ../../build/obs_detect/obs_detect.egg-info/requires.txt
+writing top-level names to ../../build/obs_detect/obs_detect.egg-info/top_level.txt
+reading manifest file '../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+writing manifest file '../../build/obs_detect/obs_detect.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+running install_data
+running install_egg_info
+removing '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/obs_detect/lib/python3.10/site-packages/obs_detect-0.0.0-py3.10.egg-info' (and everything under it)
+Copying ../../build/obs_detect/obs_detect.egg-info to /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/obs_detect/lib/python3.10/site-packages/obs_detect-0.0.0-py3.10.egg-info
+running install_scripts
+Installing obs_detection script to /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/obs_detect/lib/obs_detect
+writing list of installed files to '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/obs_detect/install.log'

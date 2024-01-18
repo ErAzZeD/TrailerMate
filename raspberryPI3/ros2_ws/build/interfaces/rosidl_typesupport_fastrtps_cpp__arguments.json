@@ -10,7 +10,9 @@
     "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces:msg/SteeringCalibration.idl",
     "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces:msg/Ultrasonic.idl",
     "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces:msg/Gnss.idl",
-    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces:msg/SystemCheck.idl"
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces:msg/SystemCheck.idl",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces:msg/StopCar.idl",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces:msg/AngleTrailer.idl"
   ],
   "target_dependencies": [
     "/opt/ros/humble/lib/rosidl_typesupport_fastrtps_cpp/rosidl_typesupport_fastrtps_cpp",
@@ -28,6 +30,8 @@
     "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces/msg/SteeringCalibration.idl",
     "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces/msg/Ultrasonic.idl",
     "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces/msg/Gnss.idl",
-    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces/msg/SystemCheck.idl"
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces/msg/SystemCheck.idl",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces/msg/StopCar.idl",
+    "/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/interfaces/rosidl_adapter/interfaces/msg/AngleTrailer.idl"
   ]
 }

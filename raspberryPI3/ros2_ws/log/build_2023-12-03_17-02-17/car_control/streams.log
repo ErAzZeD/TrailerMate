@@ -1,0 +1,39 @@
+[0.334s] Invoking command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/car_control': CMAKE_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/geicar_start:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/simulation:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/rviz_imu_plugin:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/joystick:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/car_control:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/can:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_filter_madgwick:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_complementary_filter:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/carla_msgs:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package:/opt/ros/humble LD_LIBRARY_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/lib:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/rviz_imu_plugin/lib:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_filter_madgwick/lib:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/carla_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib /usr/bin/cmake --build /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/car_control -- -j16 -l16
+[0.368s] -- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.585s] -- Found rclcpp: 16.0.6 (/opt/ros/humble/share/rclcpp/cmake)
+[0.636s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.640s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.651s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.672s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.700s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.795s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.798s] -- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.035s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.302s] -- Found interfaces: 0.0.0 (/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/share/interfaces/cmake)
+[1.332s] -- Found sensor_msgs: 4.2.3 (/opt/ros/humble/share/sensor_msgs/cmake)
+[1.574s] -- Found std_srvs: 4.2.3 (/opt/ros/humble/share/std_srvs/cmake)
+[1.638s] -- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.773s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.774s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/car_control/include>
+[1.774s] -- Configured cppcheck exclude dirs and/or files: 
+[1.776s] -- Added test 'lint_cmake' to check CMake code style
+[1.778s] -- Added test 'uncrustify' to check C / C++ code style
+[1.778s] -- Configured uncrustify additional arguments: 
+[1.779s] -- Added test 'xmllint' to check XML markup files
+[1.783s] -- Configuring done
+[1.821s] -- Generating done
+[1.825s] -- Build files have been written to: /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/car_control
+[1.925s] [35m[1mConsolidate compiler generated dependencies of target car_control_node[0m
+[1.956s] [ 20%] [32mBuilding CXX object CMakeFiles/car_control_node.dir/src/car_control_node.cpp.o[0m
+[1.972s] [ 40%] [32mBuilding CXX object CMakeFiles/car_control_node.dir/src/control_loop.cpp.o[0m
+[1.974s] [ 60%] [32mBuilding CXX object CMakeFiles/car_control_node.dir/src/propulsionCmd.cpp.o[0m
+[1.975s] [ 80%] [32mBuilding CXX object CMakeFiles/car_control_node.dir/src/steeringCmd.cpp.o[0m
+[2.029s] [01m[K/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/car_control/src/control_loop.cpp:[m[K In function ‘[01m[Kvoid compensator_recurrence(bool, double, bool, double, double, uint8_t&, uint8_t&)[m[K’:
+[2.029s] [01m[K/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/src/car_control/src/control_loop.cpp:35:14:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K:[m[K’ token
+[2.029s]    35 |     if (init)[01;31m[K:[m[K
+[2.030s]       |              [01;31m[K^[m[K
+[2.031s] gmake[2]: *** [CMakeFiles/car_control_node.dir/build.make:118: CMakeFiles/car_control_node.dir/src/control_loop.cpp.o] Error 1
+[2.031s] gmake[2]: *** Waiting for unfinished jobs....
+[29.287s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/car_control_node.dir/all] Error 2
+[29.289s] gmake: *** [Makefile:146: all] Error 2
+[29.301s] Invoked command in '/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/car_control' returned '2': CMAKE_PREFIX_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/geicar_start:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/system_check:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/simulation:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_tools:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/rviz_imu_plugin:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/joystick:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/car_control:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/can:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_filter_madgwick:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_complementary_filter:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/carla_msgs:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/trailer_angle_package:/opt/ros/humble LD_LIBRARY_PATH=/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/interfaces/lib:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/rviz_imu_plugin/lib:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/imu_filter_madgwick/lib:/home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/install/carla_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib /usr/bin/cmake --build /home/killian/Bureau/Projet_Voiture/TrailerMate/raspberryPI3/ros2_ws/build/car_control -- -j16 -l16

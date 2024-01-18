@@ -313,12 +313,13 @@ private:
                      leftRearPwmCmd = rightRearPwmCmd; 
                 }
                 steeringPwmCmd= STOP;                
+  
              //playing mode
             } else if (mode==3){
                
                 int var1 ,var2 ,var3;
-            // Lire une ligne différente à chaque appel de la fonction
-               // RCLCPP_ERROR(get_logger(), "start playing the text file.");
+                // Lire une ligne différente à chaque appel de la fonction
+                // RCLCPP_ERROR(get_logger(), "start playing the text file.");
                 if (!playing) {
                     file.open("/home/pi/motors_order_values.txt");
                     if (!file.is_open()) {
@@ -336,21 +337,20 @@ private:
 
                  // Lire la ligne actuelle
                     if (!file.eof()) {
-                    file >> var1 >> var2 >> var3;
-                    file.std::ignore(256, '\n');
-                    // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
-                    RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
-                    leftRearPwmCmd = var1;
-                    rightRearPwmCmd = var2;
-                    steeringPwmCmd = var3;
+                        file >> var1 >> var2 >> var3;
+                        file.std::ignore(256, '\n');
+                        // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
+                        RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
+                        leftRearPwmCmd = var1;
+                        rightRearPwmCmd = var2;
+                        steeringPwmCmd = var3;
                     } else {
                         RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
                     }   
                 }
-               
             }
-
         }
+      
         //Send order to motors
         motorsOrder.left_rear_pwm = leftRearPwmCmd;
         motorsOrder.right_rear_pwm = rightRearPwmCmd;
