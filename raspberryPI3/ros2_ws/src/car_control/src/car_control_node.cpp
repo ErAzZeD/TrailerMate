@@ -2,7 +2,8 @@
 #include <chrono>
 #include <functional>
 #include <memory>
-
+#include <fstream>  //rajouter
+#include <sstream>   //rajouter
 #include "interfaces/msg/motors_order.hpp"
 #include "interfaces/msg/motors_feedback.hpp"
 #include "interfaces/msg/steering_calibration.hpp"
@@ -96,7 +97,7 @@ private:
 
         }
         
-
+            
         if (joyOrder.mode != mode && joyOrder.mode != -1){ //if mode change
             mode = joyOrder.mode;
 
@@ -107,6 +108,8 @@ private:
             }else if (mode==2){
                 RCLCPP_INFO(this->get_logger(), "Switching to STEERING CALIBRATION Mode");
                 startSteeringCalibration();
+            }else if (mode==3){
+                RCLCPP_INFO(this->get_logger(), "Switching to PARKING Mode");
             }
         }
         
@@ -241,13 +244,13 @@ private:
 
         if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
-            rightRearPwmCmd = STOP;
+            rightRearPwmCmd = STOP; 
             steeringPwmCmd = STOP;
 
         }else{ //Car started
 
             //Manual Mode
-            if (mode==0){
+            if (mode==0 && !playing){
 
                 if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
                     RPM_order = requestedThrottle*50.0f;
@@ -285,7 +288,7 @@ private:
                 }
 
             //Autonomous Mode
-            } else if (mode==1){
+            } else if (mode==1 && !playing){
                 RPM_order = 20.0f;
                 
                 if (reverse) {    // => PWM : [50 -> 0] (reverse)
@@ -310,8 +313,44 @@ private:
                      leftRearPwmCmd = rightRearPwmCmd; 
                 }
                 steeringPwmCmd= STOP;                
-            }  
+  
+             //playing mode
+            } else if (mode==3){
+               
+                int var1 ,var2 ,var3;
+                // Lire une ligne différente à chaque appel de la fonction
+                // RCLCPP_ERROR(get_logger(), "start playing the text file.");
+                if (!playing) {
+                    file.open("/home/pi/motors_order_values.txt");
+                    if (!file.is_open()) {
+                        RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier ");
+                    }
+                    else{
+                        playing=true;
+                    }
+                }
+                else if(playing && file.eof() ) { //conditin fermeture fichier
+                    playing= false;
+                    file.close();
+                }
+                else if (playing) {
+
+                 // Lire la ligne actuelle
+                    if (!file.eof()) {
+                        file >> var1 >> var2 >> var3;
+                        file.std::ignore(256, '\n');
+                        // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
+                        RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
+                        leftRearPwmCmd = var1;
+                        rightRearPwmCmd = var2;
+                        steeringPwmCmd = var3;
+                    } else {
+                        RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
+                    }   
+                }
+            }
         }
+      
         //Send order to motors
         motorsOrder.left_rear_pwm = leftRearPwmCmd;
         motorsOrder.right_rear_pwm = rightRearPwmCmd;
@@ -381,7 +420,11 @@ private:
     //General variables
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
-
+    bool playing = false ;
+    //bool play;
+    int currentLine = 0;
+    std::string line;
+    int totalNumberOfLines = 0;
     //Control loop variables
         // Motors
             //Error
@@ -423,6 +466,9 @@ private:
     uint8_t leftRearPwmCmd;
     uint8_t rightRearPwmCmd;
     uint8_t steeringPwmCmd;
+
+    //file
+    std::ifstream file;
 
     //Publishers
     rclcpp::Publisher<interfaces::msg::MotorsOrder>::SharedPtr publisher_can_;
