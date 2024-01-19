@@ -102,8 +102,10 @@ private:
             mode = joyOrder.mode;
 
             if (mode==0){
+                stop_play = true;
                 RCLCPP_INFO(this->get_logger(), "Switching to MANUAL Mode");
             }else if (mode==1){
+                stop_play = true;
                 RCLCPP_INFO(this->get_logger(), "Switching to AUTONOMOUS Mode");
             }else if (mode==2){
                 RCLCPP_INFO(this->get_logger(), "Switching to STEERING CALIBRATION Mode");
