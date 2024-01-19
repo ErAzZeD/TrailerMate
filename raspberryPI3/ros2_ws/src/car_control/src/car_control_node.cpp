@@ -332,6 +332,7 @@ private:
                 else if(playing && file.eof() ) { //conditin fermeture fichier
                     playing= false;
                     file.close();
+                    mode=0;
                 }
                 else if (playing) {
 
