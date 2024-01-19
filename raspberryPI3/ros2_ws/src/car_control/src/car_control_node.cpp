@@ -131,7 +131,8 @@ private:
         currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
-    /* Update command from stop car [callback function]  :
+    /* Update command from stop car [callsteeringPwmCmd= STOP;                
+  back function]  :
     *
     * This function is called when a message is published on the "/stop_car" topic
     * 
@@ -320,7 +321,7 @@ private:
                 int var1 ,var2 ,var3;
                 // Lire une ligne différente à chaque appel de la fonction
                 // RCLCPP_ERROR(get_logger(), "start playing the text file.");
-                if (!playing) {
+                if (!playing && !stop_play) {
                     file.open("/home/pi/motors_order_values.txt");
                     if (!file.is_open()) {
                         RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier ");
@@ -332,6 +333,7 @@ private:
                 else if(playing && file.eof() ) { //conditin fermeture fichier
                     playing= false;
                     file.close();
+                    stop_play=true;
                     mode=0;
                 }
                 else if (playing) {
@@ -422,6 +424,7 @@ private:
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
     bool playing = false ;
+    bool stop_play = false;
     //bool play;
     int currentLine = 0;
     std::string line;
