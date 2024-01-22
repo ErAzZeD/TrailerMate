@@ -266,17 +266,17 @@ private:
     }
 
     void IMU_filter(float &Roll, float &Pitch, float &Yaw, IMU_filter_var &IMU_filter) {
-        float Roll_filter = 0.16666666666666666 * (Roll + IMU_filter->Roll_last) + 0.6666666666666666 * IMU_filter->Roll_filter_last;   // To = 0.1
-	IMU_filter->Roll_filter_last = Roll_filter;
-        IMU_filter->Roll_last = Roll;  
+        float Roll_filter = 0.16666666666666666 * (Roll + IMU_filter.Roll_last) + 0.6666666666666666 * IMU_filter.Roll_filter_last;   // To = 0.1
+	IMU_filter.Roll_filter_last = Roll_filter;
+        IMU_filter.Roll_last = Roll;  
         
-        float Pitch_filter = 0.16666666666666666 * (Pitch + IMU_filter->Pitch_last) + 0.6666666666666666 * IMU_filter->Pitch_filter_last;   // To = 0.1
-	IMU_filter->Pitch_filter_last = Pitch_filter;
-        IMU_filter->Pitch_last = Pitch;  
+        float Pitch_filter = 0.16666666666666666 * (Pitch + IMU_filter.Pitch_last) + 0.6666666666666666 * IMU_filter.Pitch_filter_last;   // To = 0.1
+	IMU_filter.Pitch_filter_last = Pitch_filter;
+        IMU_filter.Pitch_last = Pitch;  
         
-        float Yaw_filter = 0.16666666666666666 * (Yaw + IMU_filter->Yaw_last) + 0.6666666666666666 * IMU_filter->Yaw_filter_last;   // To = 0.1
-	IMU_filter->Yaw_filter_last = Yaw_filter;
-        IMU_filter->Yaw_last = Yaw;        
+        float Yaw_filter = 0.16666666666666666 * (Yaw + IMU_filter.Yaw_last) + 0.6666666666666666 * IMU_filter.Yaw_filter_last;   // To = 0.1
+	IMU_filter.Yaw_filter_last = Yaw_filter;
+        IMU_filter.Yaw_last = Yaw;        
     
     	RCLCPP_INFO(this->get_logger(), "Roll : (%.2f,%.2f) , Pitch : (%.2f,%.2f) , Yaw : (%.2f,%.2f)", Roll,Roll_filter, Pitch,Pitch_filter, Yaw, Yaw_filter);
     	
