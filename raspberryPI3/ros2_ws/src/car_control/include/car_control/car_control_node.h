@@ -10,5 +10,13 @@
 #define STOP 50 //PWM value to stop motors
 #define FIXED_SPEED 20.0 //Fixed speed for Autonomous Mode
 
+struct IMU_filter_var {
+    float Roll_last;
+    float Roll_filter_last;
+    float Pitch_last;
+    float Pitch_filter_last;
+    float Yaw_last;
+    float Yaw_filter_last;
+};
 
 #endif /*__ car_control_node_H */

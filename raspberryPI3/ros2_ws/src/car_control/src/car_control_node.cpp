@@ -485,16 +485,8 @@ private:
     float yaw;
     
     // IMU Filter
-    struct IMU_filter_var {
-    	float Roll_last = 0.0f;
-	float Roll_filter_last = 0.0f;
-	float Pitch_last = 0.0f;
-	float Pitch_filter_last = 0.0f;
-	float Yaw_last = 0.0f;
-	float Yaw_filter_last = 0.0f;
-    };
-    
-    IMU_filter_var IMU_filter;
+    IMU_filter_var IMU_filter = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    //IMU_filter_var IMU_filter;
     
     //Motors feedback variables
     float currentAngle;
