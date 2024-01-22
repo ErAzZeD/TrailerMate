@@ -265,8 +265,24 @@ private:
         //RCLCPP_INFO(this->get_logger(), "Valeur de TrailerAngle : %.2f et de SteerAngle : %.2f", trailerAngle, SteerAngle);
     }
 
-    void test_IMU(float roll, float pitch, float yaw) {
-    	RCLCPP_INFO(this->get_logger(), "Roll : %.2f , Pitch : %.2f , Yaw : %.2f", pitch, roll, yaw);
+    void IMU_filter(float &Roll, float &Pitch, float &Yaw, IMU_filter_var &IMU_filter) {
+        float Roll_filter = 0.16666666666666666 * (Roll + IMU_filter->Roll_last) + 0.6666666666666666 * IMU_filter->Roll_filter_last;   // To = 0.1
+	IMU_filter->Roll_filter_last = Roll_filter;
+        IMU_filter->Roll_last = Roll;  
+        
+        float Pitch_filter = 0.16666666666666666 * (Pitch + IMU_filter->Pitch_last) + 0.6666666666666666 * IMU_filter->Pitch_filter_last;   // To = 0.1
+	IMU_filter->Pitch_filter_last = Pitch_filter;
+        IMU_filter->Pitch_last = Pitch;  
+        
+        float Yaw_filter = 0.16666666666666666 * (Yaw + IMU_filter->Yaw_last) + 0.6666666666666666 * IMU_filter->Yaw_filter_last;   // To = 0.1
+	IMU_filter->Yaw_filter_last = Yaw_filter;
+        IMU_filter->Yaw_last = Yaw;        
+    
+    	RCLCPP_INFO(this->get_logger(), "Roll : (%.2f,%.2f) , Pitch : (%.2f,%.2f) , Yaw : (%.2f,%.2f)", Roll,Roll_filter, Pitch,Pitch_filter, Yaw, Yaw_filter);
+    	
+    	Roll=Roll_filter;
+    	Pitch=Pitch_filter;
+    	Yaw=Yaw_filter;
     }
 
 // --------------------------------------------------------------
@@ -298,7 +314,7 @@ private:
                 //if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
                 if (true) {
                     RPM_order = requestedThrottle*50.0f;
-                    
+                    IMU_filter(roll, pitch, yaw, IMU_filter);
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                         recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
@@ -314,7 +330,6 @@ private:
                     	steeringPwmCmd=PWM_angle;
                         
                     } else {   // => PWM : [50 -> 100] (forward)
-                    	test_IMU(roll, pitch, yaw);
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                         recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
                         
@@ -468,6 +483,18 @@ private:
     float roll;
     float pitch;
     float yaw;
+    
+    // IMU Filter
+    struct IMU_filter_var {
+    	float Roll_last = 0.0f;
+	float Roll_filter_last = 0.0f;
+	float Pitch_last = 0.0f;
+	float Pitch_filter_last = 0.0f;
+	float Yaw_last = 0.0f;
+	float Yaw_filter_last = 0.0f;
+    };
+    
+    IMU_filter_var IMU_filter;
     
     //Motors feedback variables
     float currentAngle;
