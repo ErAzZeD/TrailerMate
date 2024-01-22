@@ -9,6 +9,7 @@
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/obstacle_detection.hpp"
 #include "interfaces/msg/angle_trailer.hpp"
+#include "sensor_msgs/msg/imu.hpp"
 
 #include "std_srvs/srv/empty.hpp"
 
@@ -69,6 +70,9 @@ public:
 
         subscription_trailer_angle_package_ = this->create_subscription<interfaces::msg::AngleTrailer>(
         "trailer_angle", 10, std::bind(&car_control::trailerAngleCallback, this, _1));
+
+        subscription_IMU_package_ = this->create_subscription<interfaces::msg::Imu>(
+        "imu/data", 10, std::bind(&car_control::imuCallback, this, _1));
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -148,6 +152,15 @@ private:
     */
     void trailerAngleCallback(const interfaces::msg::AngleTrailer & angleTrailer){
         trailerAngle = angleTrailer.trailer_angle;
+    }
+   
+
+    void imuCallback(const sensor_msgs::msg::Imu & IMU){
+        geometry_msgs::msg::Quaternion q;
+        q = IMU.orientation;
+        roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
+        pitch = asin(2 * (q.w * q.y - q.z * q.x));
+        yaw = atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z));
     }
 
 // --------------------------------------------------------------
@@ -249,9 +262,12 @@ private:
         }
         //recurrence_PI_steering(SteerAngle, currentSteerAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
 	steeringCmd(SteerAngle, currentSteerAngle, PWM_angle);
-        RCLCPP_INFO(this->get_logger(), "Valeur de TrailerAngle : %.2f et de SteerAngle : %.2f", trailerAngle, SteerAngle);
+        //RCLCPP_INFO(this->get_logger(), "Valeur de TrailerAngle : %.2f et de SteerAngle : %.2f", trailerAngle, SteerAngle);
     }
 
+    void test_IMU(float roll, float pitch, float yaw) {
+    	RCLCPP_INFO(this->get_logger(), "Roll : %.2f , Pitch : %.2f , Yaw : %.2f", pitch, roll, yaw);
+    }
 
 // --------------------------------------------------------------
 
@@ -298,6 +314,7 @@ private:
                     	steeringPwmCmd=PWM_angle;
                         
                     } else {   // => PWM : [50 -> 100] (forward)
+                    	test_IMU(roll, pitch, yaw);
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                         recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
                         
@@ -447,6 +464,11 @@ private:
     float ErrorAngle_last;
     bool direction_prec;
     
+    // IMU
+    float roll
+    float pitch
+    float yaw
+    
     //Motors feedback variables
     float currentAngle;
     float currentRightSpeed;
@@ -479,6 +501,7 @@ private:
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
     rclcpp::Subscription<interfaces::msg::ObstacleDetection>::SharedPtr subscription_obstacle_detection_;
     rclcpp::Subscription<interfaces::msg::AngleTrailer>::SharedPtr subscription_trailer_angle_package_;
+    rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr subscription_IMU_package_;
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;
