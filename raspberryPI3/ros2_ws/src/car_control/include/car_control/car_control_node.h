@@ -12,10 +12,13 @@
 
 struct IMU_filter_var {
     float Roll_last;
+    float Roll_filter;
     float Roll_filter_last;
     float Pitch_last;
+    float Pitch_filter;
     float Pitch_filter_last;
     float Yaw_last;
+    float Yaw_filter;
     float Yaw_filter_last;
 };
 

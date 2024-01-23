@@ -9,7 +9,9 @@
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/obstacle_detection.hpp"
 #include "interfaces/msg/angle_trailer.hpp"
+
 #include "sensor_msgs/msg/imu.hpp"
+#include <sensor_msgs/msg/magnetic_field.hpp>
 
 #include "std_srvs/srv/empty.hpp"
 
@@ -73,6 +75,9 @@ public:
 
         subscription_IMU_package_ = this->create_subscription<sensor_msgs::msg::Imu>(
         "imu/data", 10, std::bind(&car_control::imuCallback, this, _1));
+        
+        subscription_IMU_magnetic_ = this->create_subscription<sensor_msgs::msg::MagneticField>(
+        "imu/mag", 10, std::bind(&car_orientation::imuMagCallback, this, _1));
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -154,13 +159,29 @@ private:
         trailerAngle = angleTrailer.trailer_angle;
     }
    
-
+    /* Update direction from IMU [callback function]  :
+    *
+    * This function is called when a message is published on the "/imu/data" topic
+    * 
+    */
     void imuCallback(const sensor_msgs::msg::Imu & IMU){
         geometry_msgs::msg::Quaternion q;
         q = IMU.orientation;
         roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
         pitch = asin(2 * (q.w * q.y - q.z * q.x));
         yaw = atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z));
+    }
+
+    /* Update direction from IMU [callback function]  :
+    *
+    * This function is called when a message is published on the "/imu/mag" topic
+    * 
+    */
+    void imuMagCallback(const sensor_msgs::msg::MagneticField MAG){  
+	x_mag=MAG.magnetic_field.x
+	y_mag=MAG.magnetic_field.y
+	z_mag=MAG.magnetic_field.z
+        //direction = atan2(corrected_y, corrected_x) * rad2deg ;
     }
 
 // --------------------------------------------------------------
@@ -264,25 +285,35 @@ private:
 	//steeringCmd(SteerAngle, currentSteerAngle, PWM_angle);
         //RCLCPP_INFO(this->get_logger(), "Valeur de TrailerAngle : %.2f et de SteerAngle : %.2f", trailerAngle, SteerAngle);
     }
-
+    
+    
+/* Calculate the recurrence equation based on the first order IMU filter to reduce noise disturbance
+*	IF USED WITH IMU Mag
+*	Roll  -> X
+*	Pitch -> Y
+*	Yaw   -> Z
+*/
     void IMU_filter(float &Roll, float &Pitch, float &Yaw, IMU_filter_var &IMU_filter) {
-        float Roll_filter = 0.024390243902439022 * (Roll + IMU_filter.Roll_last) + 0.9512195121951219 * IMU_filter.Roll_filter_last; 
+        IMU_filter.Roll_filter = 0.024390243902439022 * (Roll + IMU_filter.Roll_last) + 0.9512195121951219 * IMU_filter.Roll_filter_last; 
 	IMU_filter.Roll_filter_last = Roll_filter;
         IMU_filter.Roll_last = Roll;  
         
-        float Pitch_filter = 0.024390243902439022 * (Pitch + IMU_filter.Pitch_last) + 0.9512195121951219 * IMU_filter.Pitch_filter_last;  
+        IMU_filter.Pitch_filter = 0.024390243902439022 * (Pitch + IMU_filter.Pitch_last) + 0.9512195121951219 * IMU_filter.Pitch_filter_last;  
 	IMU_filter.Pitch_filter_last = Pitch_filter;
         IMU_filter.Pitch_last = Pitch;  
         
-        float Yaw_filter = 0.024390243902439022 * (Yaw + IMU_filter.Yaw_last) + 0.9512195121951219 * IMU_filter.Yaw_filter_last;  
+        IMU_filter.Yaw_filter = 0.024390243902439022 * (Yaw + IMU_filter.Yaw_last) + 0.9512195121951219 * IMU_filter.Yaw_filter_last;  
 	IMU_filter.Yaw_filter_last = Yaw_filter;
         IMU_filter.Yaw_last = Yaw;        
     
-    	RCLCPP_INFO(this->get_logger(), "Roll : (%.2f,%.2f) , Pitch : (%.2f,%.2f) , Yaw : (%.2f,%.2f)", Roll,Roll_filter, Pitch,Pitch_filter, Yaw, Yaw_filter);
+    	//RCLCPP_INFO(this->get_logger(), "Roll : (%.2f,%.2f) , Pitch : (%.2f,%.2f) , Yaw : (%.2f,%.2f)", Roll,Roll_filter, Pitch,Pitch_filter, Yaw, Yaw_filter);
+    	//RCLCPP_INFO(this->get_logger(), "Yaw : %.4f , Yaw_filter : %.4f || Yaw_filter_last : %.4f , Yaw_last : %.4f", Yaw,IMU_filter.Yaw_filter, IMU_filter.Yaw_filter_last,IMU_filter.Yaw_last);
     	
-    	Roll=Roll_filter;
-    	Pitch=Pitch_filter;
-    	Yaw=Yaw_filter;
+    	RCLCPP_INFO(this->get_logger(), "X : (%.2f,%.2f) , Y : (%.2f,%.2f) , Z : (%.2f,%.2f)", Roll,IMU_filter.Roll_filter, Pitch,IMU_filter.Pitch_filter, Yaw, IMU_filter.Yaw_filter);
+    	
+    	//Roll=Roll_filter;
+    	//Pitch=Pitch_filter;
+    	//Yaw=Yaw_filter;
     }
 
 // --------------------------------------------------------------
@@ -314,7 +345,7 @@ private:
                 //if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
                 if (true) {
                     RPM_order = requestedThrottle*50.0f;
-                    IMU_filter(roll, pitch, yaw, imu_filter);
+                    IMU_filter(x_mag, y_mag, z_mag, imu_mag_filter);
                     
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -484,11 +515,15 @@ private:
     float roll;
     float pitch;
     float yaw;
+    // IMU Mag
+    float x_mag;
+    float y_mag;
+    float z_mag
     
     // IMU Filter
     struct IMU_filter_var imu_filter;
-    //IMU_filter_var IMU_filter;
-    
+    // IMU Mag Filter
+    struct IMU_filter_var imu_mag_filter;
     //Motors feedback variables
     float currentAngle;
     float currentRightSpeed;
@@ -522,6 +557,7 @@ private:
     rclcpp::Subscription<interfaces::msg::ObstacleDetection>::SharedPtr subscription_obstacle_detection_;
     rclcpp::Subscription<interfaces::msg::AngleTrailer>::SharedPtr subscription_trailer_angle_package_;
     rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr subscription_IMU_package_;
+    rclcpp::Subscription<sensor_msgs::msg::MagneticField>::SharedPtr subscription_IMU_magnetic_;
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;
