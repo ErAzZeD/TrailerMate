@@ -178,9 +178,9 @@ private:
     * 
     */
     void imuMagCallback(const sensor_msgs::msg::MagneticField MAG){  
-	x_mag=MAG.magnetic_field.x
-	y_mag=MAG.magnetic_field.y
-	z_mag=MAG.magnetic_field.z
+	x_mag=MAG.magnetic_field.x;
+	y_mag=MAG.magnetic_field.y;
+	z_mag=MAG.magnetic_field.z;
         //direction = atan2(corrected_y, corrected_x) * rad2deg ;
     }
 
@@ -295,15 +295,15 @@ private:
 */
     void IMU_filter(float &Roll, float &Pitch, float &Yaw, IMU_filter_var &IMU_filter) {
         IMU_filter.Roll_filter = 0.024390243902439022 * (Roll + IMU_filter.Roll_last) + 0.9512195121951219 * IMU_filter.Roll_filter_last; 
-	IMU_filter.Roll_filter_last = Roll_filter;
+	IMU_filter.Roll_filter_last = IMU_filter.Roll_filter;
         IMU_filter.Roll_last = Roll;  
         
         IMU_filter.Pitch_filter = 0.024390243902439022 * (Pitch + IMU_filter.Pitch_last) + 0.9512195121951219 * IMU_filter.Pitch_filter_last;  
-	IMU_filter.Pitch_filter_last = Pitch_filter;
+	IMU_filter.Pitch_filter_last = IMU_filter.Pitch_filter;
         IMU_filter.Pitch_last = Pitch;  
         
         IMU_filter.Yaw_filter = 0.024390243902439022 * (Yaw + IMU_filter.Yaw_last) + 0.9512195121951219 * IMU_filter.Yaw_filter_last;  
-	IMU_filter.Yaw_filter_last = Yaw_filter;
+	IMU_filter.Yaw_filter_last = IMU_filter.Yaw_filter;
         IMU_filter.Yaw_last = Yaw;        
     
     	//RCLCPP_INFO(this->get_logger(), "Roll : (%.2f,%.2f) , Pitch : (%.2f,%.2f) , Yaw : (%.2f,%.2f)", Roll,Roll_filter, Pitch,Pitch_filter, Yaw, Yaw_filter);
@@ -518,7 +518,7 @@ private:
     // IMU Mag
     float x_mag;
     float y_mag;
-    float z_mag
+    float z_mag;
     
     // IMU Filter
     struct IMU_filter_var imu_filter;
