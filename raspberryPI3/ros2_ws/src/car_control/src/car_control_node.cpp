@@ -77,7 +77,7 @@ public:
         "imu/data", 10, std::bind(&car_control::imuCallback, this, _1));
         
         subscription_IMU_magnetic_ = this->create_subscription<sensor_msgs::msg::MagneticField>(
-        "imu/mag", 10, std::bind(&car_orientation::imuMagCallback, this, _1));
+        "imu/mag", 10, std::bind(&car_control::imuMagCallback, this, _1));
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -177,10 +177,12 @@ private:
     * This function is called when a message is published on the "/imu/mag" topic
     * 
     */
-    void imuMagCallback(const sensor_msgs::msg::MagneticField MAG){  
-	x_mag=MAG.magnetic_field.x;
-	y_mag=MAG.magnetic_field.y;
-	z_mag=MAG.magnetic_field.z;
+    void imuMagCallback(const sensor_msgs::msg::MagneticField & MAG){  
+    	geometry_msgs::msg::Vector3 mag_q;
+    	mag_q = MAG.magnetic_field
+	x_mag=mag_q.x;
+	y_mag=mag_q.y;
+	z_mag=mag_q.z;
         //direction = atan2(corrected_y, corrected_x) * rad2deg ;
     }
 
