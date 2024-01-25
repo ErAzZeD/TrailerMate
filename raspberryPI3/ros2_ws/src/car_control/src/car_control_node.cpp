@@ -179,7 +179,7 @@ private:
     */
     void imuMagCallback(const sensor_msgs::msg::MagneticField & MAG){  
     	geometry_msgs::msg::Vector3 mag_q;
-    	mag_q = MAG.magnetic_field
+    	mag_q = MAG.magnetic_field;
 	x_mag=mag_q.x;
 	y_mag=mag_q.y;
 	z_mag=mag_q.z;
@@ -318,6 +318,19 @@ private:
     	//Yaw=Yaw_filter;
     }
 
+
+	void CarAngle(float angle_mag, int & init, Car_Angle & car_angle_var) {
+	    if (init) {
+	    	RCLCPP_INFO(this->get_logger(), "------ Car_angle INIT -----");
+	    	car_angle_var.ref_angle = angle_mag;
+	    	car_angle_var.car_angle = 0.0;
+	    	init = 0;
+	    } else {
+	    	car_angle_var.car_angle = car_angle_var.ref_angle - angle_mag;
+	    }
+	    RCLCPP_INFO(this->get_logger(), "Car_angle : %.5f", car_angle_var.car_angle);
+	    RCLCPP_INFO(this->get_logger(), "Car_angle : %.5f", car_angle_var.car_angle*1000000);
+	}
 // --------------------------------------------------------------
 
 
@@ -347,7 +360,8 @@ private:
                 //if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
                 if (true) {
                     RPM_order = requestedThrottle*50.0f;
-                    IMU_filter(x_mag, y_mag, z_mag, imu_mag_filter);
+                    //IMU_filter(x_mag, y_mag, z_mag, imu_mag_filter);
+                    CarAngle(y_mag, reinit, car_angle_var);
                     
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -362,6 +376,8 @@ private:
                         
                         trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
                     	steeringPwmCmd=PWM_angle;
+                    	
+                    	reinit = 1;
                         
                     } else {   // => PWM : [50 -> 100] (forward)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -376,10 +392,10 @@ private:
                         
                         recurrence_PI_steering(requestedSteerAngle, currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last,direction_prec);
                     	steeringPwmCmd=PWM_angle;
+                    	
+                    	
                     }
 
-
-                    reinit = 1;
                 }
                 else {
                     leftRearPwmCmd = STOP;
@@ -526,6 +542,8 @@ private:
     struct IMU_filter_var imu_filter;
     // IMU Mag Filter
     struct IMU_filter_var imu_mag_filter;
+    // CarAngle
+    struct Car_Angle car_angle_var;
     //Motors feedback variables
     float currentAngle;
     float currentRightSpeed;

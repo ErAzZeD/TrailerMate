@@ -22,4 +22,9 @@ struct IMU_filter_var {
     float Yaw_filter_last;
 };
 
+struct Car_Angle {
+    float car_angle;
+    float ref_angle;
+};
+
 #endif /*__ car_control_node_H */
