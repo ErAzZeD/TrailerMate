@@ -6,6 +6,8 @@ import requests
 from interfaces.msg import Ultrasonic
 from interfaces.msg import AngleTrailer
 from interfaces.msg import MotorsFeedback
+from interfaces.msg import Gnss
+from interfaces.msg import GeneralData
 
 class SendData (Node):
 
@@ -19,6 +21,10 @@ class SendData (Node):
 
         self.subscription_trailer_angle = self.create_subscription(AngleTrailer, 'trailer_angle', self.trailer_angle_callback, 10)
 
+        self.subscription_gnss = self.create_subscription(Gnss, 'gnss', self.gnss_callback, 10)
+
+        self.subscription_general_data = self.create_subscription(GeneralData, 'general_data', self.general_data_callback, 10)
+
         # Create a timer with a 100 ms period and bind it to the send_all_data method
         self.timer = self.create_timer(0.1, self.send_all_data)
 
@@ -31,6 +37,9 @@ class SendData (Node):
         self.us_back_right = 0
         self.trailer_angle = 0
         self.currentRightSpeed = 0
+        self.latitude = 0
+        self.longitude = 0
+        self.battery_level = 0
 
     def us_callback(self, us: Ultrasonic):
         # Construire les données à envoyer
@@ -43,16 +52,20 @@ class SendData (Node):
 
     def motors_feedback_callback(self, motorsFeedback: MotorsFeedback):
         self.currentRightSpeed = motorsFeedback.right_rear_speed
-        #currentAngle = motorsFeedback.steering_angle
-        #currentLeftSpeed = motorsFeedback.left_rear_speed
 
     def trailer_angle_callback(self, angle: AngleTrailer):
         self.trailer_angle = angle.trailer_angle
+    
+    def gnss_callback(self, gps: Gnss):
+        self.latitude = gps.latitude
+        self.longitude = gps.longitude
+    
+    def general_data_callback(self, gd: GeneralData):
+        self.battery_level = gd.battery_level
 
     def send_all_data(self):
 
         api_url = "http://138.197.181.206/api/add/all"
-
 
         data = [
             {"us_front_left": self.us_front_left},
@@ -62,7 +75,10 @@ class SendData (Node):
             {"us_back_center": self.us_back_center},
             {"us_back_right": self.us_back_right},
             {"trailer_angle": self.trailer_angle},
-            {"speed": self.currentRightSpeed}
+            {"speed": self.currentRightSpeed},
+            {"latitude": self.latitude},
+            {"longitude": self.longitude},
+            {"battery_level": self.battery_level}
         ]
         response = requests.put(api_url, json=data)
 
