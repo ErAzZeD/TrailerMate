@@ -192,11 +192,9 @@ private:
     * 
     */
     void imuVelCallback(const sensor_msgs::msg::Imu & IMU){  
-    	geometry_msgs::msg::Vector3 vel_q;
-    	vel_q = IMU.angular_velocity;
-	x_vel=vel_q.x;
-	y_vel=vel_q.y;
-	z_vel=vel_q.z;
+        x_vel=IMU.angular_velocity.x;
+        y_vel=IMU.angular_velocity.y;
+        z_vel=IMU.angular_velocity.z;
         //direction = atan2(corrected_y, corrected_x) * rad2deg ;
     }
 
@@ -574,8 +572,8 @@ private:
     float z_vel;
     float last_y_vel;
     
-    // IMU Filter
-    struct IMU_filter_var imu_filter;
+    // IMU FilterRCLCPP_INFO(this->get_logger(), "vel: %.5f", y_velocity);
+        if (init) {
     // IMU Mag Filter
     struct IMU_filter_var imu_mag_filter;
     // CarAngle
