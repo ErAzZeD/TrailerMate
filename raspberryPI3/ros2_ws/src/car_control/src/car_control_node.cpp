@@ -572,8 +572,6 @@ private:
     float z_vel;
     float last_y_vel;
     
-    // IMU FilterRCLCPP_INFO(this->get_logger(), "vel: %.5f", y_velocity);
-        if (init) {
     // IMU Mag Filter
     struct IMU_filter_var imu_mag_filter;
     // CarAngle
