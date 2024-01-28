@@ -349,6 +349,7 @@ private:
     void CarAngleEstimation(float y_velocity, float & last_y_velocity, int & init) {
         const float deltat = 260*1E-6; //time, in seconds
         static float angle = 0.0;
+        RCLCPP_INFO(this->get_logger(), "vel: %.5f", y_velocity);
         if (init) {
             angle = 0.0;
 	    	init = 0;
@@ -391,6 +392,7 @@ private:
                     //IMU_filter(x_mag, y_mag, z_mag, imu_mag_filter);
                     //CarAngle(y_mag, reinit, car_angle_var);
                     CarAngleEstimation(y_vel, last_y_vel, reinit);
+
                     
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
