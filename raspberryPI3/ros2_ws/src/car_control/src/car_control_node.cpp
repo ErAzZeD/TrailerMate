@@ -313,7 +313,7 @@ private:
 
 		            rightRearPwmCmd = PWM_order_filter + 50; 
                     //leftRearPwmCmd = PWM_order_left + 50; // capteur cassé, donc on se base sur la roue droite  
-                     leftRearPwmCmd = rightRearPwmCmd; 
+                    leftRearPwmCmd = rightRearPwmCmd; 
                 }
                 steeringPwmCmd= STOP;                
   
@@ -337,6 +337,12 @@ private:
                     file.close();
                     stop_play=true;
                     
+                }
+                else if (!playing && stop_play){
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
+                    RCLCPP_INFO(get_logger(), "car stop");
                 }
                 else if (playing) {
 
