@@ -186,6 +186,20 @@ private:
         //direction = atan2(corrected_y, corrected_x) * rad2deg ;
     }
 
+    /* Update direction from IMU [callback function]  :
+    *
+    * This function is called when a message is published on the "/imu/data" topic
+    * 
+    */
+    void imuVelCallback(const sensor_msgs::msg::Imu & IMU){  
+    	geometry_msgs::msg::Vector3 vel_q;
+    	vel_q = IMU.angular_velocity;
+	x_vel=vel_q.x;
+	y_vel=vel_q.y;
+	z_vel=vel_q.z;
+        //direction = atan2(corrected_y, corrected_x) * rad2deg ;
+    }
+
 // --------------------------------------------------------------
 
 /* Calculate the recurrence equation based on the compensator to move the car forward and backward
@@ -277,7 +291,7 @@ private:
 * 
 */
     void trailer_angle_compensator(float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec, float trailerAngle){
-        float SteerAngle = (trailerAngle / 90) * 6;	// trailerAngle normalization and proportional gain
+        float SteerAngle = (trailerAngle / 90) * 10;	// trailerAngle normalization and proportional gain
         if (SteerAngle > 1.0) {
             SteerAngle=1.0f;
         } else if (SteerAngle < -1.0) {
@@ -331,6 +345,20 @@ private:
 	    RCLCPP_INFO(this->get_logger(), "Car_angle : %.5f", car_angle_var.car_angle);
 	    RCLCPP_INFO(this->get_logger(), "Car_angle : %.5f", car_angle_var.car_angle*1000000);
 	}
+
+    void CarAngleEstimation(float y_velocity, float & last_y_velocity, int & init) {
+        const float deltat = 260*1E-6; //time, in seconds
+        static float angle = 0.0;
+        if (init) {
+            angle = 0.0;
+	    	init = 0;
+	    } else {
+            angle = angle + (y_velocity+last_y_velocity)/2 * deltat;
+            last_y_velocity=y_velocity;
+	    }
+	    RCLCPP_INFO(this->get_logger(), "Car_angle rad/s : %.5f", angle);
+	    RCLCPP_INFO(this->get_logger(), "Car_angle deg/s : %.5f", angle*(180.0/M_PI));
+    }
 // --------------------------------------------------------------
 
 
@@ -361,7 +389,8 @@ private:
                 if (true) {
                     RPM_order = requestedThrottle*50.0f;
                     //IMU_filter(x_mag, y_mag, z_mag, imu_mag_filter);
-                    CarAngle(y_mag, reinit, car_angle_var);
+                    //CarAngle(y_mag, reinit, car_angle_var);
+                    CarAngleEstimation(y_vel, last_y_vel, reinit, car_angle_var);
                     
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -537,6 +566,11 @@ private:
     float x_mag;
     float y_mag;
     float z_mag;
+    //IMU VEL
+    float y_vel;
+    float x_vel;
+    float z_vel;
+    float last_y_vel;
     
     // IMU Filter
     struct IMU_filter_var imu_filter;
