@@ -390,7 +390,7 @@ private:
                     RPM_order = requestedThrottle*50.0f;
                     //IMU_filter(x_mag, y_mag, z_mag, imu_mag_filter);
                     //CarAngle(y_mag, reinit, car_angle_var);
-                    CarAngleEstimation(y_vel, last_y_vel, reinit, car_angle_var);
+                    CarAngleEstimation(y_vel, last_y_vel, car_angle_var);
                     
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
