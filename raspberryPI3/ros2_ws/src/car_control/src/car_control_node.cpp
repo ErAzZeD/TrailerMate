@@ -336,20 +336,25 @@ private:
 	    RCLCPP_INFO(this->get_logger(), "Car_angle : %.5f", car_angle_var.car_angle*1000000);
 	}
 
+
     void CarAngleEstimation(float y_velocity, float & last_y_velocity, int & init) {
         const float deltat = 260*1E-6; //time, in seconds
         static float angle = 0.0;
-        RCLCPP_INFO(this->get_logger(), "vel: %.5f", y_velocity);
+        //RCLCPP_INFO(this->get_logger(), "vel: %.5f", y_velocity);
         if (init) {
             angle = 0.0;
-	    	init = 0;
-	    } else {
+            last_y_velocity = 0.0;
+                init = 0;
+            } else {
             angle = angle + (y_velocity+last_y_velocity)/2 * deltat;
             last_y_velocity=y_velocity;
-	    }
-	    RCLCPP_INFO(this->get_logger(), "Car_angle rad/s : %.5f", angle);
-	    RCLCPP_INFO(this->get_logger(), "Car_angle deg/s : %.5f", angle*(180.0/M_PI));
+            }
+            RCLCPP_INFO(this->get_logger(), "Angular velocity : %.5f  || Car_angle rad/s : %.5f", y_velocity, angle);
+            //RCLCPP_INFO(this->get_logger(), "Car_angle deg/s : %.5f", angle*(180.0/M_PI));
     }
+
+
+
 // --------------------------------------------------------------
 
 
@@ -398,7 +403,7 @@ private:
                         trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
                     	steeringPwmCmd=PWM_angle;
                     	
-                    	reinit = 1;
+                    	//reinit = 1;
                         
                     } else {   // => PWM : [50 -> 100] (forward)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -428,6 +433,7 @@ private:
             } else if (mode==1){
                 RPM_order = 10.0f;
                 //reverse = 1;
+                reinit = 1;
                 
                 if (reverse) {    // => PWM : [50 -> 0] (reverse)
                     recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
