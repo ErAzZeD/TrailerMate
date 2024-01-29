@@ -283,7 +283,7 @@ private:
 * 
 */
     void trailer_angle_compensator(float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec, float trailerAngle){
-        float SteerAngle = (trailerAngle / 90) * 10;	// trailerAngle normalization and proportional gain
+        float SteerAngle = (trailerAngle / 90) * 15;	// trailerAngle normalization and proportional gain
         if (SteerAngle > 1.0) {
             SteerAngle=1.0f;
         } else if (SteerAngle < -1.0) {
@@ -294,118 +294,8 @@ private:
         //RCLCPP_INFO(this->get_logger(), "Valeur de TrailerAngle : %.2f et de SteerAngle : %.2f", trailerAngle, SteerAngle);
     }
     
-    
-/* Calculate the recurrence equation based on the first order IMU filter to reduce noise disturbance
-*	IF USED WITH IMU Mag
-*	Roll  -> X
-*	Pitch -> Y
-*	Yaw   -> Z
-*/
-    void IMU_filter(float &Roll, float &Pitch, float &Yaw, IMU_filter_var &IMU_filter) {
-        IMU_filter.Roll_filter = 0.024390243902439022 * (Roll + IMU_filter.Roll_last) + 0.9512195121951219 * IMU_filter.Roll_filter_last; 
-	IMU_filter.Roll_filter_last = IMU_filter.Roll_filter;
-        IMU_filter.Roll_last = Roll;  
-        
-        IMU_filter.Pitch_filter = 0.024390243902439022 * (Pitch + IMU_filter.Pitch_last) + 0.9512195121951219 * IMU_filter.Pitch_filter_last;  
-	IMU_filter.Pitch_filter_last = IMU_filter.Pitch_filter;
-        IMU_filter.Pitch_last = Pitch;  
-        
-        IMU_filter.Yaw_filter = 0.024390243902439022 * (Yaw + IMU_filter.Yaw_last) + 0.9512195121951219 * IMU_filter.Yaw_filter_last;  
-	IMU_filter.Yaw_filter_last = IMU_filter.Yaw_filter;
-        IMU_filter.Yaw_last = Yaw;        
-    
-    	//RCLCPP_INFO(this->get_logger(), "Roll : (%.2f,%.2f) , Pitch : (%.2f,%.2f) , Yaw : (%.2f,%.2f)", Roll,Roll_filter, Pitch,Pitch_filter, Yaw, Yaw_filter);
-    	//RCLCPP_INFO(this->get_logger(), "Yaw : %.4f , Yaw_filter : %.4f || Yaw_filter_last : %.4f , Yaw_last : %.4f", Yaw,IMU_filter.Yaw_filter, IMU_filter.Yaw_filter_last,IMU_filter.Yaw_last);
-    	
-    	RCLCPP_INFO(this->get_logger(), "X : (%.2f,%.2f) , Y : (%.2f,%.2f) , Z : (%.2f,%.2f)", Roll,IMU_filter.Roll_filter, Pitch,IMU_filter.Pitch_filter, Yaw, IMU_filter.Yaw_filter);
-    	
-    	//Roll=Roll_filter;
-    	//Pitch=Pitch_filter;
-    	//Yaw=Yaw_filter;
-    }
-
-
-	void CarAngle(float angle_mag, int & init, Car_Angle & car_angle_var) {
-	    if (init) {
-	    	RCLCPP_INFO(this->get_logger(), "------ Car_angle INIT -----");
-	    	car_angle_var.ref_angle = angle_mag;
-	    	car_angle_var.car_angle = 0.0;
-	    	init = 0;
-	    } else {
-	    	car_angle_var.car_angle = car_angle_var.ref_angle - angle_mag;
-	    }
-	    RCLCPP_INFO(this->get_logger(), "Car_angle : %.5f", car_angle_var.car_angle);
-	    RCLCPP_INFO(this->get_logger(), "Car_angle : %.5f", car_angle_var.car_angle*1000000);
-	}
-
-
-    void CarAngleEstimation(float y_velocity, float & last_y_velocity, int & init) {
-        const float deltat = 260*1E-6; //time, in seconds
-        static float angle = 0.0;
-        //RCLCPP_INFO(this->get_logger(), "vel: %.5f", y_velocity);
-        if (init) {
-            angle = 0.0;
-            last_y_velocity = 0.0;
-                init = 0;
-            } else {
-            angle = angle + (y_velocity+last_y_velocity)/2 * deltat;
-            last_y_velocity=y_velocity;
-            }
-            RCLCPP_INFO(this->get_logger(), "Angular velocity : %.5f  || Car_angle rad/s : %.5f", y_velocity, angle);
-            //RCLCPP_INFO(this->get_logger(), "Car_angle deg/s : %.5f", angle*(180.0/M_PI));
-    }
-
-	/* 
-	*
-	* Compute the m/s speed from a RPM.
-	* 
-	*/
-	float rpmToMps(float currentRPM){
-	    float rearSpeed;
-	    float perimeter = 2*3.14*WHEEL_DIAMETER/1000; // in meters
-	    
-	    rearSpeed = currentRPM*perimeter/60;
-
-	    return rearSpeed;
-	}
-
-
-    float calculateDistance(int leftRearOdometry, int rightRearOdometry){ 
-        float distanceLeft = (leftRearOdometry * 3.14 * (WHEEL_DIAMETER/10.0)) / 36.0;
-        float distanceRight = (rightRearOdometry * 3.14 * (WHEEL_DIAMETER/10.0)) / 36.0;
-
-        float distance = (distanceLeft + distanceRight)/2.0;
-        return distance;
-    }
-
-/* Calculate the recurrence equation based on the first order IMU filter to reduce noise disturbance
-*	IF USED WITH IMU Mag
-*	Roll  -> X
-*	Pitch -> Y
-*/
-    void odometry_angle(float RightSpeed, float LeftSpeed, float RightOdometry, float LeftOdometry, float & Angle, bool & init) {
-    	if (init) {
-    		Angle = 0.0;
-    		init = 0;
-    	} 
-    	else {
-    	float VR = rpmToMps(RightSpeed);
-    	float VL = rpmToMps(LeftSpeed);
-    	//if ((VR - VL) > 0.01 || (VR - VL) < -0.01) {
-    	if (abs(VR - VL) > 0.01) {
-		float R = (E/2) * (VR+VL)/(VL-VR);   // Rajouter garde div 0
-		float d = calculateDistance(LeftOdometry, RightOdometry);
-		float dTheta = d/R;
-		Angle = Angle + dTheta;
-		}
-	RCLCPP_INFO(this->get_logger(), "VR : %.4f , VL : %.4f, Car odometry angle : %.6f", VR, VL, Angle);
-	}
-
-	
-    }
 
 // --------------------------------------------------------------
-
 
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
@@ -430,13 +320,8 @@ private:
             //Manual Mode
             if (mode==0){
 
-                //if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
-                if (true) {
+                if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
                     RPM_order = requestedThrottle*50.0f;
-                    //IMU_filter(x_mag, y_mag, z_mag, imu_mag_filter);
-                    //CarAngle(y_mag, reinit, car_angle_var);
-                    //CarAngleEstimation(y_vel, last_y_vel, reinit);
-		    odometry_angle( currentRightSpeed, currentLeftSpeed, RightOdometry, LeftOdometry, Angle_odo, reinit);
                     
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -446,13 +331,10 @@ private:
                         attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
                         rightRearPwmCmd = 50 - PWM_order_filter; 
-                        //leftRearPwmCmd = 50 - PWM_order_left; // capteur cassé, donc on se base sur la roue droite
                         leftRearPwmCmd = rightRearPwmCmd; 
-                        
-                        trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
-                    	steeringPwmCmd=PWM_angle;
-                    	
-                    	//reinit = 1;
+  
+                        //trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
+                    	//steeringPwmCmd=PWM_angle;
                         
                     } else {   // => PWM : [50 -> 100] (forward)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -462,17 +344,11 @@ private:
                         attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
                         rightRearPwmCmd = PWM_order_filter + 50; 
-                        //leftRearPwmCmd = PWM_order_left + 50; //capteur cassé, donc on se base sur la roue droite  
                         leftRearPwmCmd = rightRearPwmCmd; 
-                        
+                    }
                         recurrence_PI_steering(requestedSteerAngle, currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last,direction_prec);
                     	steeringPwmCmd=PWM_angle;
-                    	
-                    	
-                    }
-
-                }
-                else {
+                } else {
                     leftRearPwmCmd = STOP;
                     rightRearPwmCmd = STOP;
                     steeringPwmCmd = STOP;
@@ -480,10 +356,11 @@ private:
 
             //Autonomous Mode
             } else if (mode==1){
-                RPM_order = 10.0f;
-                //reverse = 1;
-                reinit = 1;
-                
+                if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
+                    //RPM_order = requestedThrottle*50.0f;
+                    RPM_order = 20.0f;
+                    reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
+                    
                 if (reverse) {    // => PWM : [50 -> 0] (reverse)
                     recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                     recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
@@ -492,7 +369,6 @@ private:
                     attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
 	            rightRearPwmCmd = 50 - PWM_order_filter; 
-                    //leftRearPwmCmd = 50 - PWM_order_left; //capteur cassé, donc on se base sur la roue droite
                     leftRearPwmCmd = rightRearPwmCmd; 
                     
                     trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
@@ -504,12 +380,15 @@ private:
                     PWM_order_filter = PWM_order_right;
                     attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
-		     rightRearPwmCmd = PWM_order_filter + 50; 
-                    //leftRearPwmCmd = PWM_order_left + 50; // capteur cassé, donc on se base sur la roue droite  
-                     leftRearPwmCmd = rightRearPwmCmd; 
-                     steeringPwmCmd= STOP; 
-                }
-                               
+		    rightRearPwmCmd = PWM_order_filter + 50; 
+                    leftRearPwmCmd = rightRearPwmCmd; 
+                    steeringPwmCmd= STOP; 
+                 }
+              } else {
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
+                }              
             }  
         }
         //Send order to motors
