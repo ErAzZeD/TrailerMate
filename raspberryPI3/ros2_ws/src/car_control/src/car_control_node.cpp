@@ -383,14 +383,23 @@ private:
 *	Roll  -> X
 *	Pitch -> Y
 */
-    void odometry_angle(float RightSpeed, float LeftSpeed, float RightOdometry, float LeftOdometry, float & Angle) {
+    void odometry_angle(float RightSpeed, float LeftSpeed, float RightOdometry, float LeftOdometry, float & Angle, bool & init) {
+    	if (init) {
+    		Angle = 0.0;
+    		init = 0;
+    	} 
+    	else {
     	float VR = rpmToMps(RightSpeed);
     	float VL = rpmToMps(LeftSpeed);
-	float R = (E/2) * (VR+VL)/(VL-VR);   // Rajouter garde div 0
-	float d = calculateDistance(LeftOdometry, RightOdometry);
-	float dTheta = d/R;
-	Angle = Angle + dTheta;
+    	if (abs(VR - VL) > 0.01) {
+		float R = (E/2) * (VR+VL)/(VL-VR);   // Rajouter garde div 0
+		float d = calculateDistance(LeftOdometry, RightOdometry);
+		float dTheta = d/R;
+		Angle = Angle + dTheta;
+		}
+	}
 	RCLCPP_INFO(this->get_logger(), "VR : %.4f , VL : %.4f, Car odometry angle : %.6f", VR, VL, Angle);
+	
     }
 
 // --------------------------------------------------------------
@@ -425,7 +434,7 @@ private:
                     //IMU_filter(x_mag, y_mag, z_mag, imu_mag_filter);
                     //CarAngle(y_mag, reinit, car_angle_var);
                     //CarAngleEstimation(y_vel, last_y_vel, reinit);
-		    odometry_angle( currentRightSpeed, currentLeftSpeed, RightOdometry, LeftOdometry, Angle_odo);
+		    odometry_angle( currentRightSpeed, currentLeftSpeed, RightOdometry, LeftOdometry, Angle_odo, reinit);
                     
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
