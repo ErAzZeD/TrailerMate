@@ -138,6 +138,8 @@ private:
         currentAngle = motorsFeedback.steering_angle;
         currentLeftSpeed = motorsFeedback.left_rear_speed;
         currentRightSpeed = motorsFeedback.right_rear_speed;
+        LeftOdometry = motorsFeedback.left_rear_odometry;
+        RightOdometry = motorsFeedback.right_rear_odometry;
     }
 
     /* Update command from stop car [callback function]  :
@@ -353,7 +355,43 @@ private:
             //RCLCPP_INFO(this->get_logger(), "Car_angle deg/s : %.5f", angle*(180.0/M_PI));
     }
 
+	/* 
+	*
+	* Compute the m/s speed from a RPM.
+	* 
+	*/
+	float rpmToMps(float currentRPM){
+	    float rearSpeed;
+	    float perimeter = 2*3.14*WHEEL_DIAMETER/1000; // in meters
+	    
+	    rearSpeed = currentRPM*perimeter/60;
 
+	    return rearSpeed;
+	}
+
+
+    float calculateDistance(int leftRearOdometry, int rightRearOdometry){ 
+        float distanceLeft = (leftRearOdometry * 3.14 * (WHEEL_DIAMETER/10.0)) / 36.0;
+        float distanceRight = (rightRearOdometry * 3.14 * (WHEEL_DIAMETER/10.0)) / 36.0;
+
+        float distance = (distanceLeft + distanceRight)/2.0;
+        return distance;
+    }
+
+/* Calculate the recurrence equation based on the first order IMU filter to reduce noise disturbance
+*	IF USED WITH IMU Mag
+*	Roll  -> X
+*	Pitch -> Y
+*/
+    void odometry_angle(float RightSpeed, float LeftSpeed, float RightOdometry, float LeftOdometry, float & Angle) {
+    	float VR = rpmToMps(RightSpeed);
+    	float VL = rpmToMps(LeftSpeed);
+	float R = (E/2) * (VR+VL)/(VL-VR);   // Rajouter garde div 0
+	float d = calculateDistance(LeftOdometry, RightOdometry);
+	float dTheta = d/R;
+	Angle = Angle + dTheta;
+	RCLCPP_INFO(this->get_logger(), "VR : %.4f , VL : %.4f, Car odometry angle : %.6f", VR, VL, Angle);
+    }
 
 // --------------------------------------------------------------
 
@@ -386,8 +424,8 @@ private:
                     RPM_order = requestedThrottle*50.0f;
                     //IMU_filter(x_mag, y_mag, z_mag, imu_mag_filter);
                     //CarAngle(y_mag, reinit, car_angle_var);
-                    CarAngleEstimation(y_vel, last_y_vel, reinit);
-
+                    //CarAngleEstimation(y_vel, last_y_vel, reinit);
+		    odometry_angle( currentRightSpeed, currentLeftSpeed, RightOdometry, LeftOdometry, Angle_odo);
                     
                     if (reverse) {    // => PWM : [50 -> 0] (reverse)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -574,6 +612,10 @@ private:
     struct IMU_filter_var imu_mag_filter;
     // CarAngle
     struct Car_Angle car_angle_var;
+    
+    // Odometry
+    float Angle_odo;
+    
     //Motors feedback variables
     float currentAngle;
     float currentRightSpeed;

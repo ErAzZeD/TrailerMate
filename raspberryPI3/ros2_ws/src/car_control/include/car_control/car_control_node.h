@@ -10,6 +10,9 @@
 #define STOP 50 //PWM value to stop motors
 #define FIXED_SPEED 20.0 //Fixed speed for Autonomous Mode
 
+#define E 0.45  // Distance entre les 2 roues (m)
+#define WHEEL_DIAMETER 195 //Wheel diameters in [mm]
+
 struct IMU_filter_var {
     float Roll_last;
     float Roll_filter;
