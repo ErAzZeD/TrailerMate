@@ -391,7 +391,7 @@ private:
     	else {
     	float VR = rpmToMps(RightSpeed);
     	float VL = rpmToMps(LeftSpeed);
-    	if (abs(VR - VL) > 0.01) {
+    	if ((VR - VL) > 0.01 || (VR - VL) < -0.01) {
 		float R = (E/2) * (VR+VL)/(VL-VR);   // Rajouter garde div 0
 		float d = calculateDistance(LeftOdometry, RightOdometry);
 		float dTheta = d/R;
