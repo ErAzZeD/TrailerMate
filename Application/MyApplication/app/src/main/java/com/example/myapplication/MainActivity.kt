@@ -1,21 +1,25 @@
 package com.example.myapplication
 
 import HttpRequestTask
+import HttpSendTask
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.text.DecimalFormat
+import org.json.JSONObject
+
 
 
 /*class MainActivity : AppCompatActivity() {
@@ -62,21 +66,197 @@ import java.text.DecimalFormat
 class MainActivity : AppCompatActivity() {
 
     val decimalFormat = DecimalFormat("#.#")
+    var boolEmergency: Boolean = false
+    var boolRecord: Boolean = false
+    var boolReplay: Boolean = false
+    var boolReverse: Boolean = false
+    var boolForward: Boolean = false
+    var boolSensors: Boolean = false
+
 
     @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var httpst: HttpSendTask = HttpSendTask()
 
+        findViewById<Button>(R.id.button_emergency).setOnClickListener {
+            if (!boolEmergency) {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_emergency"
+                jsonObject.put("button_emergency", true)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_emergency).text = "Restart"
+                boolEmergency = true
+            } else {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_emergency"
+                jsonObject.put("button_emergency", false)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_emergency).text = "Emergency"
+                boolEmergency = false
+            }
 
-
-        findViewById<TextView>(R.id.textview_us_front_left).text = "COucouuuuuu !!!"
-        findViewById<Button>(R.id.button_1).setOnClickListener {
-            findViewById<TextView>(R.id.textview_us_front_left).text = "We clicked on the button !!"
         }
 
-        Log.d("test", "testttt")
+
+
+        findViewById<Button>(R.id.button_record).setOnClickListener {
+            if (!boolRecord ) {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_record"
+                jsonObject.put("button_record", true)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_record).text = "Stop"
+                boolRecord = true
+            } else {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_record"
+                jsonObject.put("button_record", false)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_record).text = "Record"
+                boolRecord = false
+            }
+
+        }
+
+        findViewById<Button>(R.id.button_replay).setOnClickListener {
+            if (!boolReplay ) {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_replay"
+                jsonObject.put("button_replay", true)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_replay).text = "Stop"
+                boolReplay = true
+            } else {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_replay"
+                jsonObject.put("button_replay", false)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_replay).text = "Replay"
+                boolReplay = false
+            }
+
+        }
+
+        findViewById<Button>(R.id.button_reverse).setOnClickListener {
+            if (!boolReverse ) {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_reverse"
+                jsonObject.put("button_reverse", true)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_reverse).text = "Stop"
+                boolReverse = true
+            } else {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_reverse"
+                jsonObject.put("button_reverse", false)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_reverse).text = "Reverse"
+                boolReverse = false
+            }
+
+        }
+
+        findViewById<Button>(R.id.button_forward).setOnClickListener {
+            if (!boolForward ) {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_forward"
+                jsonObject.put("button_forward", true)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_forward).text = "Stop"
+                boolForward = true
+            } else {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_forward"
+                jsonObject.put("button_forward", false)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_forward).text = "Forward"
+                boolForward = false
+            }
+
+        }
+
+        findViewById<Button>(R.id.button_sensors).setOnClickListener {
+            if (!boolSensors ) {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_sensors"
+                jsonObject.put("button_sensors", true)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_sensors).text = "Sensors OFF"
+                boolSensors = true
+            } else {
+                val jsonObject = JSONObject()
+                val url = "http://138.197.181.206/api/data/button_sensors"
+                jsonObject.put("button_sensors", false)
+                val thread = Thread {
+                    runBlocking {
+                        httpst.sendData(Pair(url, jsonObject))
+                    }
+                }
+                thread.start()
+                findViewById<Button>(R.id.button_sensors).text = "Sensors ON"
+                boolSensors = false
+            }
+
+        }
+
 
         lifecycleScope.launch {
             loopPrintData()
@@ -95,15 +275,6 @@ class MainActivity : AppCompatActivity() {
 
             // Mettez à jour l'interface utilisateur sur le thread principal
             withContext(Dispatchers.Main) {
-                findViewById<TextView>(R.id.textview_us_front_left).text = "Front left : " + GeicarData.carData["us_front_left"].toString()
-                findViewById<TextView>(R.id.textview_us_front_center).text = "Front center : " + GeicarData.carData["us_front_center"].toString()
-                findViewById<TextView>(R.id.textview_us_front_right).text = "Front right : " + GeicarData.carData["us_front_right"].toString()
-                findViewById<TextView>(R.id.textview_us_back_left).text = "Back left : " + GeicarData.carData["us_back_left"].toString()
-                findViewById<TextView>(R.id.textview_us_back_center).text = "Back center : " + GeicarData.carData["us_back_center"].toString()
-                findViewById<TextView>(R.id.textview_us_back_right).text = "Back right : " + GeicarData.carData["us_back_right"].toString()
-                findViewById<TextView>(R.id.textview_trailer_angle).text = "Trailer angle : " + GeicarData.carData["trailer_angle"].toString()
-                findViewById<TextView>(R.id.textview_speed).text = "Speed : " + GeicarData.carData["speed"].toString()
-
                 if (Integer.parseInt(GeicarData.carData["us_front_left"].toString()) > 70) {
                     findViewById<ImageView>(R.id.image_front_left).setImageResource(R.drawable.approach_white)
                 } else if (Integer.parseInt(GeicarData.carData["us_front_left"].toString()) > 50) {
