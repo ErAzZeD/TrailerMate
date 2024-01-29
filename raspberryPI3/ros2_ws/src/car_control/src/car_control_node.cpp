@@ -170,6 +170,10 @@ private:
         roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
         pitch = asin(2 * (q.w * q.y - q.z * q.x));
         yaw = atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z));
+        x_vel=IMU.angular_velocity.x;
+        y_vel=IMU.angular_velocity.y;
+        z_vel=IMU.angular_velocity.z;
+        //direction = atan2(corrected_y, corrected_x) * rad2deg ;
     }
 
     /* Update direction from IMU [callback function]  :
@@ -183,18 +187,6 @@ private:
 	x_mag=mag_q.x;
 	y_mag=mag_q.y;
 	z_mag=mag_q.z;
-        //direction = atan2(corrected_y, corrected_x) * rad2deg ;
-    }
-
-    /* Update direction from IMU [callback function]  :
-    *
-    * This function is called when a message is published on the "/imu/data" topic
-    * 
-    */
-    void imuVelCallback(const sensor_msgs::msg::Imu & IMU){  
-        x_vel=IMU.angular_velocity.x;
-        y_vel=IMU.angular_velocity.y;
-        z_vel=IMU.angular_velocity.z;
         //direction = atan2(corrected_y, corrected_x) * rad2deg ;
     }
 
