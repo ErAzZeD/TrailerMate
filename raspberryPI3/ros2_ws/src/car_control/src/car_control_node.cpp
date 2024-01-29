@@ -631,6 +631,8 @@ private:
     float currentAngle;
     float currentRightSpeed;
     float currentLeftSpeed;
+    float RightOdometry;
+    float LeftOdometry;
     
     //Traile Angle variables
     float trailerAngle;
