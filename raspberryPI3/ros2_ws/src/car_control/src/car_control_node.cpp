@@ -391,14 +391,16 @@ private:
     	else {
     	float VR = rpmToMps(RightSpeed);
     	float VL = rpmToMps(LeftSpeed);
-    	if ((VR - VL) > 0.01 || (VR - VL) < -0.01) {
+    	//if ((VR - VL) > 0.01 || (VR - VL) < -0.01) {
+    	if (abs(VR - VL) > 0.01) {
 		float R = (E/2) * (VR+VL)/(VL-VR);   // Rajouter garde div 0
 		float d = calculateDistance(LeftOdometry, RightOdometry);
 		float dTheta = d/R;
 		Angle = Angle + dTheta;
 		}
-	}
 	RCLCPP_INFO(this->get_logger(), "VR : %.4f , VL : %.4f, Car odometry angle : %.6f", VR, VL, Angle);
+	}
+
 	
     }
 
