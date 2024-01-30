@@ -110,8 +110,10 @@ private:
             mode = joyOrder.mode;
 
             if (mode==0){
+                stop_play = false;
                 RCLCPP_INFO(this->get_logger(), "Switching to MANUAL Mode");
             }else if (mode==1){
+                stop_play = false;
                 RCLCPP_INFO(this->get_logger(), "Switching to AUTONOMOUS Mode");
             }else if (mode==2){
                 RCLCPP_INFO(this->get_logger(), "Switching to STEERING CALIBRATION Mode");
@@ -140,6 +142,7 @@ private:
         LeftOdometry = motorsFeedback.left_rear_odometry;
         RightOdometry = motorsFeedback.right_rear_odometry;
     }
+
 
     /* Update state of sensors from obs_detection [callback function]  :
     *
@@ -382,7 +385,7 @@ private:
                 int var1 ,var2 ,var3;
                 // Lire une ligne différente à chaque appel de la fonction
                 // RCLCPP_ERROR(get_logger(), "start playing the text file.");
-                if (!playing) {
+                if (!playing && !stop_play) {
                     file.open("/home/pi/motors_order_values.txt");
                     if (!file.is_open()) {
                         RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier ");
@@ -394,13 +397,21 @@ private:
                 else if(playing && file.eof() ) { //conditin fermeture fichier
                     playing= false;
                     file.close();
+                    stop_play=true;
+                    
+                }
+                else if (!playing && stop_play){
+                    leftRearPwmCmd = STOP;
+                    rightRearPwmCmd = STOP;
+                    steeringPwmCmd = STOP;
+                   // RCLCPP_INFO(get_logger(), "car stop");
                 }
                 else if (playing) {
 
                  // Lire la ligne actuelle
                     if (!file.eof()) {
                         file >> var1 >> var2 >> var3;
-                        file.std::ignore(256, '\n');
+                        file.ignore(256, '\n');
                         // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
                         RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
                         leftRearPwmCmd = var1;
@@ -419,7 +430,9 @@ private:
         motorsOrder.steering_pwm = steeringPwmCmd;
 
         publisher_can_->publish(motorsOrder);
+    
     }
+
 
 
     /* Start the steering calibration process :
@@ -483,6 +496,7 @@ private:
     bool start;
     int mode;    //0 : Manual    1 : Auto    2 : Calibration
     bool playing = false ;
+    bool stop_play = false;
     //bool play;
     int currentLine = 0;
     std::string line;
