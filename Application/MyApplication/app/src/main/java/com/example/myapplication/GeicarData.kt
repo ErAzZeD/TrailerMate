@@ -11,8 +11,10 @@ class GeicarData {
                                 "us_back_center" to "0",
                                 "us_back_right" to "0",
                                 "trailer_angle" to "0",
-                                "speed" to "0")
-
+                                "speed" to "0",
+                                "latitude" to "0.0",
+                                "longitude" to "0.0",
+                                "server_status" to "0")
 
     }
 

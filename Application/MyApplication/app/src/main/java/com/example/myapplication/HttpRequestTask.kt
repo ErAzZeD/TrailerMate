@@ -36,8 +36,11 @@ class HttpRequestTask : AsyncTask<String, Void, String>() {
             connection.disconnect()
 
         } catch (e: Exception) {
+            Log.d("ERreur connexion serveur", "fsdqfqs")
             e.printStackTrace()
             result = "Erreur : ${e.message}"
+
+
         }
 
         return result
@@ -48,27 +51,27 @@ class HttpRequestTask : AsyncTask<String, Void, String>() {
         // Traitement du résultat
         // Ici, vous pouvez mettre à jour l'interface utilisateur ou effectuer d'autres actions nécessaires.
         Log.d("AH", result);
+        if (!result.contains("Erreur")) {
 
-        val obj = JSONObject(result).get("data")
-        var ret = ""
-        if (obj::class.simpleName != null) {
-
-            ret = obj::class.simpleName.toString()
-
-        }
-
-        if (obj is JSONArray) {
-            for (i in 0..<obj.length()) {
-                val itemTemp = obj.getJSONObject(i)
-                val key = listOf(itemTemp.keys())[0].next().toString()
-                val value = itemTemp.get(key)
-                GeicarData.carData[key] = value.toString()
-                ret = value.toString()
+            val obj = JSONObject(result).get("data")
+            var ret = ""
+            if (obj::class.simpleName != null) {
+                ret = obj::class.simpleName.toString()
             }
-            //ret = obj[1]::class.simpleName.toString()
+
+            if (obj is JSONArray) {
+                for (i in 0..<obj.length()) {
+                    val itemTemp = obj.getJSONObject(i)
+                    val key = listOf(itemTemp.keys())[0].next().toString()
+                    val value = itemTemp.get(key)
+                    GeicarData.carData[key] = value.toString()
+                    ret = value.toString()
+                }
+                //ret = obj[1]::class.simpleName.toString()
+            }
+            GeicarData.carData["server_status"] = "0"
+        } else {
+            GeicarData.carData["server_status"] = "1"
         }
-
-
-        Log.d("VALUE OF FRONT LEFT", ret);
     }
 }

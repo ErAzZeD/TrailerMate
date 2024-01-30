@@ -8,259 +8,404 @@
     android:scrollbarAlwaysDrawVerticalTrack="false"
     tools:context=".MainActivity">
 
-    <ScrollView
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/speed_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-thin"
-                android:padding="10dp"
-                android:text="Speed"
-                android:textSize="24dp" />
-
-            <LinearLayout
-                android:id="@+id/gravity"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ProgressBar
-                    android:id="@+id/progressBar2"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="250dp"
-                    android:layout_height="match_parent" />
-
-                <TextView
-                    android:id="@+id/speed_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-black"
-                    android:gravity="center|center_horizontal|center_vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="TextView" />
-
-            </LinearLayout>
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-thin"
-                    android:padding="10dp"
-                    android:text="Sensors information"
-                    android:textSize="24sp" />
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <Space
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                    <TextView
+                        android:id="@+id/speed_title"
+                        android:layout_width="275dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif-thin"
+                        android:padding="10dp"
+                        android:text="Speed"
+                        android:textSize="24dp" />
 
-                    <ImageView
-                        android:id="@+id/image_front_left"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="15dp"
+                    <ImageButton
+                        android:id="@+id/gpsButtonOpen"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_weight="1"
-                        android:rotation="-45"
-                        app:srcCompat="@drawable/approach_green" />
+                        android:background="#00FFFFFF"
+                        android:padding="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/gps_navigation" />
 
-                    <ImageView
-                        android:id="@+id/image_front_center"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/approach_green" />
-
-                    <ImageView
-                        android:id="@+id/image_front_right"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_weight="1"
-                        android:rotation="45"
-                        app:srcCompat="@drawable/approach_green" />
-
-                    <Space
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/carImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/voiture" />
+                <LinearLayout
+                    android:id="@+id/gravity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar2"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="250dp"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/speed_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="center|center_horizontal|center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="TextView" />
+
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layoutTrailer"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:rotation="0"
-                    android:transformPivotX="90dp"
-                    android:transformPivotY="0dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/trailer"
-                        android:layout_width="130dp"
-                        android:layout_height="130dp"
-                        android:layout_gravity="center_horizontal"
-                        android:rotationY="0"
-                        android:transformPivotX="65dp"
-                        android:transformPivotY="0dp"
-                        app:srcCompat="@drawable/good_trailer" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-thin"
+                        android:padding="10dp"
+                        android:text="Sensors information"
+                        android:textSize="24sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:transformPivotX="0dp">
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
                         <ImageView
-                            android:id="@+id/image_back_left"
+                            android:id="@+id/image_front_left"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginTop="15dp"
                             android:layout_weight="1"
-                            android:rotation="-135"
+                            android:rotation="-45"
                             app:srcCompat="@drawable/approach_green" />
 
                         <ImageView
-                            android:id="@+id/image_back_center"
+                            android:id="@+id/image_front_center"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_weight="1"
-                            android:rotation="180"
                             app:srcCompat="@drawable/approach_green" />
 
                         <ImageView
-                            android:id="@+id/image_back_right"
+                            android:id="@+id/image_front_right"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginTop="15dp"
                             android:layout_weight="1"
-                            android:rotation="135"
+                            android:rotation="45"
                             app:srcCompat="@drawable/approach_green" />
 
+                        <Space
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/carImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/voiture" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutTrailer"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:rotation="0"
+                        android:transformPivotX="90dp"
+                        android:transformPivotY="0dp">
+
+                        <ImageView
+                            android:id="@+id/trailer"
+                            android:layout_width="130dp"
+                            android:layout_height="130dp"
+                            android:layout_gravity="center_horizontal"
+                            android:rotationY="0"
+                            android:transformPivotX="65dp"
+                            android:transformPivotY="0dp"
+                            app:srcCompat="@drawable/good_trailer" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal"
+                            android:transformPivotX="0dp">
+
+                            <ImageView
+                                android:id="@+id/image_back_left"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:rotation="-135"
+                                app:srcCompat="@drawable/approach_green" />
+
+                            <ImageView
+                                android:id="@+id/image_back_center"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:rotation="180"
+                                app:srcCompat="@drawable/approach_green" />
+
+                            <ImageView
+                                android:id="@+id/image_back_right"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:rotation="135"
+                                app:srcCompat="@drawable/approach_green" />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
                     </LinearLayout>
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="10dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal" />
+                    android:layout_height="0dp"
+                    android:orientation="vertical">
 
-                <Space
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-thin"
+                        android:padding="10dp"
+                        android:text="Car variables"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/textview_us_front_center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingRight="3dp"
+                        android:text="TextView"
+                        android:textColor="#B5B5B5"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textview_us_front_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingRight="3dp"
+                        android:text="Hello World!"
+                        android:textColor="#B5B5B5"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textview_us_front_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingRight="3dp"
+                        android:text="TextView"
+                        android:textColor="#B5B5B5"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textview_us_back_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingRight="3dp"
+                        android:text="TextView"
+                        android:textColor="#B5B5B5"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textview_us_back_center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingRight="3dp"
+                        android:text="TextView"
+                        android:textColor="#B5B5B5"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textview_us_back_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingRight="3dp"
+                        android:text="TextView"
+                        android:textColor="#B5B5B5"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textview_trailer_angle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingRight="3dp"
+                        android:text="TextView"
+                        android:textColor="#B5B5B5"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textview_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="1dp"
+                        android:paddingRight="3dp"
+                        android:text="TextView"
+                        android:textColor="#B5B5B5"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-thin"
+                    android:padding="10dp"
+                    android:text="Controls"
+                    android:textSize="24dp" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <Switch
+                        android:id="@+id/switch1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#C55A5A"
+                        android:drawableTint="#F34B4B"
+                        android:text="Reverse"
+                        android:theme="@style/SCBSwitch"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <Button
+                        android:id="@+id/button_1"
+                        style='@style/Widget.AppCompat.Button'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#C71E1E"
+                        android:backgroundTint="#DF0000"
+                        android:backgroundTintMode="screen"
+                        android:padding="5dp"
+                        android:paddingLeft="5dp"
+                        android:text="STOP"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:cornerRadius="2dp" />
+
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:paddingLeft="5dp"
+                        android:text="RECORD"
+                        app:cornerRadius="2dp" />
+
+                    <Button
+                        android:id="@+id/button3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:paddingLeft="5dp"
+                        android:text="MANUAL"
+                        app:cornerRadius="2dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
+        </ScrollView>
 
-            <Button
-                android:id="@+id/button_emergency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Emergency"
-                app:cornerRadius="0dp" />
+    </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center|center_horizontal|center_vertical"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/button_record"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="2"
-                    android:text="Record"
-                    app:cornerRadius="0dp" />
-
-                <Button
-                    android:id="@+id/button_replay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="2"
-                    android:text="Replay"
-                    app:cornerRadius="0dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center|center_horizontal|center_vertical"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/button_forward"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="0dp"
-                    android:text="Forward"
-                    app:cornerRadius="0dp" />
-
-                <Button
-                    android:id="@+id/button_reverse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="2"
-                    android:padding="0dp"
-                    android:text="Reverse"
-                    app:cornerRadius="0dp" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button_sensors"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Sensors ON"
-                app:cornerRadius="0dp" />
-
-        </LinearLayout>
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
