@@ -320,7 +320,7 @@ private:
              //playing mode
             } else if (mode==3){
                
-                int var1 ,var2 ,var3;
+                
                 // Lire une ligne différente à chaque appel de la fonction
                 // RCLCPP_ERROR(get_logger(), "start playing the text file.");
                 if (!playing && !stop_play) {
@@ -342,19 +342,16 @@ private:
                     leftRearPwmCmd = STOP;
                     rightRearPwmCmd = STOP;
                     steeringPwmCmd = STOP;
-                    RCLCPP_INFO(get_logger(), "car stop");
+                   // RCLCPP_INFO(get_logger(), "car stop");
                 }
                 else if (playing) {
 
                  // Lire la ligne actuelle
                     if (!file.eof()) {
-                        file >> var1 >> var2 >> var3;
-                        file.ignore(256, '\n');
+                        file >> leftRearPwmCmd >> rightRearPwmCmd >> steeringPwmCmd;
+                        //file.ignore(256, '\n');
                         // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
-                        RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
-                        leftRearPwmCmd = var1;
-                        rightRearPwmCmd = var2;
-                        steeringPwmCmd = var3;
+                        RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd);
                     } else {
                         RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
                     }   
