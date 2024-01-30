@@ -285,16 +285,18 @@ private:
 *
 * 
 */
-    void trailer_angle_compensator(float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec, float trailerAngle){
-        float SteerAngle = (trailerAngle / 90) * 15;	// trailerAngle normalization and proportional gain
-        if (SteerAngle > 1.0) {
-            SteerAngle=1.0f;
-        } else if (SteerAngle < -1.0) {
-            SteerAngle=-1.0f;
-        }
-        recurrence_PI_steering(SteerAngle, currentSteerAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
-	//steeringCmd(SteerAngle, currentSteerAngle, PWM_angle);
-        //RCLCPP_INFO(this->get_logger(), "Valeur de TrailerAngle : %.2f et de SteerAngle : %.2f", trailerAngle, SteerAngle);
+    void trailer_angle_compensator(float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec, float trailerAngle) {
+    	float SteerAngle = (trailerAngle / 90) * 20;	// trailerAngle normalization and proportional gain
+        if ( (abs(currentSteerAngle) > 0.7) && (abs(trailerAngle) < 6) ) {  // Anticipation du retour du trailer dans l'alignement
+            float SteerAngle = (trailerAngle / 90) * 2;	// trailerAngle normalization and proportional gain
+        } 
+	if (SteerAngle > 1.0) {
+	    SteerAngle=1.0f;
+	} else if (SteerAngle < -1.0) {
+	    SteerAngle=-1.0f;
+	}
+	recurrence_PI_steering(SteerAngle, currentSteerAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
+
     }
     
 
