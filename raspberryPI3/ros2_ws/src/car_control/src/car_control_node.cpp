@@ -10,9 +10,7 @@
 #include "interfaces/msg/joystick_order.hpp"
 #include "interfaces/msg/obstacle_detection.hpp"
 #include "interfaces/msg/angle_trailer.hpp"
-
-#include "sensor_msgs/msg/imu.hpp"
-#include <sensor_msgs/msg/magnetic_field.hpp>
+#include "interfaces/msg/appli_order.hpp"
 
 #include "std_srvs/srv/empty.hpp"
 
@@ -74,11 +72,9 @@ public:
         subscription_trailer_angle_package_ = this->create_subscription<interfaces::msg::AngleTrailer>(
         "trailer_angle", 10, std::bind(&car_control::trailerAngleCallback, this, _1));
 
-        subscription_IMU_package_ = this->create_subscription<sensor_msgs::msg::Imu>(
-        "imu/data", 10, std::bind(&car_control::imuCallback, this, _1));
-        
-        subscription_IMU_magnetic_ = this->create_subscription<sensor_msgs::msg::MagneticField>(
-        "imu/mag", 10, std::bind(&car_control::imuMagCallback, this, _1));
+        subscription_appli_order_ = this->create_subscription<interfaces::msg::AppliOrder>(
+        "appli_order", 10, std::bind(&car_control::appliOrderCallback, this, _1));
+
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
                             "steering_calibration", std::bind(&car_control::steeringCalibration, this, std::placeholders::_1, std::placeholders::_2));
@@ -145,9 +141,9 @@ private:
         RightOdometry = motorsFeedback.right_rear_odometry;
     }
 
-    /* Update command from stop car [callback function]  :
+    /* Update state of sensors from obs_detection [callback function]  :
     *
-    * This function is called when a message is published on the "/stop_car" topic
+    * This function is called when a message is published on the "/obstacle_detection" topic
     * 
     */
     void obstacleDetectionCallback(const interfaces::msg::ObstacleDetection & obstacleDetection){
@@ -155,7 +151,7 @@ private:
         rearObstacle = obstacleDetection.obstacle_detected_rear;
     }
 
-     /* Update command from Trailer Angle [callback function]  :
+    /* Update command from Trailer Angle [callback function]  :
     *
     * This function is called when a message is published on the "/trailer_angle_package" topic
     * 
@@ -163,36 +159,19 @@ private:
     void trailerAngleCallback(const interfaces::msg::AngleTrailer & angleTrailer){
         trailerAngle = angleTrailer.trailer_angle;
     }
-   
-    /* Update direction from IMU [callback function]  :
-    *
-    * This function is called when a message is published on the "/imu/data" topic
-    * 
-    */
-    void imuCallback(const sensor_msgs::msg::Imu & IMU){
-        geometry_msgs::msg::Quaternion q;
-        q = IMU.orientation;
-        roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
-        pitch = asin(2 * (q.w * q.y - q.z * q.x));
-        yaw = atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z));
-        x_vel=IMU.angular_velocity.x;
-        y_vel=IMU.angular_velocity.y;
-        z_vel=IMU.angular_velocity.z;
-        //direction = atan2(corrected_y, corrected_x) * rad2deg ;
-    }
 
-    /* Update direction from IMU [callback function]  :
+    /* Update appli information from receive_data [callback function]  :
     *
-    * This function is called when a message is published on the "/imu/mag" topic
+    * This function is called when a message is published on the "/AppliOrder" topic
     * 
     */
-    void imuMagCallback(const sensor_msgs::msg::MagneticField & MAG){  
-    	geometry_msgs::msg::Vector3 mag_q;
-    	mag_q = MAG.magnetic_field;
-      x_mag=mag_q.x;
-      y_mag=mag_q.y;
-      z_mag=mag_q.z;
-        //direction = atan2(corrected_y, corrected_x) * rad2deg ;
+    void appliOrderCallback(const interfaces::msg::AppliOrder & appliOrder){
+        emergency = appliOrder.button_emergency;
+        record = appliOrder.button_record;       
+        replay = appliOrder.button_replay;
+        reverse = appliOrder.button_reverse;      
+        forward = appliOrder.button_forward;     
+        sensors = appliOrder.button_sensors; 
     }
 
 // --------------------------------------------------------------
@@ -337,7 +316,7 @@ private:
 
                         rightRearPwmCmd = 50 - PWM_order_filter; 
                         leftRearPwmCmd = rightRearPwmCmd; 
-  
+
                         //trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
                     	//steeringPwmCmd=PWM_angle;
                         
@@ -351,8 +330,9 @@ private:
                         rightRearPwmCmd = PWM_order_filter + 50; 
                         leftRearPwmCmd = rightRearPwmCmd; 
                     }
-                        recurrence_PI_steering(requestedSteerAngle, currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last,direction_prec);
-                    	steeringPwmCmd=PWM_angle;
+                    recurrence_PI_steering(requestedSteerAngle, currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last,direction_prec);
+                    steeringPwmCmd=PWM_angle;
+                    reinit = 1;
                 } else {
                     leftRearPwmCmd = STOP;
                     rightRearPwmCmd = STOP;
@@ -363,9 +343,9 @@ private:
             } else if (mode==1){
                 if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
                     //RPM_order = requestedThrottle*50.0f;
-                    RPM_order = 20.0f;
-                    reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
-                    
+                RPM_order = 20.0f;
+                reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
+                
                 if (reverse) {    // => PWM : [50 -> 0] (reverse)
                     recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
                     recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
@@ -373,9 +353,9 @@ private:
                     PWM_order_filter = PWM_order_right;
                     attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
-	                  rightRearPwmCmd = 50 - PWM_order_filter; 
+	                rightRearPwmCmd = 50 - PWM_order_filter; 
                     leftRearPwmCmd = rightRearPwmCmd; 
-                    
+
                     trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
                     steeringPwmCmd=PWM_angle;
                 } else {   // => PWM : [50 -> 100] (forward)
@@ -385,16 +365,16 @@ private:
                     PWM_order_filter = PWM_order_right;
                     attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
-		                rightRearPwmCmd = PWM_order_filter + 50; 
+		            rightRearPwmCmd = PWM_order_filter + 50; 
                     leftRearPwmCmd = rightRearPwmCmd; 
-                    steeringPwmCmd= STOP; 
-                 }
-              } else {
+                    steeringPwmCmd= STOP;  
+                }
+                } else {
                     leftRearPwmCmd = STOP;
                     rightRearPwmCmd = STOP;
                     steeringPwmCmd = STOP;
                 }              
-            }               
+            }
   
              //playing mode
             } else if (mode==3){
@@ -530,35 +510,11 @@ private:
     float ErrorAngle_last;
     bool direction_prec;
     
-    // IMU
-    float roll;
-    float pitch;
-    float yaw;
-    // IMU Mag
-    float x_mag;
-    float y_mag;
-    float z_mag;
-    //IMU VEL
-    float y_vel;
-    float x_vel;
-    float z_vel;
-    float last_y_vel;
-    
-    // IMU Mag Filter
-    struct IMU_filter_var imu_mag_filter;
-    // CarAngle
-    struct Car_Angle car_angle_var;
-    
-    // Odometry
-    float Angle_odo;
-    
     //Motors feedback variables
     float currentAngle;
     float currentRightSpeed;
     float currentLeftSpeed;
-    float RightOdometry;
-    float LeftOdometry;
-    
+
     //Traile Angle variables
     float trailerAngle;
 
@@ -588,9 +544,9 @@ private:
     rclcpp::Subscription<interfaces::msg::MotorsFeedback>::SharedPtr subscription_motors_feedback_;
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
     rclcpp::Subscription<interfaces::msg::ObstacleDetection>::SharedPtr subscription_obstacle_detection_;
+    rclcpp::Subscription<interfaces::msg::AppliOrder>::SharedPtr subscription_appli_order_;
     rclcpp::Subscription<interfaces::msg::AngleTrailer>::SharedPtr subscription_trailer_angle_package_;
-    rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr subscription_IMU_package_;
-    rclcpp::Subscription<sensor_msgs::msg::MagneticField>::SharedPtr subscription_IMU_magnetic_;
+
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;

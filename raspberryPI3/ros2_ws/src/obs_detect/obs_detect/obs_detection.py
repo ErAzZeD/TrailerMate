@@ -3,12 +3,13 @@ from rclpy.node import Node
 
 from interfaces.msg import Ultrasonic
 from interfaces.msg import ObstacleDetection
-from interfaces.msg import MotorsOrder
+from interfaces.msg import AppliOrder
 
 
 class ObsDetection(Node):
 
-    MINIMAL_DISTANCE = 50
+    MINIMAL_DISTANCE = 20
+    
 
     def __init__(self):
         super().__init__('obs_detection')
@@ -19,44 +20,53 @@ class ObsDetection(Node):
 
         # Subscribers
         self.subscription_us = self.create_subscription(Ultrasonic, 'us_data', self.us_callback, 10)
+        self.subscription_appli_order = self.create_subscription(AppliOrder, 'appli_order', self.appliOrder_callback, 10)
 
+        self.sensors = False
+
+    def appliOrder_Callback(self, appliOrder: AppliOrder): 
+        self.sensors = appliOrder.button_sensors; 
 
     def us_callback(self, us: Ultrasonic):
 
         obstacle = ObstacleDetection()
 
-        # Get obstacle position
-        if us.front_left < self.MINIMAL_DISTANCE :
-            obstacle.obstacle_detected_front_left = True
-        elif us.front_center < self.MINIMAL_DISTANCE :
-            obstacle.obstacle_detected_front_center = True
-        elif us.front_right < self.MINIMAL_DISTANCE :
-            obstacle.obstacle_detected_front_right = True
-        else :
-            obstacle.obstacle_detected_front_left = False
-            obstacle.obstacle_detected_front_center = False
-            obstacle.obstacle_detected_front_right = False
+        if (self.sensors):
+            # Get obstacle position
+            if us.front_left < self.MINIMAL_DISTANCE :
+                obstacle.obstacle_detected_front_left = True
+            elif us.front_center < self.MINIMAL_DISTANCE :
+                obstacle.obstacle_detected_front_center = True
+            elif us.front_right < self.MINIMAL_DISTANCE :
+                obstacle.obstacle_detected_front_right = True
+            else :
+                obstacle.obstacle_detected_front_left = False
+                obstacle.obstacle_detected_front_center = False
+                obstacle.obstacle_detected_front_right = False
 
-        if us.rear_left < self.MINIMAL_DISTANCE :
-            obstacle.obstacle_detected_rear_left = True
-        elif us.rear_center < self.MINIMAL_DISTANCE :
-            obstacle.obstacle_detected_rear_center = True
-        elif us.rear_right < self.MINIMAL_DISTANCE :
-            obstacle.obstacle_detected_rear_right = True
-        else :
-            obstacle.obstacle_detected_rear_left = False
-            obstacle.obstacle_detected_rear_center = False
-            obstacle.obstacle_detected_rear_right = False
+            if us.rear_left < self.MINIMAL_DISTANCE :
+                obstacle.obstacle_detected_rear_left = True
+            elif us.rear_center < self.MINIMAL_DISTANCE :
+                obstacle.obstacle_detected_rear_center = True
+            elif us.rear_right < self.MINIMAL_DISTANCE :
+                obstacle.obstacle_detected_rear_right = True
+            else :
+                obstacle.obstacle_detected_rear_left = False
+                obstacle.obstacle_detected_rear_center = False
+                obstacle.obstacle_detected_rear_right = False
 
-        if obstacle.obstacle_detected_rear_left or obstacle.obstacle_detected_rear_center or obstacle.obstacle_detected_rear_right :
-            obstacle.obstacle_detected_rear = True
-        else :
+            if obstacle.obstacle_detected_rear_left or obstacle.obstacle_detected_rear_center or obstacle.obstacle_detected_rear_right :
+                obstacle.obstacle_detected_rear = True
+            else :
+                obstacle.obstacle_detected_rear = False
+            
+            if obstacle.obstacle_detected_front_left or obstacle.obstacle_detected_front_center or obstacle.obstacle_detected_front_right :
+                obstacle.obstacle_detected_front = True
+            else :
+                obstacle.obstacle_detected_front = False
+        else:
             obstacle.obstacle_detected_rear = False
-        
-        if obstacle.obstacle_detected_front_left or obstacle.obstacle_detected_front_center or obstacle.obstacle_detected_front_right :
-            obstacle.obstacle_detected_front = True
-        else :
-            obstacle.obstacle_detected_front = False
+            obstacle.obstacle_detected_front = False         
 
         self.publish_obstacle_detection.publish(obstacle)
 
