@@ -142,6 +142,8 @@ private:
     }
 
 
+    // ============= Usefull callback functions for our project ============= //
+
     /* Update state of sensors from obs_detection [callback function]  :
     *
     * This function is called when a message is published on the "/obstacle_detection" topic
@@ -163,7 +165,7 @@ private:
 
     /* Update appli information from receive_data [callback function]  :
     *
-    * This function is called when a message is published on the "/AppliOrder" topic
+    * This function is called when a message is published on the "/appli_order" topic
     * 
     */
     void appliOrderCallback(const interfaces::msg::AppliOrder & appliOrder){
@@ -173,15 +175,19 @@ private:
         go_forward = appliOrder.button_forward; 
     }
 
-// --------------------------------------------------------------
+    // ====================================================================== //
 
-/* Calculate the recurrence equation based on the compensator to move the car forward and backward
-*   RPM_order -> Desired Speed (RPM)
-*   PWM_order -> I(k+1)
-*   PWM_order_last -> I(k)
-*   Error -> Erreur(k+1)
-*   Error_last -> Erreur(k)
-*/
+
+
+    // ======================= Control loop functions ======================= //
+
+    /* Calculate the recurrence equation based on the compensator to move the car forward and backward
+    *   RPM_order -> Desired Speed (RPM)
+    *   PWM_order -> I(k+1)
+    *   PWM_order_last -> I(k)
+    *   Error -> Erreur(k+1)
+    *   Error_last -> Erreur(k)
+    */
     void recurrence_PI_motors(float RPM_order, float& Error_last, float& PWM_order, float& PWM_order_last, float currentSpeed){
         float Error=RPM_order-currentSpeed; 
         Error=Error*0.9;
@@ -200,16 +206,15 @@ private:
         PWM_order_last=PWM_order;
     }
 
-
-/* Calculate the recurrence equation based on the compensator to steer
-*   requestedSteerAngle -> Desired angle [-1,1]
-*   PWM_angle -> I(k+1)
-*   PWM_angle_last -> I(k)
-*   ErrorAngle -> Erreur(k+1)
-*   ErrorAngle_last -> Erreur(k)
-*   direction -> direction(k+1) : Gauche 0, Droite 1 
-*   direction_prec -> direction(k) : Gauche 0, Droite 1 
-*/
+    /* Calculate the recurrence equation based on the compensator to steer
+    *   requestedSteerAngle -> Desired angle [-1,1]
+    *   PWM_angle -> I(k+1)
+    *   PWM_angle_last -> I(k)
+    *   ErrorAngle -> Erreur(k+1)
+    *   ErrorAngle_last -> Erreur(k)
+    *   direction -> direction(k+1) : Gauche 0, Droite 1 
+    *   direction_prec -> direction(k) : Gauche 0, Droite 1 
+    */
     void recurrence_PI_steering(float requestedSteerAngle, float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec){
         // static bool direction_prec; // (a mettre en static si pas de pb)
         bool direction = requestedSteerAngle >= currentSteerAngle;  
@@ -244,42 +249,46 @@ private:
         }
     }
 
-
-/* Calculate the recurrence equation based on the first order attenuation filter to avoid the wheels losing grip
-*   PWM_order -> Output of compensator(k+1)
-*   PWM_order_last -> Output of compensator(k)
-*   PWM_att_last -> Last attenuation output of first order filter
-*   Update of PWM_order is ~~ update of PWM_att
-*/
+    /* Calculate the recurrence equation based on the first order attenuation filter to avoid the wheels losing grip
+    *   PWM_order -> Output of compensator(k+1)
+    *   PWM_order_last -> Output of compensator(k)
+    *   PWM_att_last -> Last attenuation output of first order filter
+    *   Update of PWM_order is ~~ update of PWM_att
+    */
     void attenuate_recurrence(float& PWM_order,float& PWM_order_last,float& PWM_att_last){
         PWM_order = 0.004975124 * (PWM_order + PWM_order_last) + 0.990049751 * PWM_att_last;   // To = 0.1
         //RCLCPP_INFO(this->get_logger(), "Valeur PMW attenuated : %.2f", PWM_order);
-	PWM_att_last=PWM_order;
+	    PWM_att_last=PWM_order;
         PWM_order_last = PWM_order;
     }
 
-/* Calculate the recurrence equation based on the compensator to keep trailer and car aligned while reversing
-*
-*
-* 
-*/
+    /* Calculate the recurrence equation based on the compensator to keep trailer and car aligned while reversing
+    *
+    *
+    * 
+    */
     void trailer_angle_compensator(float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec, float trailerAngle) {
     	float SteerAngle = (trailerAngle / 90) * 20;	// trailerAngle normalization and proportional gain
+        
         if ( (abs(currentSteerAngle) > 0.7) && (abs(trailerAngle) < 6) ) {  // Anticipation du retour du trailer dans l'alignement
             float SteerAngle = (trailerAngle / 90) * 2;	// trailerAngle normalization and proportional gain
         } 
-	if (SteerAngle > 1.0) {
-	    SteerAngle=1.0f;
-	} else if (SteerAngle < -1.0) {
-	    SteerAngle=-1.0f;
-	}
-	recurrence_PI_steering(SteerAngle, currentSteerAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
+
+        if (SteerAngle > 1.0) {
+            SteerAngle=1.0f;
+        } else if (SteerAngle < -1.0) {
+            SteerAngle=-1.0f;
+        }
+
+        recurrence_PI_steering(SteerAngle, currentSteerAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
 
     }
     
+    // ====================================================================== //
 
-// --------------------------------------------------------------
 
+
+    // ========================= Principal function ========================= //
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -293,15 +302,17 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
-        if (!start){    //Car stopped
+        if (!start || emergency){    //Car stopped
+
             leftRearPwmCmd = STOP;
             rightRearPwmCmd = STOP; 
             steeringPwmCmd = STOP;
 
-        }else{ //Car started
+        }else{                       //Car started
 
             if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
-            //Manual Mode
+                
+                //Manual Mode
                 if (mode==0 && !playing){
 
                     RPM_order = requestedThrottle*50.0f;
@@ -315,9 +326,6 @@ private:
 
                         rightRearPwmCmd = 50 - PWM_order_filter; 
                         leftRearPwmCmd = rightRearPwmCmd; 
-
-                        //trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
-                    	//steeringPwmCmd=PWM_angle;
                         
                     } else {   // => PWM : [50 -> 100] (forward)
                         recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
@@ -329,13 +337,13 @@ private:
                         rightRearPwmCmd = PWM_order_filter + 50; 
                         leftRearPwmCmd = rightRearPwmCmd; 
                     }
+
                     recurrence_PI_steering(requestedSteerAngle, currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last,direction_prec);
                     steeringPwmCmd=PWM_angle;
                     reinit = 1;
-                 
 
                 //Autonomous Mode
-                } else if (mode==1 || go_reverse || go_forward){
+                } else if ((mode==1 || go_reverse || go_forward) && !playing){
                     //RPM_order = requestedThrottle*50.0f;
                     RPM_order = 20.0f;
                     reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
@@ -364,8 +372,7 @@ private:
                         steeringPwmCmd= STOP;  
                     }
                 
-    
-                //playing mode
+                //Playing mode
                 } else if (mode==3 || replay){
                 
                     int var1 ,var2 ,var3;
@@ -380,7 +387,7 @@ private:
                             playing=true;
                         }
                     }
-                    else if(playing && file.eof() ) { //conditin fermeture fichier
+                    else if(playing && file.eof()) { // Condition de fermeture du fichier
                         playing= false;
                         file.close();
                         stop_play=true;
@@ -390,11 +397,11 @@ private:
                         leftRearPwmCmd = STOP;
                         rightRearPwmCmd = STOP;
                         steeringPwmCmd = STOP;
-                    // RCLCPP_INFO(get_logger(), "car stop");
+                        // RCLCPP_INFO(get_logger(), "car stop");
                     }
                     else if (playing) {
 
-                    // Lire la ligne actuelle
+                        // Lire la ligne actuelle
                         if (!file.eof()) {
                             file >> var1 >> var2 >> var3;
                             file.ignore(256, '\n');
@@ -486,38 +493,41 @@ private:
 
     //General variables
     bool start;
-    int mode;    //0 : Manual    1 : Auto    2 : Calibration
+    int mode;    //0 : Manual    1 : Auto    2 : Calibration    3 : Replay
+
+    //Replay variables
     bool playing = false ;
     bool stop_play = false;
-    //bool play;
     int currentLine = 0;
     std::string line;
     int totalNumberOfLines = 0;
+
     //Control loop variables
-        // Motors
-            //Error
     float Error_last_right;
     float Error_last_left;
 
-    //appli order
+    //Appli order variables
     bool emergency;     
     bool replay;
     bool go_reverse;      
     bool go_forward; 
 
-            //PWM
+    //PWM variables
     float PWM_order_right;
     float PWM_order_left;
     float PWM_order_last_right;
     float PWM_order_last_left;
-            //Others
+
+    //Others variables
     float RPM_order;
     int reinit;
-            // Attenuation    
+
+    //Attenuation variables
     float PWM_att_last;
     float PWM_order_filter;
     float PWM_order_l;
-            // Steering
+    
+    //Steering variables
     float PWM_angle;
     float PWM_angle_last;
     float ErrorAngle_last;
