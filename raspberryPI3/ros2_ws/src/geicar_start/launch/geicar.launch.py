@@ -53,11 +53,11 @@ def generate_launch_description():
         emulate_tty=True
     )
 
-    obs_detection = Node(
+    """obs_detection = Node(
         package="obs_detect",
         executable="obs_detection",
         emulate_tty=True
-    )
+    )"""
 
     trailer_angle_node = Node(
         package="trailer_angle_package",
@@ -77,7 +77,12 @@ def generate_launch_description():
         emulate_tty=True
     )
 
-
+    car_parking_node = Node(
+        package="obs_detect",
+        executable="car_parking_node",
+        emulate_tty=True
+    )
+    
     ld.add_action(joystick_node)
     ld.add_action(joystick_to_cmd_node)
     ld.add_action(can_rx_node)
@@ -89,6 +94,6 @@ def generate_launch_description():
     ld.add_action(trailer_angle_node)
     ld.add_action(send_data_node)
     ld.add_action(receive_data_node)
-
+    ld.add_action(car_parking_node)
 
     return ld
