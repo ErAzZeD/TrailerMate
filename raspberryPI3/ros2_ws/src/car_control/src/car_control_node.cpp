@@ -352,7 +352,6 @@ private:
                         file.ignore(256, '\n');
                         // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
                         RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
-                        std::chrono::milliseconds(1)
                         leftRearPwmCmd = var1;
                         rightRearPwmCmd = var2;
                         steeringPwmCmd = var3;

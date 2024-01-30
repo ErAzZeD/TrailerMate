@@ -47,6 +47,9 @@ class parking(Node):
             self.file_handle.write('%d %d %d\n' %
                 (right_rear_pwm, left_rear_pwm, steering_pwm)
             )
+            self.file_handle.write('%d %d %d\n' %
+                (right_rear_pwm, left_rear_pwm, steering_pwm)
+            )
 
     def joystick_order_callback(self, joystick_order: JoystickOrder):
         record = joystick_order.record
