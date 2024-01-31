@@ -123,7 +123,7 @@ private:
             }
         }
         
-        if ((mode ==0) && start){  //if manual mode -> update requestedThrottle, requestedSteerAngle and reverse from joystick order
+        if (start){  //if manual mode -> update requestedThrottle, requestedSteerAngle and reverse from joystick order
             requestedThrottle = joyOrder.throttle;
             requestedSteerAngle = joyOrder.steer;
             reverse = joyOrder.reverse;
@@ -349,8 +349,8 @@ private:
                 //Autonomous Mode
 
                 } else if (mode==1){
-                    //RPM_order = requestedThrottle*50.0f;
-                    RPM_order = 20.0f;
+                    RPM_order = requestedThrottle*50.0f;
+                    //RPM_order = 20.0f;
                     reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
 
                     if (go_reverse) {    // => PWM : [50 -> 0] (reverse)
