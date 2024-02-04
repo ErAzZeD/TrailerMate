@@ -288,13 +288,13 @@ private:
                     acc_z = -acc_z;
                 }
 
-                imu_raw_msg.linear_acceleration.x = acc_x * pow(9.80665,-2);    //Conversion to [m/s²]
-                imu_raw_msg.linear_acceleration.y = acc_y * pow(9.80665,-2);    //Conversion to [m/s²]
-                imu_raw_msg.linear_acceleration.z = acc_z * pow(9.80665,-2);    //Conversion to [m/s²]
+                imu_raw_msg.linear_acceleration.x = acc_x * pow(10,-2);    //Conversion to [m/s²]
+                imu_raw_msg.linear_acceleration.y = acc_y * pow(10,-2);    //Conversion to [m/s²]
+                imu_raw_msg.linear_acceleration.z = acc_z * pow(10,-2);    //Conversion to [m/s²]
 
-                imu_raw_msg.angular_velocity.x = ang_vel_x * pow(1.7453,-5);    //Conversion to [rad/s]
-                imu_raw_msg.angular_velocity.y = ang_vel_y * pow(1.7453,-5);    //Conversion to [rad/s]
-                imu_raw_msg.angular_velocity.z = ang_vel_z * pow(1.7453,-5);    //Conversion to [rad/s]
+                imu_raw_msg.angular_velocity.x = ang_vel_x * 1.7453*pow(10,-5);    //Conversion to [rad/s]
+                imu_raw_msg.angular_velocity.y = ang_vel_y * 1.7453*pow(10,-5);    //Conversion to [rad/s]
+                imu_raw_msg.angular_velocity.z = ang_vel_z * 1.7453*pow(10,-5);    //Conversion to [rad/s]
 
                 imu_raw_msg.header.stamp = rclcpp::Clock().now();
                 publisher_imu_raw_->publish(imu_raw_msg);

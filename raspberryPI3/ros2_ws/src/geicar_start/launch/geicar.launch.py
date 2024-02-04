@@ -59,6 +59,29 @@ def generate_launch_description():
         emulate_tty=True
     )
 
+    trailer_angle_node = Node(
+        package="trailer_angle_package",
+        executable="trailer_angle_node",
+        emulate_tty=True
+    )
+
+    send_data_node = Node(
+        package="send_data",
+        executable="send_data_node",
+        emulate_tty=True
+    )
+
+    receive_data_node = Node(
+        package="receive_data",
+        executable="receive_data_node",
+        emulate_tty=True
+    )
+
+    car_park_node = Node(
+        package="car_park",
+        executable="car_park_node",
+        emulate_tty=True
+    )
 
     ld.add_action(joystick_node)
     ld.add_action(joystick_to_cmd_node)
@@ -68,5 +91,9 @@ def generate_launch_description():
     ld.add_action(imu_filter_madgwick_node)
     ld.add_action(system_check_node)
     ld.add_action(obs_detection)
+    ld.add_action(trailer_angle_node)
+    ld.add_action(send_data_node)
+    ld.add_action(receive_data_node)
+    ld.add_action(car_park_node)
 
     return ld

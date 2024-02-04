@@ -1,3 +1,5 @@
+msg/AngleTrailer.idl
+msg/AngleTrailer.msg
 msg/GeneralData.idl
 msg/GeneralData.msg
 msg/Gnss.idl
@@ -10,6 +12,8 @@ msg/MotorsOrder.idl
 msg/MotorsOrder.msg
 msg/SteeringCalibration.idl
 msg/SteeringCalibration.msg
+msg/StopCar.idl
+msg/StopCar.msg
 msg/SystemCheck.idl
 msg/SystemCheck.msg
 msg/Ultrasonic.idl

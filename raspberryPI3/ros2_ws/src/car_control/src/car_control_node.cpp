@@ -2,12 +2,15 @@
 #include <chrono>
 #include <functional>
 #include <memory>
-
+#include <fstream>  //rajouter
+#include <sstream>   //rajouter
 #include "interfaces/msg/motors_order.hpp"
 #include "interfaces/msg/motors_feedback.hpp"
 #include "interfaces/msg/steering_calibration.hpp"
 #include "interfaces/msg/joystick_order.hpp"
-#include "interfaces/msg/stop_car.hpp"
+#include "interfaces/msg/obstacle_detection.hpp"
+#include "interfaces/msg/angle_trailer.hpp"
+#include "interfaces/msg/appli_order.hpp"
 
 #include "std_srvs/srv/empty.hpp"
 
@@ -19,7 +22,7 @@ using namespace std;
 using placeholders::_1;
 
 
-class car_control : public rclcpp::Node {
+class car_control : public rclcpp::Node {                 
 
 public:
     car_control()
@@ -30,6 +33,23 @@ public:
         requestedThrottle = 0;
         requestedSteerAngle = 0;
     
+        RCLCPP_INFO(this->get_logger(), "INIT of Error and PWM to 0.0");
+        // Motors control loop
+        Error_last_right = 0.0f;
+        Error_last_left = 0.0f;
+        PWM_order_right = 0.0f;
+        PWM_order_left = 0.0f;
+        PWM_order_last_right = 0.0f;
+        PWM_order_last_left = 0.0f;
+        // Steering control loop
+        PWM_angle = 0.0f;
+        PWM_angle_last = 0.0f;
+        ErrorAngle_last = 0.0f;
+        direction_prec = true;
+        // Attenuation
+        PWM_att_last= 0.0f;
+        PWM_order_filter= 0.0f;
+        PWM_order_l= 0.0f;
 
         publisher_can_= this->create_publisher<interfaces::msg::MotorsOrder>("motors_order", 10);
 
@@ -46,8 +66,14 @@ public:
         subscription_steering_calibration_ = this->create_subscription<interfaces::msg::SteeringCalibration>(
         "steering_calibration", 10, std::bind(&car_control::steeringCalibrationCallback, this, _1));
 
-        subscription_stop_car_ = this->create_subscription<interfaces::msg::StopCar>(
-        "stop_car", 10, std::bind(&car_control::stopCarCallback, this, _1));
+        subscription_obstacle_detection_ = this->create_subscription<interfaces::msg::ObstacleDetection>(
+        "obstacle_detection", 10, std::bind(&car_control::obstacleDetectionCallback, this, _1));
+
+        subscription_trailer_angle_package_ = this->create_subscription<interfaces::msg::AngleTrailer>(
+        "trailer_angle", 10, std::bind(&car_control::trailerAngleCallback, this, _1));
+
+        subscription_appli_order_ = this->create_subscription<interfaces::msg::AppliOrder>(
+        "appli_order", 10, std::bind(&car_control::appliOrderCallback, this, _1));
 
 
         server_calibration_ = this->create_service<std_srvs::srv::Empty>(
@@ -79,21 +105,25 @@ private:
 
         }
         
-
+            
         if (joyOrder.mode != mode && joyOrder.mode != -1){ //if mode change
             mode = joyOrder.mode;
 
             if (mode==0){
+                stop_play = false;
                 RCLCPP_INFO(this->get_logger(), "Switching to MANUAL Mode");
             }else if (mode==1){
+                stop_play = false;
                 RCLCPP_INFO(this->get_logger(), "Switching to AUTONOMOUS Mode");
             }else if (mode==2){
                 RCLCPP_INFO(this->get_logger(), "Switching to STEERING CALIBRATION Mode");
                 startSteeringCalibration();
+            }else if (mode==3){
+                RCLCPP_INFO(this->get_logger(), "Switching to PARKING Mode");
             }
         }
         
-        if (mode == 0 && start){  //if manual mode -> update requestedThrottle, requestedSteerAngle and reverse from joystick order
+        if (start){  //if manual mode -> update requestedThrottle, requestedSteerAngle and reverse from joystick order
             requestedThrottle = joyOrder.throttle;
             requestedSteerAngle = joyOrder.steer;
             reverse = joyOrder.reverse;
@@ -107,17 +137,158 @@ private:
     */
     void motorsFeedbackCallback(const interfaces::msg::MotorsFeedback & motorsFeedback){
         currentAngle = motorsFeedback.steering_angle;
+        currentLeftSpeed = motorsFeedback.left_rear_speed;
+        currentRightSpeed = motorsFeedback.right_rear_speed;
     }
 
-    /* Update command from stop car [callback function]  :
+
+    // ============= Usefull callback functions for our project ============= //
+
+    /* Update state of sensors from obs_detection [callback function]  :
     *
-    * This function is called when a message is published on the "/stop_car" topic
+    * This function is called when a message is published on the "/obstacle_detection" topic
     * 
     */
-    void stopCarCallback(const interfaces::msg::StopCar & stopCar){
-        frontObstacle = stopCar.stop_car_front;
-        rearObstacle = stopCar.stop_car_rear;
+    void obstacleDetectionCallback(const interfaces::msg::ObstacleDetection & obstacleDetection){
+        frontObstacle = obstacleDetection.obstacle_detected_front;
+        rearObstacle = obstacleDetection.obstacle_detected_rear;
     }
+
+    /* Update command from Trailer Angle [callback function]  :
+    *
+    * This function is called when a message is published on the "/trailer_angle_package" topic
+    * 
+    */
+    void trailerAngleCallback(const interfaces::msg::AngleTrailer & angleTrailer){
+        trailerAngle = angleTrailer.trailer_angle;
+    }
+
+    /* Update appli information from receive_data [callback function]  :
+    *
+    * This function is called when a message is published on the "/appli_order" topic
+    * 
+    */
+    void appliOrderCallback(const interfaces::msg::AppliOrder & appliOrder){
+        emergency = appliOrder.button_emergency;
+        replay = appliOrder.button_replay;
+        go_reverse = appliOrder.button_reverse;
+        go_forward = appliOrder.button_forward;
+    }
+
+    // ====================================================================== //
+
+
+
+    // ======================= Control loop functions ======================= //
+
+    /* Calculate the recurrence equation based on the compensator to move the car forward and backward
+    *   RPM_order -> Desired Speed (RPM)
+    *   PWM_order -> I(k+1)
+    *   PWM_order_last -> I(k)
+    *   Error -> Erreur(k+1)
+    *   Error_last -> Erreur(k)
+    */
+    void recurrence_PI_motors(float RPM_order, float& Error_last, float& PWM_order, float& PWM_order_last, float currentSpeed){
+        float Error=RPM_order-currentSpeed; 
+        Error=Error*0.9;
+        //RCLCPP_INFO(this->get_logger(), "Valeur de Erreur(k+1) : %.2f et de Erreur(k) : %.2f", Error, Error_last);
+
+        PWM_order = PWM_order_last + 1.002*Error - 0.998*Error_last;   // Ki = 4  et Kp = 1   ao = Ki*Te/2 + Kp, bo = Ki*Te/2 - Kp
+        //RCLCPP_INFO(this->get_logger(), "Valeur de PWM_order : %.2f", PWM_order);
+
+        if (PWM_order > 50.0) {
+            PWM_order=50.0f;
+        } else if (PWM_order < 0.0) {
+            PWM_order=0.0f;
+        }
+
+        Error_last=Error;
+        PWM_order_last=PWM_order;
+    }
+
+    /* Calculate the recurrence equation based on the compensator to steer
+    *   requestedSteerAngle -> Desired angle [-1,1]
+    *   PWM_angle -> I(k+1)
+    *   PWM_angle_last -> I(k)
+    *   ErrorAngle -> Erreur(k+1)
+    *   ErrorAngle_last -> Erreur(k)
+    *   direction -> direction(k+1) : Gauche 0, Droite 1 
+    *   direction_prec -> direction(k) : Gauche 0, Droite 1 
+    */
+    void recurrence_PI_steering(float requestedSteerAngle, float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec){
+        // static bool direction_prec; // (a mettre en static si pas de pb)
+        bool direction = requestedSteerAngle >= currentSteerAngle;  
+        float ErrorAngle = currentSteerAngle - requestedSteerAngle;
+        ErrorAngle = abs(ErrorAngle)*25;  // ErrorAngle : [-2,2] -> [0,50]
+        //RCLCPP_INFO(this->get_logger(), "Valeur de Erreur(k+1) : %.2f et de Erreur(k) : %.2f", ErrorAngle, ErrorAngle_last);
+
+        if (direction != direction_prec) {  // Si changement de direction reinit 
+            PWM_angle_last=0.0;
+            ErrorAngle_last=0.0;
+        }
+        //PWM_angle = PWM_angle_last + 0.5005*ErrorAngle - 0.4995*ErrorAngle_last;   // Ki = 1  et Kp = 0.5   ao = Ki*Te/2 + Kp, bo = Ki*Te/2 - Kp
+        PWM_angle = 12*ErrorAngle;
+        //RCLCPP_INFO(this->get_logger(), "Valeur de PWM_angle : %.2f", PWM_angle);
+
+        if (PWM_angle > 50.0) {
+            PWM_angle=50.0f;
+        } else if (PWM_angle < 0.0) {
+            PWM_angle=0.0f;
+        }
+
+        PWM_angle_last=PWM_angle;
+        ErrorAngle_last=ErrorAngle;
+        direction_prec=direction;
+
+        if (direction) {  // Vers la droite
+            //RCLCPP_INFO(this->get_logger(), "Tourne à droite");
+            PWM_angle = 50 + PWM_angle;
+        } else {          // Vers la gauche
+            //RCLCPP_INFO(this->get_logger(), "Tourne à gauche");
+            PWM_angle = 50 - PWM_angle;
+        }
+    }
+
+    /* Calculate the recurrence equation based on the first order attenuation filter to avoid the wheels losing grip
+    *   PWM_order -> Output of compensator(k+1)
+    *   PWM_order_last -> Output of compensator(k)
+    *   PWM_att_last -> Last attenuation output of first order filter
+    *   Update of PWM_order is ~~ update of PWM_att
+    */
+    void attenuate_recurrence(float& PWM_order,float& PWM_order_last,float& PWM_att_last){
+        PWM_order = 0.004975124 * (PWM_order + PWM_order_last) + 0.990049751 * PWM_att_last;   // To = 0.1
+        //RCLCPP_INFO(this->get_logger(), "Valeur PMW attenuated : %.2f", PWM_order);
+	    PWM_att_last=PWM_order;
+        PWM_order_last = PWM_order;
+    }
+
+    /* Calculate the recurrence equation based on the compensator to keep trailer and car aligned while reversing
+    *
+    *
+    * 
+    */
+    void trailer_angle_compensator(float currentSteerAngle, float& ErrorAngle_last, float& PWM_angle, float& PWM_angle_last, bool& direction_prec, float trailerAngle) {
+    	float SteerAngle = (trailerAngle / 90) * 20;	// trailerAngle normalization and proportional gain
+        
+        if ( (abs(currentSteerAngle) > 0.7) && (abs(trailerAngle) < 6) ) {  // Anticipation du retour du trailer dans l'alignement
+            float SteerAngle = (trailerAngle / 90) * 2;	// trailerAngle normalization and proportional gain
+        } 
+
+        if (SteerAngle > 1.0) {
+            SteerAngle=1.0f;
+        } else if (SteerAngle < -1.0) {
+            SteerAngle=-1.0f;
+        }
+
+        recurrence_PI_steering(SteerAngle, currentSteerAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec);
+
+    }
+    
+    // ====================================================================== //
+
+
+
+    // ========================= Principal function ========================= //
 
     /* Update PWM commands : leftRearPwmCmd, rightRearPwmCmd, steeringPwmCmd
     *
@@ -131,43 +302,143 @@ private:
 
         auto motorsOrder = interfaces::msg::MotorsOrder();
 
+        if (!replay && !go_reverse && !go_forward) mode = 0;
+        if (go_forward || go_reverse) mode = 1;
+        //if (replay) mode = 3;
+        if (emergency) start = false;
+
         if (!start){    //Car stopped
             leftRearPwmCmd = STOP;
-            rightRearPwmCmd = STOP;
+            rightRearPwmCmd = STOP; 
             steeringPwmCmd = STOP;
 
-        }else{ //Car started
+        }else{                       //Car started
 
-            //Manual Mode
-            if (mode==0){
-                RCLCPP_INFO(this->get_logger(), "Test1 de la condition");
-                if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
-                    RCLCPP_INFO(this->get_logger(), "Test2 de la condition");
+            if ((!frontObstacle && !reverse) || (!rearObstacle && reverse) || (!frontObstacle && !rearObstacle)) {
+                
+                //Manual Mode
+                if (mode==0 && !playing){
 
-                    manualPropulsionCmd(requestedThrottle, reverse, leftRearPwmCmd,rightRearPwmCmd);
+                    RPM_order = requestedThrottle*50.0f;
+                    
+                    if (reverse) {    // => PWM : [50 -> 0] (reverse)
+                        recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                        recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+                        
+                        PWM_order_filter = PWM_order_right;
+                        //attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
 
+                        rightRearPwmCmd = 50 - PWM_order_filter; 
+                        leftRearPwmCmd = rightRearPwmCmd; 
+                        
+                    } else {   // => PWM : [50 -> 100] (forward)
+                        recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                        recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+                        
+                        PWM_order_filter = PWM_order_right;
+                        //attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
+
+                        rightRearPwmCmd = PWM_order_filter + 50; 
+                        leftRearPwmCmd = rightRearPwmCmd; 
+                    }
+
+                    recurrence_PI_steering(requestedSteerAngle, currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last,direction_prec);
+                    steeringPwmCmd=PWM_angle;
+                    reinit = 1;
+
+                //Autonomous Mode
+
+                } else if (mode==1){
+
+                    //RPM_order = 20.0f;
+                    //reverse = 1;    // ou dans JoystickOrderCallBack, remplacer if ((mode ==0) && start) par if (start), pour pouvoir switch
+
+                    if (go_reverse) {    // => PWM : [50 -> 0] (reverse)
+			RPM_order = requestedThrottle*50.0f;
+                        recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                        recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+
+                        PWM_order_filter = PWM_order_right;
+                        attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
+
+                        rightRearPwmCmd = 50 - PWM_order_filter; 
+                        leftRearPwmCmd = rightRearPwmCmd; 
+
+                        trailer_angle_compensator(currentAngle, ErrorAngle_last, PWM_angle, PWM_angle_last, direction_prec, trailerAngle);
+                        steeringPwmCmd=PWM_angle;
+                    } else if (go_forward) {   // => PWM : [50 -> 100] (forward)
+                        RPM_order = 20.0f;
+			recurrence_PI_motors(RPM_order, Error_last_right, PWM_order_right, PWM_order_last_right, currentRightSpeed);
+                        recurrence_PI_motors(RPM_order, Error_last_left, PWM_order_left, PWM_order_last_left, currentLeftSpeed);
+
+                        PWM_order_filter = PWM_order_right;
+                        attenuate_recurrence(PWM_order_filter, PWM_order_l, PWM_att_last);
+
+                        rightRearPwmCmd = PWM_order_filter + 50; 
+                        leftRearPwmCmd = rightRearPwmCmd; 
+                        steeringPwmCmd= STOP;  
+                    }
+
+                //playing mode
+                } else if (mode==3){
+
+                    int var1 ,var2 ,var3;
+                    // Lire une ligne différente à chaque appel de la fonction
+                    // RCLCPP_ERROR(get_logger(), "start playing the text file.");
+                    if (!playing && !stop_play) {
+                        file.open("/home/pi/motors_order_values.txt");
+                        if (!file.is_open()) {
+                            RCLCPP_ERROR(get_logger(), "Impossible d'ouvrir le fichier ");
+                        }
+                        else{
+                            playing=true;
+                        }
+                    }
+                    else if(playing && file.eof()) { // Condition de fermeture du fichier
+                        playing= false;
+                        file.close();
+                        stop_play=true;
+                        
+                    }
+                    else if (!playing && stop_play){
+                        leftRearPwmCmd = STOP;
+                        rightRearPwmCmd = STOP;
+                        steeringPwmCmd = STOP;
+                        // RCLCPP_INFO(get_logger(), "car stop");
+                    }
+                    else if (playing) {
+
+                        // Lire la ligne actuelle
+                        if (!file.eof()) {
+                            file >> var1 >> var2 >> var3;
+                            file.ignore(256, '\n');
+                            // Utilisez leftRearPwmCmd, rightRearPwmCmd, et steeringPwmCmd comme vous le souhaitez
+                            RCLCPP_INFO(get_logger(), "Left: %d | Right: %d | Steering: %d", var1, var2, var3);
+                            leftRearPwmCmd = var1;
+                            rightRearPwmCmd = var2;
+                            steeringPwmCmd = var3;
+                        } else {
+                            RCLCPP_ERROR(get_logger(), "Erreur de lecture des valeurs à partir du fichier.");
+                        }   
+                    }
                 }
-                else {
-                    leftRearPwmCmd = STOP;
-                    rightRearPwmCmd = STOP;
-                    steeringPwmCmd = STOP;
-                }
-                steeringCmd(requestedSteerAngle,currentAngle, steeringPwmCmd);
 
-            //Autonomous Mode
-            } else if (mode==1){
-                //...
-            }  
+            }else {
+                leftRearPwmCmd = STOP;
+                rightRearPwmCmd = STOP;
+                steeringPwmCmd = STOP;
+            }
         }
-
-
+      
         //Send order to motors
         motorsOrder.left_rear_pwm = leftRearPwmCmd;
         motorsOrder.right_rear_pwm = rightRearPwmCmd;
         motorsOrder.steering_pwm = steeringPwmCmd;
 
         publisher_can_->publish(motorsOrder);
+    
     }
+
 
 
     /* Start the steering calibration process :
@@ -229,10 +500,53 @@ private:
 
     //General variables
     bool start;
-    int mode;    //0 : Manual    1 : Auto    2 : Calibration
+    int mode;    //0 : Manual    1 : Auto    2 : Calibration    3 : Replay
 
+    //Replay variables
+    bool playing = false ;
+    bool stop_play = false;
+    int currentLine = 0;
+    std::string line;
+    int totalNumberOfLines = 0;
+
+    //Control loop variables
+    float Error_last_right;
+    float Error_last_left;
+
+    //Appli order variables
+    bool emergency;     
+    bool replay;
+    bool go_reverse;      
+    bool go_forward; 
+
+    //PWM variables
+    float PWM_order_right;
+    float PWM_order_left;
+    float PWM_order_last_right;
+    float PWM_order_last_left;
+
+    //Others variables
+    float RPM_order;
+    int reinit;
+
+    //Attenuation variables
+    float PWM_att_last;
+    float PWM_order_filter;
+    float PWM_order_l;
+    
+    //Steering variables
+    float PWM_angle;
+    float PWM_angle_last;
+    float ErrorAngle_last;
+    bool direction_prec;
+    
     //Motors feedback variables
     float currentAngle;
+    float currentRightSpeed;
+    float currentLeftSpeed;
+
+    //Traile Angle variables
+    float trailerAngle;
 
     //Obstacles variables
     bool frontObstacle;
@@ -248,6 +562,9 @@ private:
     uint8_t rightRearPwmCmd;
     uint8_t steeringPwmCmd;
 
+    //file
+    std::ifstream file;
+
     //Publishers
     rclcpp::Publisher<interfaces::msg::MotorsOrder>::SharedPtr publisher_can_;
     rclcpp::Publisher<interfaces::msg::SteeringCalibration>::SharedPtr publisher_steeringCalibration_;
@@ -256,7 +573,10 @@ private:
     rclcpp::Subscription<interfaces::msg::JoystickOrder>::SharedPtr subscription_joystick_order_;
     rclcpp::Subscription<interfaces::msg::MotorsFeedback>::SharedPtr subscription_motors_feedback_;
     rclcpp::Subscription<interfaces::msg::SteeringCalibration>::SharedPtr subscription_steering_calibration_;
-    rclcpp::Subscription<interfaces::msg::StopCar>::SharedPtr subscription_stop_car_;
+    rclcpp::Subscription<interfaces::msg::ObstacleDetection>::SharedPtr subscription_obstacle_detection_;
+    rclcpp::Subscription<interfaces::msg::AppliOrder>::SharedPtr subscription_appli_order_;
+    rclcpp::Subscription<interfaces::msg::AngleTrailer>::SharedPtr subscription_trailer_angle_package_;
+
 
     //Timer
     rclcpp::TimerBase::SharedPtr timer_;

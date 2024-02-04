@@ -80,7 +80,9 @@ private:
         buttonB = joy.buttons[buttonsMap.find("B")->second];    
         buttonA = joy.buttons[buttonsMap.find("A")->second];  
         buttonY = joy.buttons[buttonsMap.find("Y")->second]; 
-        
+        buttonLB = joy.buttons[buttonsMap.find("LB")->second];  
+        buttonRB = joy.buttons[buttonsMap.find("RB")->second]; 
+        buttonX = joy.buttons[buttonsMap.find("X")->second]; 
 
         axisRT = joy.axes[axisMap.find("RT")->second];      //Motors (go forward)
         axisLT = joy.axes[axisMap.find("LT")->second];      //Motors (go backward)
@@ -110,15 +112,18 @@ private:
             mode = -1;
         
 
-        if (buttonA || buttonY || buttonDpadBottom){
+        if (buttonA || buttonX || buttonY || buttonDpadBottom){
 
             if (buttonY)
                 mode = 0;
             else if (buttonA)
                 mode = 1;
+            else if (buttonX)
+                mode = 3;
             else if (buttonDpadBottom && buttonStart){
                 mode = 2;
-                start = false;
+                start = 
+                false;
             }
         }
 
@@ -141,7 +146,19 @@ private:
             start = true;
         }
 
+        // ------ record button ------
+        if (buttonLB){       // LB start recording
+            record = true;
 
+        }else if (buttonRB){   // RB stop recording 
+            record = false;
+        }
+        //playing button
+        /*if (buttonX){       // X start reading text file
+          play = true;
+        }else{                // X stop reading text file
+          play = false;
+        }*/
         // ------ Propulsion ------
         if (axisLT > DEADZONE_LT_RT && axisRT > DEADZONE_LT_RT){  //Incompatible orders : Stop the car
             requestedThrottle = STOP;
@@ -175,22 +192,24 @@ private:
         joystickOrderMsg.throttle = requestedThrottle;
         joystickOrderMsg.steer  = requestedAngle;
         joystickOrderMsg.reverse = reverse;
-
+        joystickOrderMsg.record = record;
+        //joystickOrderMsg.play = play;
         publisher_joystick_order_->publish(joystickOrderMsg); //Send order to the car_control_node
     }
 
     //Joystick variables
     map<string,int> axisMap;
     map<string,int> buttonsMap;
-    bool buttonB, buttonStart, buttonA, buttonY, buttonDpadBottom, buttonDpadLeft ;
+    bool buttonB, buttonX, buttonStart, buttonA, buttonLB, buttonRB, buttonY, buttonDpadBottom, buttonDpadLeft ;
     
     float axisRT, axisLT, axisLS_X;
 
     //General variables
     bool start;
     int mode;
+    bool record;
     bool systemCheckPrintRequest;
-
+    //bool play;
 
     //Manual mode variables
     float requestedAngle, requestedThrottle;
